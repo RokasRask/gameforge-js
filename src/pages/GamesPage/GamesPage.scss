@@ -1,0 +1,272 @@
+// GamesPage.scss
+// Styles for the games listing page
+
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.games-page {
+    width: 100%;
+    padding: $spacing-xl 0;
+
+    // Page header
+    &__header {
+        text-align: center;
+        margin-bottom: $spacing-xl;
+    }
+
+    &__title {
+        font-family: $font-family-pixel;
+        font-size: $font-size-3xl;
+        margin-bottom: $spacing-sm;
+
+        @include media-breakpoint-down(sm) {
+            font-size: $font-size-2xl;
+        }
+    }
+
+    &__subtitle {
+        font-size: $font-size-lg;
+        color: $color-gray;
+        max-width: 600px;
+        margin: 0 auto;
+
+        @include media-breakpoint-down(sm) {
+            font-size: $font-size-md;
+        }
+    }
+
+    // Search and filter controls
+    &__controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: $spacing-lg;
+
+        @include media-breakpoint-down(sm) {
+            flex-direction: column;
+            gap: $spacing-md;
+        }
+    }
+
+    &__search {
+        flex: 1;
+        max-width: 400px;
+
+        @include media-breakpoint-down(sm) {
+            max-width: 100%;
+            width: 100%;
+        }
+    }
+
+    &__filter {
+        @include media-breakpoint-down(sm) {
+            width: 100%;
+        }
+    }
+
+    // Game categories section
+    &__categories {
+        margin-bottom: $spacing-xl;
+    }
+
+    // Games content area
+    &__content {
+        min-height: 400px;
+
+        // Loading state
+        &--loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: $spacing-xl 0;
+        }
+    }
+
+    // Loading state
+    &__loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: $spacing-xl 0;
+
+        .pixel-loader {
+            margin-bottom: $spacing-md;
+            color: $color-primary;
+        }
+
+        p {
+            font-family: $font-family-pixel;
+            color: $color-gray;
+        }
+    }
+
+    // Empty state (no games found)
+    &__empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: $spacing-xl 0;
+        text-align: center;
+    }
+
+    &__empty-icon {
+        font-size: 4rem;
+        margin-bottom: $spacing-md;
+        opacity: 0.5;
+    }
+
+    &__empty-title {
+        font-family: $font-family-pixel;
+        font-size: $font-size-xl;
+        margin-bottom: $spacing-sm;
+    }
+
+    &__empty-message {
+        color: $color-gray;
+        margin-bottom: $spacing-lg;
+    }
+
+    &__reset-button {
+        @include pixel-button;
+        padding: $spacing-sm $spacing-md;
+        background-color: $color-secondary;
+        color: $color-white;
+        font-family: $font-family-pixel;
+        font-size: $font-size-sm;
+        border: 2px solid $color-black;
+    }
+
+    // CTA section for game submission
+    &__cta {
+        margin-top: $spacing-2xl;
+        padding: $spacing-xl;
+        background-color: $color-light-gray;
+        border: 4px solid $color-black;
+        border-radius: $border-radius-md;
+        position: relative;
+        overflow: hidden;
+
+        // Decorative pixel elements
+        &-decoration {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 140px;
+            height: 100%;
+            background-color: rgba($color-primary, 0.1);
+            clip-path: polygon(100% 0, 0 0, 100% 100%);
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+                background-color: rgba($color-primary, 0.3);
+                clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            }
+        }
+    }
+
+    &__cta-content {
+        position: relative;
+        z-index: 1;
+        max-width: 600px;
+    }
+
+    &__cta-title {
+        font-family: $font-family-pixel;
+        font-size: $font-size-xl;
+        margin-bottom: $spacing-sm;
+    }
+
+    &__cta-text {
+        margin-bottom: $spacing-md;
+    }
+
+    &__cta-button {
+        display: inline-block;
+        padding: $spacing-sm $spacing-lg;
+        background-color: $color-primary;
+        color: $color-white;
+        font-family: $font-family-pixel;
+        text-decoration: none;
+        border: 3px solid $color-black;
+        box-shadow: 3px 3px 0 0 $color-black;
+        transition: transform $transition-speed-fast, box-shadow $transition-speed-fast;
+
+        &:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 0 $color-black;
+        }
+
+        &:active {
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0 0 $color-black;
+        }
+    }
+
+    // Theme variations
+    .theme-nes & {
+        &__title {
+            color: var(--primary-color);
+        }
+
+        &__cta-button {
+            background-color: var(--primary-color);
+        }
+    }
+
+    .theme-gameboy & {
+        &__title {
+            color: var(--secondary-color);
+        }
+
+        &__cta {
+            background-color: var(--background-color);
+            border-color: var(--secondary-color);
+        }
+
+        &__cta-button {
+            background-color: var(--primary-color);
+            color: var(--background-color);
+            border-color: var(--secondary-color);
+            box-shadow: 3px 3px 0 0 var(--secondary-color);
+        }
+    }
+
+    .theme-arcade & {
+        &__title {
+            color: #ff00ff;
+            text-shadow: 2px 2px 0 #0000ff;
+        }
+
+        &__cta {
+            background-color: #000033;
+            border-color: #ff00ff;
+        }
+
+        &__cta-decoration {
+            background-color: rgba(#ff00ff, 0.2);
+        }
+
+        &__cta-title {
+            color: #ffffff;
+        }
+
+        &__cta-text {
+            color: #ffffff;
+        }
+
+        &__cta-button {
+            background-color: #ff00ff;
+            color: #000000;
+            border-color: #00ffff;
+            box-shadow: 3px 3px 0 0 #0000ff;
+        }
+    }
+}

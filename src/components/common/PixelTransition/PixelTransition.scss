@@ -1,0 +1,232 @@
+// PixelTransition.scss
+// 8-bit style transition effects
+
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.pixel-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: $z-index-modal - 1;
+    pointer-events: none;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: var(--transition-duration, 800ms);
+
+    &.is-active {
+        opacity: 1;
+    }
+
+    // Pixelate transition
+    &--pixelate {
+        background-color: rgba($color-black, 0.1);
+        backdrop-filter: blur(var(--pixel-size, 0px));
+        -webkit-backdrop-filter: blur(var(--pixel-size, 0px));
+
+        &.is-active {
+            opacity: 1;
+        }
+    }
+
+    // Scanline transition
+    &--scanline {
+        background-color: transparent;
+        overflow: hidden;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: $color-white;
+            opacity: 0.8;
+            transform: scaleY(0);
+            transform-origin: top;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: calc(var(--scan-progress, 0) * 100%);
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: $color-primary;
+            box-shadow: 0 0 20px 5px $color-primary;
+        }
+
+        &.is-active {
+            &::before {
+                animation: scan-wipe var(--transition-duration, 800ms) forwards;
+            }
+        }
+    }
+
+    // Fade transition
+    &--fade {
+        background-color: $color-black;
+
+        &.is-active {
+            animation: fade-in-out var(--transition-duration, 800ms) forwards;
+        }
+    }
+
+    // Bit-by-bit transition
+    &--bits {
+        display: grid;
+        grid-template-columns: repeat(16, 1fr);
+        grid-template-rows: repeat(12, 1fr);
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: $color-white;
+            opacity: 0;
+        }
+
+        &>div {
+            background-color: $color-black;
+            transform: scale(0);
+        }
+
+        &.is-active {
+            &>div {
+                animation: bit-appear 100ms both;
+            }
+
+            @for $i from 0 through 191 {
+                &>div:nth-child(#{$i + 1}) {
+                    animation-delay: #{$i * 5}ms;
+                }
+            }
+        }
+    }
+
+    // Glitch transition
+    &--glitch {
+        background-color: transparent;
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: $color-primary;
+            opacity: 0;
+        }
+
+        &::before {
+            background-color: $color-primary;
+            mix-blend-mode: difference;
+        }
+
+        &::after {
+            background-color: $color-secondary;
+            mix-blend-mode: multiply;
+        }
+
+        &.is-active {
+            &::before {
+                animation: glitch-shift calc(var(--transition-duration, 800ms) / 2) ease-in-out forwards;
+            }
+
+            &::after {
+                animation: glitch-shift calc(var(--transition-duration, 800ms) / 2) calc(var(--transition-duration, 800ms) / 2) ease-in-out forwards;
+            }
+        }
+    }
+}
+
+// Transition animation keyframes
+@keyframes scan-wipe {
+    0% {
+        transform: scaleY(0);
+    }
+
+    50% {
+        transform: scaleY(1);
+    }
+
+    100% {
+        transform: scaleY(0);
+        transform-origin: bottom;
+    }
+}
+
+@keyframes fade-in-out {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes bit-appear {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes glitch-shift {
+    0% {
+        opacity: 0;
+        transform: translate(0);
+    }
+
+    20% {
+        opacity: 0.8;
+        transform: translate(-10px, 5px);
+    }
+
+    40% {
+        opacity: 0.6;
+        transform: translate(10px, -5px);
+    }
+
+    60% {
+        opacity: 0.8;
+        transform: translate(-5px, 10px);
+    }
+
+    80% {
+        opacity: 0.6;
+        transform: translate(5px, -10px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(0);
+    }
+}
+
+// Create bit-by-bit elements with JavaScript
+// This would be created dynamically in the component
+// But we add the styling here
+.pixel-transition--bits__bit {
+    width: 100%;
+    height: 100%;
+    background-color: $color-black;
+    transform: scale(0);
+}

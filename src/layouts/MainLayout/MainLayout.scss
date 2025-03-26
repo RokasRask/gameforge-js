@@ -1,0 +1,158 @@
+// MainLayout.scss
+// Main layout styling
+
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.main-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+
+    // Header section
+    &__header {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        z-index: $z-index-sticky;
+    }
+
+    // Main content area
+    &__content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding-bottom: $spacing-2xl;
+        position: relative;
+
+        // 8-bit grid background (optional)
+        // @include pixel-background($color-light-gray, $color-white, 16px);
+
+        // Add top padding to create space below the navbar
+        padding-top: $spacing-md;
+
+        // Ensure the main content is centered on larger screens
+        // and doesn't exceed a reasonable reading width
+        >* {
+            width: 100%;
+            max-width: $container-xl;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    // Fixed UI elements
+    &__fixed-ui {
+        position: fixed;
+        bottom: $spacing-md;
+        right: $spacing-md;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-sm;
+        z-index: $z-index-sticky - 1;
+
+        @include media-breakpoint-down(xs) {
+            bottom: $spacing-sm;
+            right: $spacing-sm;
+        }
+    }
+
+    // Sound toggle position
+    &__sound-toggle {
+        order: 1;
+    }
+
+    // Theme switcher position
+    &__theme-switcher {
+        order: 2;
+    }
+
+    // Easter egg trigger
+    &__easter-egg-trigger {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        width: 8px;
+        height: 8px;
+        cursor: pointer;
+        z-index: $z-index-sticky - 2;
+        opacity: 0;
+
+        &:hover {
+            opacity: 0.1;
+        }
+    }
+
+    // Theme variations
+    .theme-nes & {
+        background-color: var(--background-color);
+        color: var(--text-color);
+
+        &__content {
+            background-color: var(--background-color);
+        }
+    }
+
+    .theme-gameboy & {
+        background-color: var(--background-color);
+        color: var(--text-color);
+
+        // Add scanlines for Gameboy effect
+        &::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(to bottom,
+                    rgba(var(--text-color), 0.05),
+                    rgba(var(--text-color), 0.05) 1px,
+                    transparent 1px,
+                    transparent 2px);
+            pointer-events: none;
+            z-index: $z-index-fixed;
+        }
+    }
+
+    .theme-arcade & {
+        background-color: var(--background-color);
+        color: var(--text-color);
+
+        // Add CRT effect
+        &::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center,
+                    transparent 0%,
+                    rgba(0, 0, 0, 0.2) 90%,
+                    rgba(0, 0, 0, 0.4) 100%);
+            pointer-events: none;
+            z-index: $z-index-fixed;
+        }
+
+        // Add scanlines for CRT effect
+        &::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(to bottom,
+                    rgba(255, 255, 255, 0.05),
+                    rgba(255, 255, 255, 0.05) 1px,
+                    transparent 1px,
+                    transparent 2px);
+            pointer-events: none;
+            z-index: $z-index-fixed + 1;
+        }
+    }
+}
