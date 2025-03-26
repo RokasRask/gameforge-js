@@ -23,7 +23,7 @@ const MainLayout = ({ children }) => {
       setIsTransitioning(true);
     }
     setPreviousPathname(location.pathname);
-  }, [location.pathname]);
+  }, [location.pathname, previousPathname]);
   
   // Complete transition handler
   const handleTransitionComplete = () => {

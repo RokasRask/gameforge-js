@@ -1,0 +1,161 @@
+// SoundToggle.scss
+// Styles for the sound toggle button component
+
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.sound-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border: 3px solid $color-black;
+  background-color: $color-white;
+  box-shadow: 4px 4px 0 0 rgba($color-black, 0.2);
+  transition: transform $transition-speed-fast, box-shadow $transition-speed-fast;
+  z-index: $z-index-fixed;
+  cursor: pointer;
+
+  &:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 0 rgba($color-black, 0.2);
+  }
+
+  &:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 0 rgba($color-black, 0.2);
+  }
+
+  // Icon container
+  &__icon {
+    width: 24px;
+    height: 24px;
+    position: relative;
+  }
+
+  // Sound waves (for on state)
+  &__sound-wave {
+    position: absolute;
+    width: 4px;
+    height: 12px;
+    background-color: $color-primary;
+    bottom: 6px;
+    
+    &:nth-child(1) {
+      left: 4px;
+      height: 6px;
+    }
+    
+    &:nth-child(2) {
+      left: 10px;
+      height: 14px;
+    }
+    
+    &:nth-child(3) {
+      left: 16px;
+      height: 10px;
+    }
+
+    &--off {
+      background-color: $color-gray;
+    }
+  }
+
+  // Label (hidden visually but can be used)
+  &__label {
+    @include visually-hidden;
+  }
+
+  // States
+  &.is-on {
+    border-color: $color-primary;
+
+    .sound-toggle__sound-wave {
+      animation: sound-wave 1.2s infinite ease-in-out;
+      
+      &:nth-child(1) {
+        animation-delay: 0s;
+      }
+      
+      &:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      
+      &:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+    }
+  }
+
+  &.is-off {
+    border-color: $color-gray;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 10%;
+      width: 80%;
+      height: 3px;
+      background-color: $color-danger;
+      transform: translateY(-50%) rotate(-45deg);
+    }
+  }
+
+  // Theme variations
+  .theme-nes & {
+    &.is-on {
+      border-color: var(--primary-color);
+
+      .sound-toggle__sound-wave {
+        background-color: var(--primary-color);
+      }
+    }
+  }
+
+  .theme-gameboy & {
+    background-color: var(--background-color);
+    
+    &.is-on {
+      border-color: var(--primary-color);
+
+      .sound-toggle__sound-wave {
+        background-color: var(--primary-color);
+      }
+    }
+
+    &.is-off::after {
+      background-color: var(--secondary-color);
+    }
+  }
+
+  .theme-arcade & {
+    background-color: #000033;
+    border-color: #ff00ff;
+    
+    &.is-on {
+      .sound-toggle__sound-wave {
+        background-color: #ff00ff;
+      }
+    }
+
+    &.is-off::after {
+      background-color: #00ffff;
+    }
+  }
+}
+
+// Sound wave animation
+@keyframes sound-wave {
+  0% {
+    transform: scaleY(0.8);
+  }
+  50% {
+    transform: scaleY(1.2);
+  }
+  100% {
+    transform: scaleY(0.8);
+  }
+}
