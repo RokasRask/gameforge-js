@@ -4,6 +4,7 @@ import GamesList from '../../components/games/GamesList/GamesList';
 import SearchBar from '../../components/common/SearchBar/SearchBar';
 import FilterMenu from '../../components/common/FilterMenu/FilterMenu';
 import GameCategories from '../../components/games/GameCategories/GameCategories';
+import Button from '../../components/common/Button/Button';
 
 /**
  * Games listing page
@@ -28,7 +29,7 @@ const GamesPage = () => {
           {
             id: 'game1',
             title: 'Pixel Platformer',
-            thumbnail: '/assets/images/games/pixel-platformer.png',
+            thumbnail: 'https://via.placeholder.com/350x200/3498db/ffffff?text=Pixel+Platformer',
             description: 'Jump and run through challenging levels in this retro platformer.',
             category: 'platformer',
             rating: 4.5,
@@ -39,7 +40,7 @@ const GamesPage = () => {
           {
             id: 'game2',
             title: 'Space Shooter',
-            thumbnail: '/assets/images/games/space-shooter.png',
+            thumbnail: 'https://via.placeholder.com/350x200/e74c3c/ffffff?text=Space+Shooter',
             description: 'Defend Earth from alien invaders in this classic arcade shooter.',
             category: 'arcade',
             rating: 4.2,
@@ -50,7 +51,7 @@ const GamesPage = () => {
           {
             id: 'game3',
             title: 'Puzzle Quest',
-            thumbnail: '/assets/images/games/puzzle-quest.png',
+            thumbnail: 'https://via.placeholder.com/350x200/2ecc71/ffffff?text=Puzzle+Quest',
             description: 'Solve mind-bending puzzles in this brain-teasing adventure.',
             category: 'puzzle',
             rating: 4.7,
@@ -58,7 +59,39 @@ const GamesPage = () => {
             tags: ['puzzle', 'strategy', 'adventure'],
             createdAt: '2023-10-05T09:45:00Z'
           },
-          // Add more sample games as needed
+          {
+            id: 'game4',
+            title: 'Retro RPG',
+            thumbnail: 'https://via.placeholder.com/350x200/9b59b6/ffffff?text=Retro+RPG',
+            description: 'Embark on an epic quest in this turn-based role-playing game.',
+            category: 'rpg',
+            rating: 4.9,
+            plays: 2100,
+            tags: ['rpg', 'adventure', 'turn-based'],
+            createdAt: '2023-10-12T14:20:00Z'
+          },
+          {
+            id: 'game5',
+            title: 'Strategy Master',
+            thumbnail: 'https://via.placeholder.com/350x200/f39c12/ffffff?text=Strategy+Master',
+            description: 'Plan, build, and conquer in this challenging strategy game.',
+            category: 'strategy',
+            rating: 4.3,
+            plays: 870,
+            tags: ['strategy', 'building', 'resource-management'],
+            createdAt: '2023-09-28T08:15:00Z'
+          },
+          {
+            id: 'game6',
+            title: 'Pixel Sports',
+            thumbnail: 'https://via.placeholder.com/350x200/1abc9c/ffffff?text=Pixel+Sports',
+            description: 'Compete in various sports events with simple yet addictive gameplay.',
+            category: 'sports',
+            rating: 4.0,
+            plays: 750,
+            tags: ['sports', 'multiplayer', 'competitive'],
+            createdAt: '2023-09-10T16:45:00Z'
+          }
         ];
         
         // Simulate network delay
@@ -203,8 +236,8 @@ const GamesPage = () => {
                 <p className="games-page__empty-message">
                   Try adjusting your search or filter settings
                 </p>
-                <button 
-                  className="games-page__reset-button"
+                <Button 
+                  variant="primary"
                   onClick={() => {
                     setSearchQuery('');
                     setActiveCategory('all');
@@ -212,7 +245,7 @@ const GamesPage = () => {
                   }}
                 >
                   Reset Filters
-                </button>
+                </Button>
               </div>
             )}
           </>
