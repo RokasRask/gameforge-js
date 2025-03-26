@@ -1,0 +1,113 @@
+// Rating.scss
+// Styles for the 8-bit star rating component
+
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+
+    // Star container
+    &__star {
+        position: relative;
+        width: 20px;
+        height: 20px;
+        background-color: $color-light-gray;
+        clip-path: polygon(50% 0%,
+                61% 35%,
+                98% 35%,
+                68% 57%,
+                79% 91%,
+                50% 70%,
+                21% 91%,
+                32% 57%,
+                2% 35%,
+                39% 35%);
+        cursor: default;
+
+        // Size variations
+        &--small {
+            width: 16px;
+            height: 16px;
+        }
+
+        &--large {
+            width: 24px;
+            height: 24px;
+        }
+
+        // Star fill overlay
+        &-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: $color-tertiary;
+            clip-path: inherit;
+        }
+
+        // Active star
+        &.is-active {
+            .rating__star-fill {
+                background-color: $color-tertiary;
+            }
+        }
+    }
+
+    // Interactive rating
+    &.is-interactive {
+        .rating__star {
+            cursor: pointer;
+            transition: transform $transition-speed-fast;
+
+            &:hover {
+                transform: scale(1.1);
+
+                .rating__star-fill {
+                    background-color: $color-accent;
+                }
+            }
+
+            &:active {
+                transform: scale(0.9);
+            }
+        }
+    }
+
+    // Theme variations
+    .theme-nes & {
+        .rating__star-fill {
+            background-color: var(--primary-color);
+        }
+
+        &.is-interactive .rating__star:hover .rating__star-fill {
+            background-color: lighten(map-get(map-get($themes, 'nes'), 'primary'), 10%);
+        }
+    }
+
+    .theme-gameboy & {
+        .rating__star {
+            background-color: darken(map-get(map-get($themes, 'gameboy'), 'background'), 10%);
+        }
+
+        .rating__star-fill {
+            background-color: var(--primary-color);
+        }
+    }
+
+    .theme-arcade & {
+        .rating__star {
+            background-color: #000033;
+        }
+
+        .rating__star-fill {
+            background-color: #ffff00;
+        }
+
+        &.is-interactive .rating__star:hover .rating__star-fill {
+            background-color: #ff00ff;
+        }
+    }
+}

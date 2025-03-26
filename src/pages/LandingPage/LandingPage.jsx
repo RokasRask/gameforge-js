@@ -12,21 +12,21 @@ const LandingPage = () => {
     {
       id: 'game1',
       title: 'Pixel Platformer',
-      thumbnail: '/assets/images/games/pixel-platformer.png',
+      thumbnail: 'https://via.placeholder.com/400x300/3498db/ffffff?text=Pixel+Platformer',
       description: 'Jump and run through challenging levels in this retro platformer.',
       category: 'Platformer'
     },
     {
       id: 'game2',
       title: 'Space Shooter',
-      thumbnail: '/assets/images/games/space-shooter.png',
+      thumbnail: 'https://via.placeholder.com/400x300/e74c3c/ffffff?text=Space+Shooter',
       description: 'Defend Earth from alien invaders in this classic arcade shooter.',
       category: 'Arcade'
     },
     {
       id: 'game3',
       title: 'Puzzle Quest',
-      thumbnail: '/assets/images/games/puzzle-quest.png',
+      thumbnail: 'https://via.placeholder.com/400x300/2ecc71/ffffff?text=Puzzle+Quest',
       description: 'Solve mind-bending puzzles in this brain-teasing adventure.',
       category: 'Puzzle'
     }
