@@ -1,0 +1,128 @@
+// GamesList.scss
+// Styles for games list/grid component
+
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.games-list {
+  width: 100%;
+  margin-bottom: $spacing-xl;
+  
+  // Grid container for game cards
+  &__container {
+    display: grid;
+    gap: $spacing-lg;
+  }
+  
+  // Grid layout
+  &--grid {
+    .games-list__container {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      
+      @include media-breakpoint-down(sm) {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      }
+    }
+  }
+  
+  // List layout (alternative view)
+  &--list {
+    .games-list__container {
+      grid-template-columns: 1fr;
+      gap: $spacing-md;
+    }
+    
+    .game-card {
+      display: flex;
+      flex-direction: row;
+      height: auto;
+      max-width: none;
+      
+      &__header {
+        flex: 0 0 200px;
+        height: auto;
+        
+        @include media-breakpoint-down(md) {
+          flex: 0 0 150px;
+        }
+        
+        @include media-breakpoint-down(sm) {
+          flex: 0 0 100px;
+        }
+      }
+      
+      &__content {
+        flex: 1;
+      }
+    }
+  }
+  
+  // Empty state
+  &--empty {
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  &__empty-state {
+    text-align: center;
+    padding: $spacing-xl;
+    background-color: rgba($color-light-gray, 0.2);
+    border: 2px dashed $color-gray;
+    max-width: 400px;
+  }
+  
+  &__empty-icon {
+    font-size: 3rem;
+    margin-bottom: $spacing-md;
+    opacity: 0.5;
+  }
+  
+  &__empty-title {
+    font-family: $font-family-pixel;
+    font-size: $font-size-lg;
+    margin-bottom: $spacing-sm;
+    color: $color-gray;
+  }
+  
+  &__empty-message {
+    color: $color-gray;
+  }
+  
+  // Theme variations
+  .theme-nes & {
+    &__empty-title {
+      color: var(--text-color);
+    }
+  }
+  
+  .theme-gameboy & {
+    &__empty-state {
+      background-color: var(--background-color);
+      border-color: var(--secondary-color);
+    }
+    
+    &__empty-title,
+    &__empty-message {
+      color: var(--text-color);
+    }
+  }
+  
+  .theme-arcade & {
+    &__empty-state {
+      background-color: #000033;
+      border-color: #ff00ff;
+      border-style: solid;
+    }
+    
+    &__empty-title {
+      color: #ff00ff;
+      text-shadow: 2px 2px 0 #0000ff;
+    }
+    
+    &__empty-message {
+      color: #ffffff;
+    }
+  }
+}

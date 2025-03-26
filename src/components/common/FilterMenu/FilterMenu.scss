@@ -1,0 +1,295 @@
+// FilterMenu.scss
+// Styles for filter and sort menu component
+
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.filter-menu {
+  position: relative;
+  z-index: $z-index-dropdown;
+  
+  // Toggle button
+  &__toggle {
+    display: flex;
+    align-items: center;
+    height: 44px;
+    padding: 0 $spacing-md;
+    background-color: $color-white;
+    border: 3px solid $color-black;
+    font-family: $font-family-pixel;
+    font-size: $font-size-sm;
+    color: $color-black;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 0 rgba($color-black, 0.2);
+    transition: transform $transition-speed-fast, box-shadow $transition-speed-fast;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 4px 6px 0 0 rgba($color-black, 0.2);
+    }
+    
+    &:active {
+      transform: translateY(2px);
+      box-shadow: 4px 2px 0 0 rgba($color-black, 0.2);
+    }
+    
+    // When dropdown is open
+    &[aria-expanded="true"] {
+      background-color: $color-light-gray;
+      
+      .filter-menu__toggle-icon {
+        transform: rotate(180deg);
+      }
+    }
+  }
+  
+  &__toggle-text {
+    margin-right: $spacing-sm;
+  }
+  
+  &__toggle-icon {
+    font-size: 10px;
+    transition: transform $transition-speed-fast;
+  }
+  
+  // Dropdown container
+  &__dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: $spacing-xs;
+    min-width: 200px;
+    background-color: $color-white;
+    border: 3px solid $color-black;
+    box-shadow: 4px 4px 0 0 rgba($color-black, 0.2);
+    z-index: $z-index-dropdown;
+    animation: pixel-fade-in 0.2s forwards;
+  }
+  
+  // Section within dropdown
+  &__section {
+    padding: $spacing-sm;
+    
+    &:not(:last-child) {
+      border-bottom: 2px solid $color-light-gray;
+    }
+  }
+  
+  &__section-title {
+    font-family: $font-family-pixel;
+    font-size: $font-size-xs;
+    text-transform: uppercase;
+    color: $color-gray;
+    margin-bottom: $spacing-xs;
+  }
+  
+  // Options list
+  &__options {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  &__option {
+    margin-bottom: 2px;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  // Option button (for sort options)
+  &__option-button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: $spacing-xs $spacing-sm;
+    background: none;
+    border: none;
+    font-family: $font-family-base;
+    font-size: $font-size-sm;
+    color: $color-black;
+    cursor: pointer;
+    transition: background-color $transition-speed-fast;
+    
+    &:hover {
+      background-color: $color-light-gray;
+    }
+    
+    &.is-active {
+      background-color: $color-primary;
+      color: $color-white;
+    }
+  }
+  
+  // Checkbox for filter options
+  &__checkbox {
+    display: flex;
+    align-items: center;
+    padding: $spacing-xs $spacing-sm;
+    cursor: pointer;
+    transition: background-color $transition-speed-fast;
+    
+    &:hover {
+      background-color: $color-light-gray;
+    }
+    
+    input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border: 2px solid $color-black;
+      background-color: $color-white;
+      margin-right: $spacing-sm;
+      position: relative;
+      cursor: pointer;
+      
+      &:checked {
+        background-color: $color-primary;
+        
+        &::after {
+          content: "";
+          position: absolute;
+          top: 2px;
+          left: 2px;
+          width: 8px;
+          height: 8px;
+          background-color: $color-white;
+        }
+      }
+      
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba($color-primary, 0.3);
+      }
+    }
+  }
+  
+  &__checkbox-text {
+    font-family: $font-family-base;
+    font-size: $font-size-sm;
+    color: $color-black;
+  }
+  
+  // Theme variations
+  .theme-nes & {
+    &__toggle {
+      border-color: #333;
+    }
+    
+    &__dropdown {
+      border-color: #333;
+    }
+    
+    &__option-button.is-active {
+      background-color: var(--primary-color);
+    }
+    
+    &__checkbox input[type="checkbox"]:checked {
+      background-color: var(--primary-color);
+    }
+  }
+  
+  .theme-gameboy & {
+    &__toggle {
+      background-color: var(--background-color);
+      border-color: var(--secondary-color);
+      color: var(--text-color);
+      box-shadow: 2px 2px 0 0 var(--secondary-color);
+      
+      &[aria-expanded="true"] {
+        background-color: var(--primary-color);
+        color: var(--background-color);
+      }
+    }
+    
+    &__dropdown {
+      background-color: var(--background-color);
+      border-color: var(--secondary-color);
+      box-shadow: 2px 2px 0 0 var(--secondary-color);
+    }
+    
+    &__option-button {
+      color: var(--text-color);
+      
+      &:hover {
+        background-color: rgba(var(--primary-color), 0.1);
+      }
+      
+      &.is-active {
+        background-color: var(--primary-color);
+        color: var(--background-color);
+      }
+    }
+    
+    &__checkbox-text {
+      color: var(--text-color);
+    }
+    
+    &__checkbox input[type="checkbox"] {
+      border-color: var(--secondary-color);
+      background-color: var(--background-color);
+      
+      &:checked {
+        background-color: var(--primary-color);
+      }
+    }
+  }
+  
+  .theme-arcade & {
+    &__toggle {
+      background-color: #000033;
+      border-color: #ff00ff;
+      color: #ffffff;
+      box-shadow: 4px 4px 0 0 #0000ff;
+      
+      &[aria-expanded="true"] {
+        background-color: #ff00ff;
+        color: #000033;
+      }
+    }
+    
+    &__dropdown {
+      background-color: #000033;
+      border-color: #ff00ff;
+      box-shadow: 4px 4px 0 0 #0000ff;
+    }
+    
+    &__section-title {
+      color: #00ffff;
+    }
+    
+    &__option-button {
+      color: #ffffff;
+      
+      &:hover {
+        background-color: rgba(255, 0, 255, 0.2);
+      }
+      
+      &.is-active {
+        background-color: #ff00ff;
+        color: #000033;
+      }
+    }
+    
+    &__checkbox-text {
+      color: #ffffff;
+    }
+    
+    &__checkbox {
+      &:hover {
+        background-color: rgba(255, 0, 255, 0.2);
+      }
+      
+      input[type="checkbox"] {
+        border-color: #ff00ff;
+        background-color: #000033;
+        
+        &:checked {
+          background-color: #ff00ff;
+        }
+      }
+    }
+  }
+}
