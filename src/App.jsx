@@ -19,14 +19,7 @@ import RegisterPage from './pages/RegisterPage/RegisterPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import LeaderboardPage from './pages/LeaderboardPage/LeaderboardPage';
 import DeveloperPortalPage from './pages/DeveloperPortalPage/DeveloperPortalPage';
-
-// Not found page
-const NotFoundPage = () => (
-  <div className="not-found-page">
-    <h1>404</h1>
-    <p>Page not found</p>
-  </div>
-);
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
 /**
  * Main App component
