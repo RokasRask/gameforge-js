@@ -1,0 +1,235 @@
+// _mixins.scss
+// Reusable SCSS mixins for 8-bit effects
+
+@import 'variables';
+
+// Pixel border (8-bit style border)
+@mixin pixel-border($color: $color-black, $size: 2px) {
+  border: $size solid $color;
+  image-rendering: pixelated;
+  box-shadow: $shadow-pixel;
+}
+
+// Pixel button style
+@mixin pixel-button {
+  position: relative;
+  padding: $spacing-sm $spacing-md;
+  background-color: $color-white;
+  @include pixel-border;
+  transform: translateY(0);
+  transition: transform $transition-speed-fast ease-in-out;
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+  
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 2px 2px 0 0 $color-shadow;
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 4px 4px 0 0 rgba($color-primary, 0.5);
+  }
+  
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: translateY(0);
+    box-shadow: none;
+  }
+}
+
+// Pixel card style
+@mixin pixel-card {
+  @include pixel-border;
+  background-color: $color-white;
+  padding: $spacing-md;
+}
+
+// Pixelated image
+@mixin pixelated-image {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+// 8-bit shadow
+@mixin pixel-shadow($offset: 4px, $color: $color-shadow) {
+  box-shadow: $offset $offset 0 0 $color;
+}
+
+// Inner 8-bit shadow
+@mixin pixel-shadow-inner($offset: 4px, $color: $color-shadow) {
+  box-shadow: inset $offset $offset 0 0 $color;
+}
+
+// Container with max-width and padding
+@mixin container {
+  width: 100%;
+  max-width: $container-xl;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $spacing-md;
+  padding-right: $spacing-md;
+  
+  @media (max-width: $breakpoint-sm) {
+    padding-left: $spacing-sm;
+    padding-right: $spacing-sm;
+  }
+}
+
+// Flex center (horizontally and vertically)
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Flex between (horizontally separated, vertically centered)
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Pixel art background
+@mixin pixel-background($color1: $color-light-gray, $color2: $color-white, $size: $pixel-size-md) {
+  background-color: $color1;
+  background-image: 
+    linear-gradient(45deg, $color2 25%, transparent 25%),
+    linear-gradient(-45deg, $color2 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, $color2 75%),
+    linear-gradient(-45deg, transparent 75%, $color2 75%);
+  background-size: $size * 2 $size * 2;
+  background-position: 0 0, 0 $size, $size $size, $size 0;
+}
+
+// Scanline effect
+@mixin scanline-effect($color: rgba($color-black, 0.1), $size: 2px, $gap: 4px) {
+  position: relative;
+  
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent $gap,
+      $color $gap,
+      $color $gap + $size
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+// CRT screen effect
+@mixin crt-screen {
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+    background-size: 100% 4px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  
+  &::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(18, 16, 16, 0.1);
+    opacity: 0;
+    z-index: 2;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+  }
+}
+
+// Pixel text (prevents anti-aliasing for sharper text)
+@mixin pixel-text {
+  font-family: $font-family-pixel;
+  text-rendering: optimizeSpeed;
+  font-smooth: never;
+  -webkit-font-smoothing: none;
+}
+
+// Truncate text with ellipsis
+@mixin truncate($lines: 1) {
+  @if $lines == 1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+// Media queries
+@mixin media-breakpoint-up($breakpoint) {
+  @if $breakpoint == sm {
+    @media (min-width: $breakpoint-sm) { @content; }
+  } @else if $breakpoint == md {
+    @media (min-width: $breakpoint-md) { @content; }
+  } @else if $breakpoint == lg {
+    @media (min-width: $breakpoint-lg) { @content; }
+  } @else if $breakpoint == xl {
+    @media (min-width: $breakpoint-xl) { @content; }
+  }
+}
+
+@mixin media-breakpoint-down($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: $breakpoint-sm - 1) { @content; }
+  } @else if $breakpoint == sm {
+    @media (max-width: $breakpoint-md - 1) { @content; }
+  } @else if $breakpoint == md {
+    @media (max-width: $breakpoint-lg - 1) { @content; }
+  } @else if $breakpoint == lg {
+    @media (max-width: $breakpoint-xl - 1) { @content; }
+  }
+}
+
+// Accessibility - visually hide element but keep it accessible for screen readers
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Retro button press effect
+@mixin button-press-effect {
+  transform: translateY(0);
+  transition: transform 0.1s ease;
+  
+  &:active {
+    transform: translateY(4px);
+  }
+}
