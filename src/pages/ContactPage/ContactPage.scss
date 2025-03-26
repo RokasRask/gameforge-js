@@ -1,0 +1,460 @@
+// ContactPage.scss
+// Styles for the contact page
+
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.contact-page {
+    padding: $spacing-xl 0 $spacing-2xl;
+
+    &__container {
+        @include container;
+    }
+
+    // Page header
+    &__header {
+        text-align: center;
+        margin-bottom: $spacing-xl;
+    }
+
+    &__title {
+        font-family: $font-family-pixel;
+        font-size: $font-size-3xl;
+        margin-bottom: $spacing-sm;
+
+        @include media-breakpoint-down(sm) {
+            font-size: $font-size-2xl;
+        }
+    }
+
+    &__subtitle {
+        font-size: $font-size-lg;
+        color: $color-gray;
+        max-width: 600px;
+        margin: 0 auto;
+
+        @include media-breakpoint-down(sm) {
+            font-size: $font-size-md;
+        }
+    }
+
+    // Contact info cards
+    &__info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: $spacing-lg;
+        margin-bottom: $spacing-xl;
+    }
+
+    // Contact form container
+    &__form-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: $spacing-lg;
+        background-color: $color-white;
+        border: 4px solid $color-black;
+        box-shadow: 8px 8px 0 0 rgba($color-black, 0.2);
+
+        @include media-breakpoint-down(sm) {
+            padding: $spacing-md;
+        }
+    }
+
+    // Success message
+    &__success {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: $spacing-xl 0;
+
+        &-icon {
+            width: 80px;
+            height: 80px;
+            background-color: $color-success;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: $spacing-md;
+
+            &::before {
+                content: "✓";
+                font-size: 2.5rem;
+                color: $color-white;
+            }
+        }
+
+        &-title {
+            font-family: $font-family-pixel;
+            font-size: $font-size-xl;
+            margin-bottom: $spacing-sm;
+            color: $color-success;
+        }
+
+        &-message {
+            color: $color-gray;
+            margin-bottom: $spacing-lg;
+            max-width: 400px;
+        }
+    }
+
+    // Additional info footer
+    &__info-footer {
+        margin-top: $spacing-xl;
+        padding-top: $spacing-lg;
+        border-top: 1px dashed $color-gray;
+    }
+}
+
+// Contact card component
+.contact-card {
+    padding: $spacing-lg;
+    background-color: $color-white;
+    border: 4px solid $color-black;
+    text-align: center;
+    transition: transform $transition-speed-normal;
+
+    &:hover {
+        transform: translateY(-8px);
+    }
+
+    &__icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto $spacing-md;
+        background-color: $color-light-gray;
+        position: relative;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 32px;
+            height: 32px;
+            background-color: $color-primary;
+        }
+
+        // Different icons for each card
+        &--questions::before {
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+        }
+
+        &--game::before {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        &--feedback::before {
+            clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+        }
+    }
+
+    &__title {
+        font-family: $font-family-pixel;
+        font-size: $font-size-lg;
+        margin-bottom: $spacing-sm;
+    }
+
+    &__text {
+        color: $color-gray;
+    }
+}
+
+// Contact form
+.contact-form {
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: $spacing-md;
+
+        @include media-breakpoint-down(sm) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &__field {
+        margin-bottom: $spacing-md;
+
+        &--full {
+            grid-column: 1 / -1;
+        }
+
+        &--checkbox {
+            display: flex;
+            align-items: center;
+            grid-column: 1 / -1;
+        }
+    }
+
+    &__label {
+        display: block;
+        margin-bottom: $spacing-xs;
+        font-weight: bold;
+    }
+
+    &__input,
+    &__select,
+    &__textarea {
+        width: 100%;
+        padding: $spacing-sm;
+        border: 3px solid $color-black;
+        background-color: $color-white;
+        font-family: $font-family-base;
+        font-size: $font-size-md;
+        transition: border-color $transition-speed-fast, box-shadow $transition-speed-fast;
+
+        &:focus {
+            outline: none;
+            border-color: $color-primary;
+            box-shadow: 0 0 0 2px rgba($color-primary, 0.2);
+        }
+    }
+
+    &__textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    &__checkbox {
+        width: 20px;
+        height: 20px;
+        margin-right: $spacing-sm;
+        appearance: none;
+        border: 3px solid $color-black;
+        background-color: $color-white;
+        position: relative;
+        cursor: pointer;
+
+        &:checked {
+            background-color: $color-primary;
+
+            &::after {
+                content: "";
+                position: absolute;
+                top: 3px;
+                left: 3px;
+                width: 8px;
+                height: 8px;
+                background-color: $color-white;
+            }
+        }
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba($color-primary, 0.2);
+        }
+    }
+
+    &__checkbox-label {
+        cursor: pointer;
+    }
+
+    &__submit {
+        grid-column: 1 / -1;
+        text-align: center;
+        margin-top: $spacing-md;
+    }
+
+    &__error {
+        grid-column: 1 / -1;
+        color: $color-danger;
+        background-color: rgba($color-danger, 0.1);
+        padding: $spacing-sm;
+        border: 1px solid $color-danger;
+        margin-top: $spacing-sm;
+        font-size: $font-size-sm;
+    }
+}
+
+// Contact information component
+.contact-info {
+    max-width: 600px;
+    margin: 0 auto;
+
+    &__title {
+        font-family: $font-family-pixel;
+        font-size: $font-size-lg;
+        margin-bottom: $spacing-md;
+        text-align: center;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        margin-bottom: $spacing-sm;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &__icon {
+        width: 24px;
+        height: 24px;
+        margin-right: $spacing-sm;
+        background-color: $color-primary;
+        position: relative;
+
+        // Icon styles
+        &--email::before {
+            content: "@";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: $font-size-sm;
+            color: $color-white;
+        }
+
+        &--discord::before {
+            content: "D";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: $font-size-sm;
+            color: $color-white;
+        }
+
+        &--github::before {
+            content: "G";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: $font-size-sm;
+            color: $color-white;
+        }
+    }
+
+    &__link {
+        color: $color-primary;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+// Theme variations
+.theme-nes {
+    .contact-card__icon::before {
+        background-color: var(--primary-color);
+    }
+
+    .contact-form__checkbox:checked {
+        background-color: var(--primary-color);
+    }
+
+    .contact-info__icon {
+        background-color: var(--primary-color);
+    }
+
+    .contact-info__link {
+        color: var(--primary-color);
+    }
+
+    .contact-page__success-icon {
+        background-color: var(--primary-color);
+    }
+
+    .contact-page__success-title {
+        color: var(--primary-color);
+    }
+}
+
+.theme-gameboy {
+    .contact-card {
+        background-color: var(--background-color);
+        border-color: var(--secondary-color);
+    }
+
+    .contact-card__icon::before {
+        background-color: var(--primary-color);
+    }
+
+    .contact-form__checkbox:checked {
+        background-color: var(--primary-color);
+    }
+
+    .contact-page__form-container {
+        background-color: var(--background-color);
+        border-color: var(--secondary-color);
+    }
+
+    .contact-form__input,
+    .contact-form__select,
+    .contact-form__textarea,
+    .contact-form__checkbox {
+        background-color: var(--background-color);
+        border-color: var(--secondary-color);
+        color: var(--text-color);
+    }
+}
+
+.theme-arcade {
+    .contact-card {
+        background-color: #000033;
+        border-color: #ff00ff;
+        box-shadow: 6px 6px 0 0 #0000ff;
+    }
+
+    .contact-card__title {
+        color: #ff00ff;
+        text-shadow: 1px 1px 0 #0000ff;
+    }
+
+    .contact-card__text {
+        color: #ffffff;
+    }
+
+    .contact-card__icon::before {
+        background-color: #ff00ff;
+    }
+
+    .contact-page__form-container {
+        background-color: #000033;
+        border-color: #ff00ff;
+        box-shadow: 8px 8px 0 0 #0000ff;
+    }
+
+    .contact-form__label {
+        color: #ffffff;
+    }
+
+    .contact-form__input,
+    .contact-form__select,
+    .contact-form__textarea {
+        background-color: #000022;
+        border-color: #00ffff;
+        color: #ffffff;
+    }
+
+    .contact-form__checkbox {
+        border-color: #00ffff;
+
+        &:checked {
+            background-color: #ff00ff;
+        }
+    }
+
+    .contact-form__checkbox-label {
+        color: #ffffff;
+    }
+
+    .contact-info__title {
+        color: #ff00ff;
+        text-shadow: 1px 1px 0 #0000ff;
+    }
+
+    .contact-info__icon {
+        background-color: #ff00ff;
+    }
+
+    .contact-info__link {
+        color: #00ffff;
+    }
+}
