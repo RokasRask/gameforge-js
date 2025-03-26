@@ -2,52 +2,52 @@
 // Main stylesheet for GameForge.js
 
 // Import base styles
-@import 'reset';
-@import 'variables';
-@import 'mixins';
-@import 'animations';
-@import 'typography';
-@import 'responsive';
-@import 'pixel-effects';
+@import './reset';
+@import './variables';
+@import './mixins';
+@import './animations';
+@import './typography';
+@import './responsive';
+@import './pixel-effects';
 
 // Import component styles
-@import '../components/common/Button/Button';
-@import '../components/common/Navbar/Navbar';
-@import '../components/common/Footer/Footer';
-@import '../components/common/GameCard/GameCard';
-@import '../components/common/PixelTransition/PixelTransition';
-@import '../components/common/SearchBar/SearchBar';
-@import '../components/common/ThemeSwitcher/ThemeSwitcher';
-@import '../components/common/FeaturedCarousel/FeaturedCarousel';
-@import '../components/common/Leaderboard/Leaderboard';
-@import '../components/common/Rating/Rating';
-@import '../components/common/SoundToggle/SoundToggle';
-@import '../components/common/FilterMenu/FilterMenu';
+@import '../components/common/Button/Button.scss';
+@import '../components/common/Navbar/Navbar.scss';
+@import '../components/common/Footer/Footer.scss';
+@import '../components/common/GameCard/GameCard.scss';
+@import '../components/common/PixelTransition/PixelTransition.scss';
+@import '../components/common/SearchBar/SearchBar.scss';
+@import '../components/common/ThemeSwitcher/ThemeSwitcher.scss';
+@import '../components/common/FeaturedCarousel/FeaturedCarousel.scss';
+@import '../components/common/Leaderboard/Leaderboard.scss';
+@import '../components/common/Rating/Rating.scss';
+@import '../components/common/SoundToggle/SoundToggle.scss';
+@import '../components/common/FilterMenu/FilterMenu.scss';
 
 // Import auth component styles
-@import '../components/auth/LoginForm/LoginForm';
-@import '../components/auth/RegisterForm/RegisterForm';
+@import '../components/auth/LoginForm/LoginForm.scss';
+@import '../components/auth/RegisterForm/RegisterForm.scss';
 
 // Import game component styles
-@import '../components/games/GamesList/GamesList';
-@import '../components/games/GameFrame/GameFrame';
-@import '../components/games/GameCategories/GameCategories';
-@import '../components/games/ReviewSection/ReviewSection';
+@import '../components/games/GamesList/GamesList.scss';
+@import '../components/games/GameFrame/GameFrame.scss';
+@import '../components/games/GameCategories/GameCategories.scss';
+@import '../components/games/ReviewSection/ReviewSection.scss';
 
 // Import layout styles
-@import '../layouts/MainLayout/MainLayout';
+@import '../layouts/MainLayout/MainLayout.scss';
 
 // Import page styles
-@import '../pages/LandingPage/LandingPage';
-@import '../pages/GamesPage/GamesPage';
-@import '../pages/GameCategoryPage/GameCategoryPage';
-@import '../pages/ContactPage/ContactPage';
-@import '../pages/LoginPage/LoginPage';
-@import '../pages/RegisterPage/RegisterPage';
-@import '../pages/GameDetailPage/GameDetailPage';
-@import '../pages/ProfilePage/ProfilePage';
-@import '../pages/LeaderboardPage/LeaderboardPage';
-@import '../pages/DeveloperPortalPage/DeveloperPortalPage';
+@import '../pages/LandingPage/LandingPage.scss';
+@import '../pages/GamesPage/GamesPage.scss';
+@import '../pages/GameCategoryPage/GameCategoryPage.scss';
+@import '../pages/ContactPage/ContactPage.scss';
+@import '../pages/LoginPage/LoginPage.scss';
+@import '../pages/RegisterPage/RegisterPage.scss';
+@import '../pages/GameDetailPage/GameDetailPage.scss';
+@import '../pages/ProfilePage/ProfilePage.scss';
+@import '../pages/LeaderboardPage/LeaderboardPage.scss';
+@import '../pages/DeveloperPortalPage/DeveloperPortalPage.scss';
 
 // Global styles
 body {
