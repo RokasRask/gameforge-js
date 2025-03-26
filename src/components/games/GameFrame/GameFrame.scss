@@ -1,0 +1,311 @@
+// GameFrame.scss
+// Styles for the game iframe container
+
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.game-frame {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    background-color: $color-black;
+    border: 4px solid $color-black;
+    box-shadow: 8px 8px 0 0 rgba($color-black, 0.2);
+
+    // Game header
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: $spacing-sm $spacing-md;
+        background-color: $color-dark-gray;
+        color: $color-white;
+        font-family: $font-family-pixel;
+    }
+
+    &__title {
+        font-size: $font-size-md;
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 70%;
+    }
+
+    &__controls {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+    }
+
+    &__control-button {
+        background: none;
+        border: none;
+        color: $color-white;
+        padding: $spacing-xs;
+        cursor: pointer;
+        transition: color $transition-speed-fast;
+
+        &:hover {
+            color: $color-primary;
+        }
+
+        svg,
+        img {
+            width: 20px;
+            height: 20px;
+            display: block;
+        }
+    }
+
+    &__close-button {
+        background-color: $color-danger;
+        color: $color-white;
+        width: 24px;
+        height: 24px;
+        border: 2px solid $color-white;
+        border-radius: 2px; // Small radius for pixel look
+        font-size: $font-size-sm;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color $transition-speed-fast;
+
+        &:hover {
+            background-color: darken($color-danger, 10%);
+        }
+    }
+
+    // Game container
+    &__container {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%; // 16:9 aspect ratio
+        overflow: hidden;
+
+        // For square games
+        &--square {
+            padding-top: 100%; // 1:1 aspect ratio
+        }
+
+        // For other aspect ratios if needed
+        &--tall {
+            padding-top: 150%; // 2:3 aspect ratio
+        }
+    }
+
+    // Game iframe
+    &__iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        background-color: $color-black;
+    }
+
+    // Loading state
+    &__loading {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba($color-black, 0.8);
+        z-index: 1;
+        color: $color-white;
+
+        .pixel-loader {
+            margin-bottom: $spacing-md;
+        }
+
+        p {
+            font-family: $font-family-pixel;
+            font-size: $font-size-sm;
+        }
+    }
+
+    // Fullscreen state
+    &--fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        max-width: none;
+        z-index: $z-index-modal;
+        box-shadow: none;
+
+        .game-frame__container {
+            position: absolute;
+            top: 44px; // Height of the header
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: calc(100% - 44px);
+            padding-top: 0;
+        }
+    }
+
+    // Game footer with controls (optional)
+    &__footer {
+        padding: $spacing-sm $spacing-md;
+        background-color: $color-dark-gray;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__hint {
+        font-family: $font-family-pixel;
+        font-size: $font-size-xs;
+        color: $color-light-gray;
+    }
+
+    // Game overlay controls (for mobile)
+    &__mobile-controls {
+        position: absolute;
+        bottom: $spacing-md;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: $spacing-md;
+        z-index: 10;
+
+        @include media-breakpoint-up(md) {
+            display: none; // Hide on desktop
+        }
+    }
+
+    &__mobile-button {
+        width: 60px;
+        height: 60px;
+        background-color: rgba($color-black, 0.5);
+        border: 2px solid $color-white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $color-white;
+        font-size: $font-size-xl;
+    }
+
+    // Error state
+    &__error {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba($color-black, 0.9);
+        z-index: 1;
+        color: $color-white;
+        padding: $spacing-lg;
+        text-align: center;
+
+        &-icon {
+            font-size: 3rem;
+            color: $color-danger;
+            margin-bottom: $spacing-md;
+        }
+
+        &-title {
+            font-family: $font-family-pixel;
+            font-size: $font-size-lg;
+            margin-bottom: $spacing-sm;
+        }
+
+        &-message {
+            color: $color-light-gray;
+            margin-bottom: $spacing-lg;
+        }
+
+        &-button {
+            @include pixel-button;
+            background-color: $color-primary;
+            color: $color-white;
+            font-family: $font-family-pixel;
+            padding: $spacing-xs $spacing-md;
+        }
+    }
+
+    // CRT effect (can be toggled)
+    &--crt {
+        @include crt-screen;
+
+        &::before {
+            z-index: 2;
+        }
+
+        &::after {
+            z-index: 2;
+        }
+
+        .game-frame__header,
+        .game-frame__footer {
+            position: relative;
+            z-index: 3;
+        }
+    }
+
+    // Theme variations
+    .theme-nes & {
+        border-color: #333;
+
+        &__header,
+        &__footer {
+            background-color: var(--primary-color);
+        }
+    }
+
+    .theme-gameboy & {
+        border-color: var(--secondary-color);
+
+        &__header,
+        &__footer {
+            background-color: var(--secondary-color);
+            color: var(--background-color);
+        }
+
+        &__container {
+            background-color: var(--background-color);
+        }
+
+        &__iframe {
+            background-color: var(--background-color);
+        }
+    }
+
+    .theme-arcade & {
+        border-color: #ff00ff;
+        box-shadow: 8px 8px 0 0 #0000ff;
+
+        &__header,
+        &__footer {
+            background-color: #000033;
+            border-bottom: 2px solid #ff00ff;
+        }
+
+        &__title {
+            color: #ff00ff;
+            text-shadow: 1px 1px 0 #0000ff;
+        }
+
+        &--crt {
+            &::before {
+                opacity: 0.8;
+            }
+        }
+    }
+}
