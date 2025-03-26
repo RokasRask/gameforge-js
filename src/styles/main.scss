@@ -18,10 +18,10 @@
 @import '../components/common/PixelTransition/PixelTransition';
 @import '../components/common/SearchBar/SearchBar';
 @import '../components/common/ThemeSwitcher/ThemeSwitcher';
+@import '../components/common/SoundToggle/SoundToggle';
 @import '../components/common/FeaturedCarousel/FeaturedCarousel';
 @import '../components/common/Leaderboard/Leaderboard';
 @import '../components/common/Rating/Rating';
-@import '../components/common/SoundToggle/SoundToggle';
 @import '../components/common/FilterMenu/FilterMenu';
 
 // Import auth component styles
@@ -48,7 +48,7 @@
 @import '../pages/ProfilePage/ProfilePage';
 @import '../pages/LeaderboardPage/LeaderboardPage';
 @import '../pages/DeveloperPortalPage/DeveloperPortalPage';
-
+@import '../pages/NotFoundPage/NotFoundPage';
 
 // Global styles
 body {
