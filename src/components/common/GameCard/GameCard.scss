@@ -1,5 +1,5 @@
-// GameCard.scss
-// 8-bit style game card component
+// Revised GameCard.scss
+// 8-bit style game card component with improved layout
 
 @import '../../../styles/variables';
 @import '../../../styles/mixins';
@@ -8,13 +8,14 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: $game-card-width;
-    height: $game-card-height;
+    max-width: 320px; // Increased from original
+    height: 400px;    // Increased from original
     background-color: $color-white;
     border: 4px solid $color-black;
     box-shadow: 8px 8px 0 0 rgba($color-black, 0.2);
     transition: transform $transition-speed-normal, box-shadow $transition-speed-normal;
     overflow: hidden;
+    position: relative;
 
     // Hover effect
     &:hover {
@@ -30,13 +31,17 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 0 0 darken($color-primary, 15%);
         }
+        
+        .game-card__more-button {
+            background-color: darken($color-secondary, 5%);
+        }
     }
 
     // Card header with thumbnail
     &__header {
         position: relative;
         width: 100%;
-        height: 160px;
+        height: 180px; // Increased height for thumbnail
         overflow: hidden;
         border-bottom: 4px solid $color-black;
     }
@@ -82,9 +87,9 @@
     &__title {
         font-family: $font-family-pixel;
         font-size: $font-size-md;
-        margin-bottom: $spacing-sm;
-        color: $color-black;
         line-height: 1.2;
+        margin-bottom: $spacing-xs;
+        color: $color-black;
     }
 
     &__title-link {
@@ -95,19 +100,33 @@
             color: $color-primary;
         }
     }
+    
+    // Creator info
+    &__creator {
+        font-size: $font-size-sm;
+        color: $color-gray;
+        margin-bottom: $spacing-xs;
+        
+        &-name {
+            font-weight: bold;
+            color: $color-dark-gray;
+        }
+    }
 
     // Meta information (rating, plays)
     &__meta {
         display: flex;
+        justify-content: space-between;
         align-items: center;
         margin-bottom: $spacing-sm;
+        padding-bottom: $spacing-xs;
+        border-bottom: 1px solid $color-light-gray;
     }
 
     // Rating display
     &__rating {
         display: flex;
         align-items: center;
-        margin-right: $spacing-md;
     }
 
     &__rating-value {
@@ -121,6 +140,7 @@
         display: flex;
         align-items: center;
         font-size: $font-size-sm;
+        color: $color-gray;
     }
 
     &__plays-icon {
@@ -149,6 +169,7 @@
     &__tags {
         display: flex;
         flex-wrap: wrap;
+        gap: $spacing-xs;
         margin-top: auto;
         padding-top: $spacing-sm;
     }
@@ -159,17 +180,39 @@
         background-color: $color-light-gray;
         color: $color-dark-gray;
         font-size: $font-size-xs;
-        margin-right: $spacing-xs;
-        margin-bottom: $spacing-xs;
         border: 1px solid $color-gray;
+        
+        &--more {
+            background-color: $color-gray;
+            color: $color-white;
+        }
     }
 
     // Card footer
     &__footer {
-        padding: $spacing-sm;
+        padding: $spacing-md;
         background-color: rgba($color-light-gray, 0.3);
         border-top: 2px dashed $color-gray;
-        text-align: center;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    // More button
+    &__more-button {
+        display: inline-block;
+        padding: $spacing-xs $spacing-sm;
+        background-color: $color-secondary;
+        color: $color-white;
+        font-family: $font-family-pixel;
+        text-decoration: none;
+        font-size: $font-size-sm;
+        border: 2px solid darken($color-secondary, 10%);
+        transition: background-color $transition-speed-fast, transform $transition-speed-fast;
+        
+        &:hover {
+            background-color: darken($color-secondary, 10%);
+        }
     }
 
     // Play button
@@ -182,7 +225,7 @@
         text-decoration: none;
         text-transform: uppercase;
         font-size: $font-size-sm;
-        border: none;
+        border: 2px solid darken($color-primary, 10%);
         position: relative;
         transition: transform $transition-speed-fast, background-color $transition-speed-fast, box-shadow $transition-speed-fast;
         box-shadow: 0 2px 0 0 darken($color-primary, 15%);
@@ -194,12 +237,16 @@
     }
 
     // Responsive adjustments
-    @include media-breakpoint-down(xs) {
-        height: auto;
-        min-height: 300px;
-
+    @include media-breakpoint-down(sm) {
+        max-width: 280px;
+        height: 380px;
+        
         &__header {
-            height: 120px;
+            height: 160px;
+        }
+        
+        &__footer {
+            padding: $spacing-sm;
         }
     }
 
@@ -209,7 +256,13 @@
 
         &__play-button {
             background-color: var(--primary-color);
+            border-color: darken(map-get(map-get($themes, 'nes'), 'primary'), 10%);
             box-shadow: 0 2px 0 0 darken(map-get(map-get($themes, 'nes'), 'primary'), 15%);
+        }
+        
+        &__more-button {
+            background-color: var(--secondary-color);
+            border-color: darken(map-get(map-get($themes, 'nes'), 'secondary'), 10%);
         }
     }
 
@@ -234,7 +287,14 @@
         &__play-button {
             background-color: var(--primary-color);
             color: var(--background-color);
+            border-color: var(--secondary-color);
             box-shadow: 0 2px 0 0 var(--secondary-color);
+        }
+        
+        &__more-button {
+            background-color: var(--secondary-color);
+            color: var(--background-color);
+            border-color: var(--primary-color);
         }
     }
 
@@ -257,10 +317,21 @@
         &__play-button {
             background-color: #ff00ff;
             color: #000000;
+            border-color: #cc00cc;
             box-shadow: 0 2px 0 0 #cc00cc;
 
             &:hover {
                 background-color: lighten(#ff00ff, 10%);
+            }
+        }
+        
+        &__more-button {
+            background-color: #00ffff;
+            color: #000033;
+            border-color: #00cccc;
+            
+            &:hover {
+                background-color: lighten(#00ffff, 10%);
             }
         }
     }
