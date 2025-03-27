@@ -15,14 +15,14 @@
 @import '../components/common/Navbar/Navbar';
 @import '../components/common/Footer/Footer';
 @import '../components/common/GameCard/GameCard';
-@import '../components/common/Transition/Transition';
+@import '../components/common/FilterMenu/FilterMenu';
 @import '../components/common/SearchBar/SearchBar';
 @import '../components/common/ThemeSwitcher/ThemeSwitcher';
 @import '../components/common/SoundToggle/SoundToggle';
 @import '../components/common/FeaturedCarousel/FeaturedCarousel';
-@import '../components/common/Leaderboard/Leaderboard';
 @import '../components/common/Rating/Rating';
-@import '../components/common/FilterMenu/FilterMenu';
+@import '../components/common/Loader/Loader';
+@import '../components/common/Transition/Transition';
 
 // Import auth component styles
 @import '../components/auth/LoginForm/LoginForm';
@@ -40,11 +40,11 @@
 // Import page styles
 @import '../pages/LandingPage/LandingPage';
 @import '../pages/GamesPage/GamesPage';
+@import '../pages/GameDetailPage/GameDetailPage';
 @import '../pages/GameCategoryPage/GameCategoryPage';
 @import '../pages/ContactPage/ContactPage';
 @import '../pages/LoginPage/LoginPage';
 @import '../pages/RegisterPage/RegisterPage';
-@import '../pages/GameDetailPage/GameDetailPage';
 @import '../pages/ProfilePage/ProfilePage';
 @import '../pages/LeaderboardPage/LeaderboardPage';
 @import '../pages/DeveloperPortalPage/DeveloperPortalPage';
