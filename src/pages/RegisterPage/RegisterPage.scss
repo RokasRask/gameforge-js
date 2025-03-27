@@ -1,0 +1,568 @@
+// RegisterPage.scss
+// Styles for the registration page
+
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.register-page {
+  width: 100%;
+  padding: $spacing-xl 0;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  
+  &__container {
+    @include container;
+  }
+  
+  &__content {
+    display: flex;
+    align-items: stretch;
+    background-color: $color-white;
+    border: 4px solid $color-black;
+    box-shadow: 8px 8px 0 0 rgba($color-black, 0.2);
+    overflow: hidden;
+    
+    @include media-breakpoint-down(md) {
+      flex-direction: column-reverse;
+    }
+  }
+  
+  &__form-container {
+    flex: 1.5;
+    padding: $spacing-xl;
+    
+    @include media-breakpoint-down(sm) {
+      padding: $spacing-lg;
+    }
+  }
+  
+  &__title {
+    font-family: $font-family-pixel;
+    font-size: $font-size-2xl;
+    margin-bottom: $spacing-lg;
+    text-align: center;
+    
+    &::after {
+      content: '';
+      display: block;
+      width: 64px;
+      height: 4px;
+      background-color: $color-primary;
+      margin: $spacing-sm auto 0;
+    }
+  }
+  
+  &__error {
+    background-color: rgba($color-danger, 0.1);
+    border-left: 4px solid $color-danger;
+    color: $color-danger;
+    padding: $spacing-sm $spacing-md;
+    margin-bottom: $spacing-md;
+    font-size: $font-size-sm;
+  }
+  
+  // Login section
+  &__login {
+    margin-top: $spacing-lg;
+    text-align: center;
+    
+    p {
+      margin-bottom: $spacing-sm;
+      color: $color-gray;
+    }
+  }
+  
+  &__login-link {
+    display: inline-block;
+  }
+  
+  // Benefits section
+  &__info {
+    margin-top: $spacing-xl;
+    padding-top: $spacing-md;
+    border-top: 2px dashed $color-light-gray;
+    
+    p {
+      text-align: center;
+      margin-bottom: $spacing-md;
+      color: $color-gray;
+    }
+  }
+  
+  &__benefits {
+    list-style: none;
+    padding: 0;
+  }
+  
+  &__benefit-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: $spacing-sm;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  &__benefit-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: $spacing-sm;
+    color: $color-success;
+    font-family: $font-family-pixel;
+  }
+  
+  &__benefit-text {
+    font-size: $font-size-sm;
+  }
+  
+  // Decorative pixel art side panel
+  &__decoration {
+    flex: 1;
+    background-color: rgba($color-secondary, 0.1);
+    position: relative;
+    
+    @include media-breakpoint-down(md) {
+      height: 160px;
+    }
+  }
+  
+  &__pixel-art {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    
+    // Pixel grid background
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(to right, rgba($color-black, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba($color-black, 0.05) 1px, transparent 1px);
+      background-size: 16px 16px;
+      z-index: 1;
+    }
+  }
+  
+  &__pixel-grid {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 32px;
+    background-color: $color-dark-gray;
+    z-index: 2;
+  }
+  
+  &__pixel-art-character {
+    position: absolute;
+    bottom: 32px;
+    left: 20%;
+    width: 32px;
+    height: 48px;
+    background-color: $color-secondary;
+    z-index: 3;
+    
+    // Simple pixel character shape
+    clip-path: polygon(
+      25% 0%, 75% 0%, 75% 20%, 100% 20%, 100% 80%, 75% 80%, 75% 100%,
+      25% 100%, 25% 80%, 0% 80%, 0% 20%, 25% 20%
+    );
+    
+    animation: pixel-run 3s infinite linear;
+  }
+  
+  &__pixel-art-block {
+    position: absolute;
+    bottom: 32px;
+    right: 20%;
+    width: 48px;
+    height: 48px;
+    background-color: $color-tertiary;
+    z-index: 2;
+    
+    &--tall {
+      right: 40%;
+      height: 80px;
+    }
+  }
+  
+  &__pixel-art-coin {
+    position: absolute;
+    top: 30%;
+    right: 30%;
+    width: 24px;
+    height: 24px;
+    background-color: $color-warning;
+    border-radius: 50%;
+    z-index: 2;
+    animation: pixel-rotate 2s infinite linear;
+    
+    &--small {
+      top: 40%;
+      left: 30%;
+      width: 16px;
+      height: 16px;
+      animation-duration: 1.5s;
+      animation-direction: reverse;
+    }
+  }
+}
+
+// Registration form styles
+.register-form {
+  &__field {
+    margin-bottom: $spacing-md;
+  }
+  
+  &__label {
+    display: block;
+    margin-bottom: $spacing-xs;
+    font-weight: bold;
+  }
+  
+  &__input {
+    width: 100%;
+    padding: $spacing-sm;
+    border: 3px solid $color-black;
+    background-color: $color-white;
+    font-family: $font-family-base;
+    transition: border-color $transition-speed-fast, box-shadow $transition-speed-fast;
+    
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+      box-shadow: 0 0 0 2px rgba($color-primary, 0.2);
+    }
+    
+    &.is-invalid {
+      border-color: $color-danger;
+    }
+  }
+  
+  &__field-error {
+    color: $color-danger;
+    font-size: $font-size-xs;
+    margin-top: $spacing-xs;
+  }
+  
+  &__terms {
+    margin-bottom: $spacing-lg;
+  }
+  
+  &__checkbox-container {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  &__checkbox {
+    width: 18px;
+    height: 18px;
+    margin-right: $spacing-xs;
+    margin-top: 3px;
+    appearance: none;
+    background-color: $color-white;
+    border: 2px solid $color-black;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+    
+    &:checked {
+      background-color: $color-primary;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 8px;
+        height: 8px;
+        background-color: $color-white;
+      }
+    }
+    
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba($color-primary, 0.2);
+    }
+    
+    &.is-invalid {
+      border-color: $color-danger;
+    }
+  }
+  
+  &__checkbox-label {
+    font-size: $font-size-sm;
+    cursor: pointer;
+  }
+  
+  &__link {
+    color: $color-primary;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  
+  &__submit {
+    margin-top: $spacing-lg;
+    
+    .register-form__button {
+      width: 100%;
+    }
+  }
+}
+
+// Animation for running character
+@keyframes pixel-run {
+  0% {
+    left: -5%;
+    transform: scaleX(1);
+  }
+  45% {
+    left: 85%;
+    transform: scaleX(1);
+  }
+  50% {
+    left: 85%;
+    transform: scaleX(-1);
+  }
+  95% {
+    left: -5%;
+    transform: scaleX(-1);
+  }
+  100% {
+    left: -5%;
+    transform: scaleX(1);
+  }
+}
+
+// Animation for rotating coins
+@keyframes pixel-rotate {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.7);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// Theme variations
+.theme-nes {
+  .register-page {
+    &__title::after {
+      background-color: var(--primary-color);
+    }
+    
+    &__pixel-art-character {
+      background-color: var(--primary-color);
+    }
+    
+    &__pixel-art-block {
+      background-color: var(--secondary-color);
+    }
+    
+    &__benefit-icon {
+      color: var(--primary-color);
+    }
+    
+    .register-form__checkbox:checked {
+      background-color: var(--primary-color);
+    }
+    
+    .register-form__link {
+      color: var(--primary-color);
+    }
+  }
+}
+
+.theme-gameboy {
+  .register-page {
+    &__content {
+      background-color: var(--background-color);
+      border-color: var(--secondary-color);
+    }
+    
+    &__title {
+      color: var(--text-color);
+      
+      &::after {
+        background-color: var(--primary-color);
+      }
+    }
+    
+    &__decoration {
+      background-color: rgba(var(--primary-color), 0.1);
+    }
+    
+    &__pixel-grid {
+      background-color: var(--secondary-color);
+    }
+    
+    &__pixel-art-character {
+      background-color: var(--primary-color);
+    }
+    
+    &__pixel-art-block {
+      background-color: var(--secondary-color);
+    }
+    
+    &__info {
+      border-top-color: var(--secondary-color);
+    }
+    
+    .register-form__input {
+      background-color: var(--background-color);
+      border-color: var(--secondary-color);
+      color: var(--text-color);
+      
+      &:focus {
+        border-color: var(--primary-color);
+      }
+      
+      &.is-invalid {
+        border-color: $color-danger;
+      }
+    }
+    
+    .register-form__checkbox {
+      background-color: var(--background-color);
+      border-color: var(--secondary-color);
+      
+      &:checked {
+        background-color: var(--primary-color);
+      }
+      
+      &.is-invalid {
+        border-color: $color-danger;
+      }
+    }
+    
+    .register-form__link {
+      color: var(--primary-color);
+    }
+  }
+}
+
+.theme-arcade {
+  .register-page {
+    &__content {
+      background-color: #000033;
+      border-color: #ff00ff;
+      box-shadow: 8px 8px 0 0 #0000ff;
+    }
+    
+    &__title {
+      color: #ff00ff;
+      text-shadow: 2px 2px 0 #0000ff;
+      
+      &::after {
+        background-color: #ff00ff;
+        box-shadow: 2px 2px 0 #0000ff;
+      }
+    }
+    
+    &__form-container {
+      color: #ffffff;
+    }
+    
+    &__decoration {
+      background-color: rgba(#ff00ff, 0.2);
+    }
+    
+    &__pixel-grid {
+      background-color: #0000ff;
+    }
+    
+    &__pixel-art-character {
+      background-color: #ff00ff;
+      box-shadow: 2px 2px 0 #0000ff;
+    }
+    
+    &__pixel-art-block {
+      background-color: #00ffff;
+      
+      &--tall {
+        background-color: #ff00ff;
+      }
+    }
+    
+    &__pixel-art-coin {
+      background-color: #ffff00;
+      box-shadow: 0 0 10px rgba(#ffff00, 0.7);
+    }
+    
+    &__info {
+      border-top-color: #ff00ff;
+      
+      p {
+        color: #ffffff;
+      }
+    }
+    
+    &__benefit-icon {
+      color: #00ffff;
+    }
+    
+    &__benefit-text {
+      color: #ffffff;
+    }
+    
+    .register-form__input {
+      background-color: #000022;
+      border-color: #00ffff;
+      color: #ffffff;
+      
+      &:focus {
+        border-color: #ff00ff;
+        box-shadow: 0 0 0 2px rgba(#ff00ff, 0.3);
+      }
+      
+      &.is-invalid {
+        border-color: $color-danger;
+      }
+    }
+    
+    .register-form__label {
+      color: #ffffff;
+    }
+    
+    .register-form__checkbox {
+      background-color: #000022;
+      border-color: #00ffff;
+      
+      &:checked {
+        background-color: #ff00ff;
+      }
+      
+      &.is-invalid {
+        border-color: $color-danger;
+      }
+    }
+    
+    .register-form__checkbox-label {
+      color: #ffffff;
+    }
+    
+    .register-form__link {
+      color: #00ffff;
+    }
+    
+    .register-form__field-error {
+      color: #ff5252;
+    }
+  }
+}
