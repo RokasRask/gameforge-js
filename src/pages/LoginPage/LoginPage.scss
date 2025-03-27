@@ -1,0 +1,538 @@
+// LoginPage.scss
+// Styles for the login page
+
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.login-page {
+  width: 100%;
+  padding: $spacing-xl 0;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  
+  &__container {
+    @include container;
+  }
+  
+  &__content {
+    display: flex;
+    align-items: stretch;
+    background-color: $color-white;
+    border: 4px solid $color-black;
+    box-shadow: 8px 8px 0 0 rgba($color-black, 0.2);
+    overflow: hidden;
+    
+    @include media-breakpoint-down(md) {
+      flex-direction: column;
+    }
+  }
+  
+  &__form-container {
+    flex: 1;
+    padding: $spacing-xl;
+    
+    @include media-breakpoint-down(sm) {
+      padding: $spacing-lg;
+    }
+  }
+  
+  &__title {
+    font-family: $font-family-pixel;
+    font-size: $font-size-2xl;
+    margin-bottom: $spacing-lg;
+    text-align: center;
+    
+    &::after {
+      content: '';
+      display: block;
+      width: 64px;
+      height: 4px;
+      background-color: $color-primary;
+      margin: $spacing-sm auto 0;
+    }
+  }
+  
+  &__error {
+    background-color: rgba($color-danger, 0.1);
+    border-left: 4px solid $color-danger;
+    color: $color-danger;
+    padding: $spacing-sm $spacing-md;
+    margin-bottom: $spacing-md;
+    font-size: $font-size-sm;
+  }
+  
+  &__register {
+    margin-top: $spacing-lg;
+    text-align: center;
+    
+    p {
+      margin-bottom: $spacing-sm;
+      color: $color-gray;
+    }
+  }
+  
+  &__register-link {
+    display: inline-block;
+  }
+  
+  &__social {
+    margin-top: $spacing-xl;
+  }
+  
+  &__social-divider {
+    position: relative;
+    text-align: center;
+    margin-bottom: $spacing-md;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: $color-light-gray;
+      z-index: 1;
+    }
+    
+    span {
+      position: relative;
+      z-index: 2;
+      background-color: $color-white;
+      padding: 0 $spacing-sm;
+      font-size: $font-size-sm;
+      color: $color-gray;
+    }
+  }
+  
+  &__social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: $spacing-md;
+  }
+  
+  &__social-button {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-white;
+    border: 3px solid $color-black;
+    font-family: $font-family-pixel;
+    cursor: pointer;
+    transition: transform $transition-speed-fast, box-shadow $transition-speed-fast;
+    box-shadow: 3px 3px 0 0 rgba($color-black, 0.2);
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 5px 5px 0 0 rgba($color-black, 0.2);
+    }
+    
+    &:active {
+      transform: translateY(1px);
+      box-shadow: 2px 2px 0 0 rgba($color-black, 0.2);
+    }
+    
+    &--google {
+      color: #DB4437;
+      border-color: #DB4437;
+    }
+    
+    &--github {
+      color: #333;
+      border-color: #333;
+    }
+    
+    &--discord {
+      color: #7289DA;
+      border-color: #7289DA;
+    }
+  }
+  
+  // Decorative pixel art side panel (hidden on mobile)
+  &__decoration {
+    flex: 1;
+    background-color: $color-light-gray;
+    position: relative;
+    
+    @include media-breakpoint-down(md) {
+      display: none;
+    }
+  }
+  
+  &__pixel-art {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: rgba($color-primary, 0.1);
+    
+    // Add pixel grid background
+    background-image: 
+      linear-gradient(to right, rgba($color-black, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba($color-black, 0.05) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+  
+  &__pixel-art-character {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px;
+    height: 48px;
+    background-color: $color-primary;
+    
+    // Simple pixel character shape
+    clip-path: polygon(
+      25% 0%, 75% 0%, 75% 20%, 100% 20%, 100% 80%, 75% 80%, 75% 100%,
+      25% 100%, 25% 80%, 0% 80%, 0% 20%, 25% 20%
+    );
+    
+    animation: pixel-bounce 1.5s infinite ease-in-out;
+  }
+  
+  &__pixel-art-platform {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 24px;
+    background-color: $color-dark-gray;
+  }
+  
+  &__pixel-art-cloud {
+    position: absolute;
+    top: 30%;
+    right: 20%;
+    width: 80px;
+    height: 40px;
+    background-color: rgba($color-white, 0.8);
+    border-radius: $border-radius-lg;
+    animation: pixel-float 7s infinite ease-in-out;
+    
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      background-color: rgba($color-white, 0.8);
+      border-radius: 50%;
+    }
+    
+    &::before {
+      width: 30px;
+      height: 30px;
+      top: -15px;
+      left: 15px;
+    }
+    
+    &::after {
+      width: 40px;
+      height: 40px;
+      top: -20px;
+      right: 15px;
+    }
+    
+    &--small {
+      top: 20%;
+      left: 20%;
+      width: 60px;
+      height: 30px;
+      animation-delay: -3.5s;
+      
+      &::before {
+        width: 25px;
+        height: 25px;
+        top: -12px;
+        left: 10px;
+      }
+      
+      &::after {
+        width: 30px;
+        height: 30px;
+        top: -15px;
+        right: 10px;
+      }
+    }
+  }
+}
+
+// Login form styles
+.login-form {
+  &__field {
+    margin-bottom: $spacing-md;
+  }
+  
+  &__label {
+    display: block;
+    margin-bottom: $spacing-xs;
+    font-weight: bold;
+  }
+  
+  &__input {
+    width: 100%;
+    padding: $spacing-sm;
+    border: 3px solid $color-black;
+    background-color: $color-white;
+    font-family: $font-family-base;
+    transition: border-color $transition-speed-fast, box-shadow $transition-speed-fast;
+    
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+      box-shadow: 0 0 0 2px rgba($color-primary, 0.2);
+    }
+  }
+  
+  &__options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-md;
+    
+    @include media-breakpoint-down(sm) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-sm;
+    }
+  }
+  
+  &__checkbox {
+    width: 18px;
+    height: 18px;
+    margin-right: $spacing-xs;
+    appearance: none;
+    background-color: $color-white;
+    border: 2px solid $color-black;
+    position: relative;
+    cursor: pointer;
+    
+    &:checked {
+      background-color: $color-primary;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 8px;
+        height: 8px;
+        background-color: $color-white;
+      }
+    }
+    
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba($color-primary, 0.2);
+    }
+  }
+  
+  &__remember {
+    display: flex;
+    align-items: center;
+  }
+  
+  &__checkbox-label {
+    cursor: pointer;
+    font-size: $font-size-sm;
+  }
+  
+  &__forgot-link {
+    font-size: $font-size-sm;
+    color: $color-secondary;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  
+  &__submit {
+    margin-top: $spacing-lg;
+    
+    .login-form__button {
+      width: 100%;
+    }
+  }
+}
+
+// Animation for bouncing character
+@keyframes pixel-bounce {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+}
+
+// Animation for floating clouds
+@keyframes pixel-float {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-15px);
+  }
+}
+
+// Theme variations
+.theme-nes {
+  .login-page {
+    &__title::after {
+      background-color: var(--primary-color);
+    }
+    
+    &__pixel-art-character {
+      background-color: var(--primary-color);
+    }
+    
+    .login-form__checkbox:checked {
+      background-color: var(--primary-color);
+    }
+  }
+}
+
+.theme-gameboy {
+  .login-page {
+    &__content {
+      background-color: var(--background-color);
+      border-color: var(--secondary-color);
+    }
+    
+    &__title::after {
+      background-color: var(--primary-color);
+    }
+    
+    &__pixel-art {
+      background-color: rgba(var(--primary-color), 0.1);
+    }
+    
+    &__pixel-art-character {
+      background-color: var(--primary-color);
+    }
+    
+    &__social-divider {
+      span {
+        background-color: var(--background-color);
+      }
+      
+      &::before {
+        background-color: var(--secondary-color);
+      }
+    }
+    
+    .login-form__input {
+      background-color: var(--background-color);
+      border-color: var(--secondary-color);
+      color: var(--text-color);
+      
+      &:focus {
+        border-color: var(--primary-color);
+      }
+    }
+    
+    .login-form__checkbox {
+      background-color: var(--background-color);
+      border-color: var(--secondary-color);
+      
+      &:checked {
+        background-color: var(--primary-color);
+      }
+    }
+  }
+}
+
+.theme-arcade {
+  .login-page {
+    &__content {
+      background-color: #000033;
+      border-color: #ff00ff;
+      box-shadow: 8px 8px 0 0 #0000ff;
+    }
+    
+    &__title {
+      color: #ff00ff;
+      text-shadow: 2px 2px 0 #0000ff;
+      
+      &::after {
+        background-color: #ff00ff;
+        box-shadow: 2px 2px 0 #0000ff;
+      }
+    }
+    
+    &__form-container {
+      color: #ffffff;
+    }
+    
+    &__pixel-art {
+      background-color: rgba(#ff00ff, 0.2);
+    }
+    
+    &__pixel-art-character {
+      background-color: #ff00ff;
+      box-shadow: 2px 2px 0 #0000ff;
+    }
+    
+    &__pixel-art-platform {
+      background-color: #00ffff;
+    }
+    
+    &__social-divider {
+      span {
+        background-color: #000033;
+        color: #ffffff;
+      }
+      
+      &::before {
+        background-color: #ff00ff;
+      }
+    }
+    
+    &__social-button {
+      background-color: #000033;
+      
+      &--google {
+        border-color: #ff00ff;
+        color: #ff00ff;
+      }
+      
+      &--github {
+        border-color: #00ffff;
+        color: #00ffff;
+      }
+      
+      &--discord {
+        border-color: #ff00ff;
+        color: #ff00ff;
+      }
+    }
+    
+    .login-form__input {
+      background-color: #000022;
+      border-color: #00ffff;
+      color: #ffffff;
+      
+      &:focus {
+        border-color: #ff00ff;
+        box-shadow: 0 0 0 2px rgba(#ff00ff, 0.3);
+      }
+    }
+    
+    .login-form__checkbox {
+      background-color: #000022;
+      border-color: #00ffff;
+      
+      &:checked {
+        background-color: #ff00ff;
+      }
+    }
+    
+    .login-form__forgot-link {
+      color: #00ffff;
+    }
+  }
+}
