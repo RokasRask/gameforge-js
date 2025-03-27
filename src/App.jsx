@@ -20,6 +20,7 @@ import ProfilePage from './pages/ProfilePage/ProfilePage';
 import LeaderboardPage from './pages/LeaderboardPage/LeaderboardPage';
 import DeveloperPortalPage from './pages/DeveloperPortalPage/DeveloperPortalPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import AdminPage from './pages/AdminPage/AdminPage'; // Add this import
 
 /**
  * Main App component
@@ -57,6 +58,9 @@ const App = () => {
             <GameProvider>
               <div className="app">
                 <Routes>
+                  {/* Admin Section - Different layout for admin section */}
+                  <Route path="/admin/*" element={<AdminPage />} />
+                  
                   {/* Wrapped in MainLayout */}
                   <Route path="/" element={<MainLayout><LandingPage /></MainLayout>} />
                   <Route path="/games" element={<MainLayout><GamesPage /></MainLayout>} />
