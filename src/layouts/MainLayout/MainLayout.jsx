@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from '../../components/common/Navbar/Navbar';
 import Footer from '../../components/common/Footer/Footer';
-import PixelTransition from '../../components/common/PixelTransition/PixelTransition';
+import Transition from '../../components/common/Transition/Transition';
 import SoundToggle from '../../components/common/SoundToggle/SoundToggle';
 import ThemeSwitcher from '../../components/common/ThemeSwitcher/ThemeSwitcher';
 
@@ -33,10 +33,11 @@ const MainLayout = ({ children }) => {
   return (
     <div className="main-layout">
       {/* Page transition effect */}
-      <PixelTransition 
+      <Transition 
         isActive={isTransitioning} 
         onComplete={handleTransitionComplete}
-        type="pixelate"
+        type="fade"
+        duration={300}
       />
       
       {/* Header and navigation */}

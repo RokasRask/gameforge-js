@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import Button from '../../components/common/Button/Button';
+import Loader from '../../components/common/Loader/Loader';
 
 /**
  * User registration page component
@@ -119,6 +120,12 @@ const RegisterPage = () => {
   
   return (
     <div className="register-page">
+      {isLoading && (
+        <div className="register-page__loading-overlay">
+          <Loader size="large" color="var(--primary-color)" />
+        </div>
+      )}
+      
       <div className="register-page__container">
         <div className="register-page__content">
           <div className="register-page__form-container">
@@ -224,7 +231,11 @@ const RegisterPage = () => {
                   disabled={isLoading}
                   className="register-form__button"
                 >
-                  {isLoading ? 'Creating Account...' : 'Register'}
+                  {isLoading ? (
+                    <span className="register-form__loader-container">
+                      <Loader size="small" /> Creating Account...
+                    </span>
+                  ) : 'Register'}
                 </Button>
               </div>
             </form>

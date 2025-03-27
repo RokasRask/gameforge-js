@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import Button from '../../components/common/Button/Button';
+import Loader from '../../components/common/Loader/Loader';
 
 /**
  * Login page component
@@ -133,7 +134,11 @@ const LoginPage = () => {
                   disabled={isLoading}
                   className="login-form__button"
                 >
-                  {isLoading ? 'Logging in...' : 'Login'}
+                  {isLoading ? (
+                    <span className="login-form__loader-container">
+                      <Loader size="small" /> Logging in...
+                    </span>
+                  ) : 'Login'}
                 </Button>
               </div>
             </form>
