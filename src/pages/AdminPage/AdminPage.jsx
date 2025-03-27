@@ -1,9 +1,9 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import AdminLayout from '../layouts/AdminLayout/AdminLayout';
-import AdminDashboard from '../components/admin/AdminDashboard/AdminDashboard';
-import GameManager from '../components/admin/GameManager/GameManager';
-import GameEditor from '../components/admin/GameEditor/GameEditor';
+import AdminLayout from '../../layouts/AdminLayout/AdminLayout';
+import AdminDashboard from '../../components/admin/AdminDashboard/AdminDashboard';
+import GameManager from '../../components/admin/GameManager/GameManager';
+import GameEditor from '../../components/admin/GameEditor/GameEditor';
 
 /**
  * AdminPage - Entry point for the admin section

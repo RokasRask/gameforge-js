@@ -12,11 +12,6 @@ const GAMES_METADATA_DIR = '/games/metadata';
 class GameRegistry {
   constructor() {
     this.games = [];
-
-// Initialize registry with mock data
-gameRegistry.initialize();
-
-export default gameRegistry;
     this.initialized = false;
     this.categories = new Map();
     this.tags = new Map();
@@ -579,3 +574,8 @@ const mockGamesData = [
     lastUpdated: "2023-09-22T09:20:00Z"
   }
 ];
+
+// Initialize registry with mock data
+gameRegistry.initialize();
+
+export default gameRegistry;

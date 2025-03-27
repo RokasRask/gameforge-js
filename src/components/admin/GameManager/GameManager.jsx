@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import gameRegistry from '../../utils/gameRegistry';
+import gameRegistry from '../../../games/utils/gameRegistry';
 
 /**
  * GameManager - Admin component for managing games

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import gameRegistry from '../../utils/gameRegistry';
+import gameRegistry from '../../../games/utils/gameRegistry';
 
 /**
  * GameEditor - Form for adding or editing a game

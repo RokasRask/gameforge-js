@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import gameRegistry from '../../utils/gameRegistry';
+import gameRegistry from '../../../games/utils/gameRegistry';
 
 /**
  * AdminDashboard - Main admin dashboard component
