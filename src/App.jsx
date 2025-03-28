@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, HashRouter } from 'react-router-dom';
 import './styles/global.scss';
 
 // Components
@@ -43,14 +43,16 @@ const ScrollToTop = () => {
 
 // App wrapper with Router
 function App() {
+  // Use HashRouter to prevent 404 issues with GitHub Pages
+  // This will work both in development and production
   return (
-    <Router>
+    <HashRouter>
       <MessageProvider>
         <Auth>
           <AppContent />
         </Auth>
       </MessageProvider>
-    </Router>
+    </HashRouter>
   );
 }
 

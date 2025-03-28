@@ -100,7 +100,7 @@ const LoginPage = () => {
           <p className="login-header__subtitle">Log in to continue to GameForge.js</p>
         </div>
         
-        <form className="login-form" onSubmit={handleSubmit}>
+        <form className="login-form" onSubmit={handleSubmit} autoComplete="on">
           <div className="login-form__group">
             <label htmlFor="identifier" className="login-form__label">Username or Email</label>
             <input
@@ -112,6 +112,8 @@ const LoginPage = () => {
               className={`login-form__input ${errors.identifier ? 'login-form__input--error' : ''}`}
               placeholder="Enter your username or email"
               disabled={isSubmitting}
+              autoComplete="username email" // Add both username and email hints
+              autoFocus
             />
             {errors.identifier && (
               <div className="login-form__error">{errors.identifier}</div>
@@ -134,6 +136,7 @@ const LoginPage = () => {
               className={`login-form__input ${errors.password ? 'login-form__input--error' : ''}`}
               placeholder="Enter your password"
               disabled={isSubmitting}
+              autoComplete="current-password" // Specific autocomplete for passwords
             />
             {errors.password && (
               <div className="login-form__error">{errors.password}</div>

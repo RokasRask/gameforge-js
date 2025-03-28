@@ -198,16 +198,18 @@ app.post('/login', async (req, res) => {
                 return res.status(401).json({ error: 'Invalid credentials' });
             }
 
-            // Create session
+            // Create session with remember me flag
             const session = await createSession(user.id, remember);
 
-            // Set cookie
-            res.cookie('token', session.token, {
+            // Set cookie with proper options for "remember me"
+            const cookieOptions = {
                 httpOnly: true,
                 expires: session.expires,
                 sameSite: 'lax',
                 path: '/'
-            });
+            };
+            
+            res.cookie('token', session.token, cookieOptions);
 
             // Return user data (excluding password)
             const { password: _, ...userData } = user;
