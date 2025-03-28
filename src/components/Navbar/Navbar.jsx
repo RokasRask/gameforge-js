@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Navbar.scss';
 import Button from '../Button/Button';
+import AuthContext from '../../contexts/Auth';
 
 const Navbar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -42,6 +45,10 @@ const Navbar = () => {
     }
     
     return false;
+  };
+
+  const handleLogout = () => {
+    navigate('/logout');
   };
 
   return (
@@ -87,15 +94,27 @@ const Navbar = () => {
           </ul>
           
           <div className="navbar__buttons">
-            <Link to="/contact">
-              <Button 
-                type="secondary" 
-                size="small"
-                onClick={() => setMenuOpen(false)}
-              >
-                Submit Game
-              </Button>
-            </Link>
+            {user ? (
+              <div className="navbar__user">
+                <span className="navbar__username">Hello, {user.name}</span>
+                <Button 
+                  type="secondary" 
+                  size="small"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              <>
+                <Link to="/login" onClick={() => setMenuOpen(false)}>
+                  <Button type="secondary" size="small">Login</Button>
+                </Link>
+                <Link to="/register" onClick={() => setMenuOpen(false)}>
+                  <Button type="primary" size="small">Register</Button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

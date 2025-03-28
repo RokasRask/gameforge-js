@@ -15,6 +15,13 @@ import GameDetailsPage from './pages/GameDetailsPage/GameDetailsPage';
 import GamePlayPage from './pages/GamePlayPage/GamePlayPage';
 import AdminPage from './pages/AdminPage/AdminPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import RegisterPage from './pages/RegisterPage/RegisterPage';
+import LogoutPage from './pages/LogoutPage/LogoutPage';
+
+// Context Providers
+import { Auth } from './contexts/Auth';
+import { MessageProvider } from './contexts/MessageContext';
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -38,7 +45,11 @@ const ScrollToTop = () => {
 function App() {
   return (
     <Router>
-      <AppContent />
+      <MessageProvider>
+        <Auth>
+          <AppContent />
+        </Auth>
+      </MessageProvider>
     </Router>
   );
 }
@@ -59,6 +70,9 @@ function AppContent() {
           <Route path="/games/:gameId" element={<GamePlayPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/logout" element={<LogoutPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

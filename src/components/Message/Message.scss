@@ -1,0 +1,62 @@
+@import '../../styles/variables.scss';
+
+.message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  min-width: 300px;
+  max-width: 400px;
+  padding: $spacing-md;
+  border-radius: $border-radius-md;
+  box-shadow: $box-shadow-md;
+  transform: translateX(120%);
+  transition: transform 0.3s ease;
+  
+  &--visible {
+    transform: translateX(0);
+  }
+  
+  &--hidden {
+    transform: translateX(120%);
+  }
+  
+  &--success {
+    background: linear-gradient(135deg, $color-primary, darken($color-primary, 10%));
+    color: white;
+  }
+  
+  &--error {
+    background: linear-gradient(135deg, $color-danger, darken($color-danger, 10%));
+    color: white;
+  }
+  
+  &--info {
+    background: linear-gradient(135deg, $color-secondary, darken($color-secondary, 10%));
+    color: white;
+  }
+  
+  &__content {
+    flex: 1;
+  }
+  
+  &__text {
+    font-weight: 500;
+  }
+  
+  &__close {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    font-size: $font-size-md;
+    margin-left: $spacing-sm;
+    transition: color $transition-fast;
+    
+    &:hover {
+      color: white;
+    }
+  }
+}

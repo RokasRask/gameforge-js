@@ -239,3 +239,18 @@ ul, ol {
 ::-webkit-scrollbar-thumb:hover {
   background: lighten($color-primary, 10%);
 }
+
+.message-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+  pointer-events: none;
+  
+  & > * {
+    pointer-events: auto;
+  }
+}
