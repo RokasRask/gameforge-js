@@ -3,42 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import './GameDetailsPage.scss';
 import Button from '../../components/Button/Button';
 
-// Sample game data (in a real app, this would be fetched from an API)
-const gamesData = [
-  {
-    id: 1,
-    title: "Neon Abyss",
-    developer: "Cosmic Games",
-    image: "/images/game1.jpg",
-    category: "Action",
-    rating: 4.8,
-    releaseDate: "2023",
-    isFeatured: true,
-    description: "Neon Abyss is a fast-paced roguelike shooter where you run 'n' gun your way through procedurally generated dungeons. Experience unprecedented synergies as your collect items that modify your attacks and abilities in surprising ways.",
-    features: [
-      "Procedurally generated levels for endless replayability",
-      "Over 100 unique items and power-ups",
-      "Dynamic character progression system",
-      "Multiple playable characters with unique abilities",
-      "Intense boss battles with challenging mechanics"
-    ],
-    screenshots: [
-      "/images/game1-screen1.jpg",
-      "/images/game1-screen2.jpg",
-      "/images/game1-screen3.jpg"
-    ],
-    minimumRequirements: {
-      os: "Windows 10",
-      processor: "Intel Core i5-2300",
-      memory: "4 GB RAM",
-      graphics: "NVIDIA GeForce GTX 550 Ti",
-      storage: "2 GB available space"
-    },
-    website: "https://example.com/neonabyss",
-    price: "Free to play"
-  },
-  // Add more games here...
-];
+// Game data will be added later
+const gamesData = [];
 
 const GameDetailsPage = () => {
   const { gameId } = useParams();

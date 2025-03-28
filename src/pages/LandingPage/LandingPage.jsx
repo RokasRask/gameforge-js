@@ -1,73 +1,56 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './LandingPage.scss';
 import Button from '../../components/Button/Button';
 import GameCard from '../../components/GameCard/GameCard';
 
-// Sample featured games data
-const featuredGames = [
-  {
-    id: 1,
-    title: "Neon Abyss",
-    developer: "Cosmic Games",
-    image: "/images/game1.jpg", // You'll need to add your own images
-    category: "Action",
-    rating: 4.8,
-    releaseDate: "2023",
-    isFeatured: true
-  },
-  {
-    id: 2,
-    title: "Stellar Odyssey",
-    developer: "Galaxy Studios",
-    image: "/images/game2.jpg",
-    category: "RPG",
-    rating: 4.5,
-    releaseDate: "2023",
-    isFeatured: false
-  },
-  {
-    id: 3,
-    title: "Quantum Break",
-    developer: "Time Games",
-    image: "/images/game3.jpg",
-    category: "Adventure",
-    rating: 4.6,
-    releaseDate: "2022",
-    isFeatured: false
-  }
-];
+// Featured games will be added later
+const featuredGames = [];
 
-// Sample categories data
+// JavaScript game categories
 const categories = [
-  { id: 1, name: "Action", icon: "fa-running", count: 42 },
-  { id: 2, name: "Adventure", icon: "fa-map-marked-alt", count: 37 },
-  { id: 3, name: "RPG", icon: "fa-dragon", count: 28 },
-  { id: 4, name: "Strategy", icon: "fa-chess", count: 24 },
-  { id: 5, name: "Puzzle", icon: "fa-puzzle-piece", count: 19 },
-  { id: 6, name: "Simulation", icon: "fa-gamepad", count: 15 }
+  { id: 1, name: "Canvas", icon: "fa-paint-brush", count: 0 },
+  { id: 2, name: "WebGL", icon: "fa-cube", count: 0 },
+  { id: 3, name: "React", icon: "fa-react", count: 0 },
+  { id: 4, name: "Phaser", icon: "fa-gamepad", count: 0 },
+  { id: 5, name: "p5.js", icon: "fa-code", count: 0 },
+  { id: 6, name: "Three.js", icon: "fa-cubes", count: 0 }
 ];
 
 const LandingPage = () => {
+
+  // Featured games from localStorage
+  const [featuredGames, setFeaturedGames] = useState([]);
+
+  // Load featured games
+  useEffect(() => {
+    const storedGames = localStorage.getItem('gameforge-games');
+    if (storedGames) {
+      const games = JSON.parse(storedGames);
+      const featured = games.filter(game => game.featured);
+      setFeaturedGames(featured);
+    }
+  }, []);
+
   // Animation on scroll effect
   useEffect(() => {
     const animateOnScroll = () => {
       const elements = document.querySelectorAll('.animate-on-scroll');
-      
+
       elements.forEach(element => {
         const elementPosition = element.getBoundingClientRect().top;
         const screenPosition = window.innerHeight / 1.2;
-        
+
         if (elementPosition < screenPosition) {
           element.classList.add('animate');
         }
       });
     };
-    
+
     window.addEventListener('scroll', animateOnScroll);
     // Trigger once on load
     animateOnScroll();
-    
+
     return () => window.removeEventListener('scroll', animateOnScroll);
   }, []);
 
@@ -77,10 +60,10 @@ const LandingPage = () => {
       <section className="hero">
         <div className="hero__content">
           <h1 className="hero__title">
-            Discover <span className="text-gradient">Indie</span> Games
+            Discover <span className="text-gradient">JavaScript</span> Games
           </h1>
           <p className="hero__subtitle">
-            Your gateway to the best independent game experiences
+            Your gateway to browser-based JavaScript game experiences
           </p>
           <div className="hero__buttons">
             <Link to="/games">
@@ -114,7 +97,7 @@ const LandingPage = () => {
           <div className="hero__grid"></div>
         </div>
       </section>
-      
+
       {/* Featured Games Section */}
       <section className="section section--gradient">
         <div className="container">
@@ -124,13 +107,25 @@ const LandingPage = () => {
               Check out our handpicked selection of amazing indie games
             </p>
           </div>
-          
-          <div className="grid grid--autofit featured-games animate-on-scroll">
-            {featuredGames.map(game => (
-              <GameCard key={game.id} {...game} />
-            ))}
-          </div>
-          
+
+          {featuredGames.length > 0 ? (
+            <div className="grid grid--autofit featured-games animate-on-scroll">
+              {featuredGames.map(game => (
+                <GameCard key={game.id} {...game} />
+              ))}
+            </div>
+          ) : (
+            <div className="featured-games__empty animate-on-scroll">
+              <div className="featured-games__empty-icon">
+                <i className="fas fa-gamepad"></i>
+              </div>
+              <h3 className="featured-games__empty-title">No Games Yet</h3>
+              <p className="featured-games__empty-text">
+                Check back soon for featured JavaScript games, or submit your own!
+              </p>
+            </div>
+          )}
+
           <div className="text-center mt-xl">
             <Link to="/games">
               <Button type="primary">
@@ -140,7 +135,7 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Categories Section */}
       <section className="section">
         <div className="container">
@@ -150,12 +145,12 @@ const LandingPage = () => {
               Browse games by your favorite genre
             </p>
           </div>
-          
+
           <div className="categories animate-on-scroll">
             {categories.map(category => (
-              <Link 
-                to={`/games/category/${category.name.toLowerCase()}`} 
-                className="category-card" 
+              <Link
+                to={`/games/category/${category.name.toLowerCase()}`}
+                className="category-card"
                 key={category.id}
               >
                 <div className="category-card__icon">
@@ -168,14 +163,14 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
-      
+
       {/* CTA Section */}
       <section className="cta animate-on-scroll">
         <div className="container">
           <div className="cta__content">
             <h2 className="cta__title">Got a Game to Share?</h2>
             <p className="cta__text">
-              Are you an indie developer looking to showcase your game? 
+              Are you an indie developer looking to showcase your game?
               Submit your creation to our platform and reach thousands of players!
             </p>
             <Link to="/contact">
@@ -190,7 +185,7 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Newsletter Section */}
       <section className="newsletter">
         <div className="container">
@@ -200,9 +195,9 @@ const LandingPage = () => {
               Subscribe to our newsletter for the latest indie game releases and news
             </p>
             <form className="newsletter__form">
-              <input 
-                type="email" 
-                placeholder="Your email address" 
+              <input
+                type="email"
+                placeholder="Your email address"
                 className="newsletter__input"
                 aria-label="Email for newsletter"
               />

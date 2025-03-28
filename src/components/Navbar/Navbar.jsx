@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './Navbar.scss';
 import Button from '../Button/Button';
 
 const Navbar = () => {
+  const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -25,12 +26,29 @@ const Navbar = () => {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+  
+  // Function to check if the link is active
+  const isLinkActive = (path) => {
+    if (path === '/' && location.pathname === '/') {
+      return true;
+    }
+    
+    if (path === '/games' && (location.pathname === '/games' || location.pathname.startsWith('/games/'))) {
+      return true;
+    }
+    
+    if (path !== '/' && path !== '/games' && location.pathname === path) {
+      return true;
+    }
+    
+    return false;
+  };
 
   return (
     <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
       <div className="navbar__container">
         <Link to="/" className="navbar__logo">
-          <span className="navbar__logo-text">Game<span className="navbar__logo-accent">Hub</span></span>
+          <span className="navbar__logo-text">Game<span className="navbar__logo-accent">Forge.js</span></span>
         </Link>
 
         <div className="navbar__menu-toggle" onClick={toggleMenu}>
@@ -40,30 +58,44 @@ const Navbar = () => {
         <div className={`navbar__links ${menuOpen ? 'navbar__links--open' : ''}`}>
           <ul className="navbar__list">
             <li className="navbar__item">
-              <Link to="/" className="navbar__link" onClick={() => setMenuOpen(false)}>
+              <Link 
+                to="/" 
+                className={`navbar__link ${isLinkActive('/') ? 'navbar__link--active' : ''}`} 
+                onClick={() => setMenuOpen(false)}
+              >
                 Home
               </Link>
             </li>
             <li className="navbar__item">
-              <Link to="/games" className="navbar__link" onClick={() => setMenuOpen(false)}>
+              <Link 
+                to="/games" 
+                className={`navbar__link ${isLinkActive('/games') ? 'navbar__link--active' : ''}`} 
+                onClick={() => setMenuOpen(false)}
+              >
                 Games
               </Link>
             </li>
             <li className="navbar__item">
-              <Link to="/contact" className="navbar__link" onClick={() => setMenuOpen(false)}>
+              <Link 
+                to="/contact" 
+                className={`navbar__link ${isLinkActive('/contact') ? 'navbar__link--active' : ''}`} 
+                onClick={() => setMenuOpen(false)}
+              >
                 Contact
               </Link>
             </li>
           </ul>
           
           <div className="navbar__buttons">
-            <Button 
-              type="secondary" 
-              size="small"
-              onClick={() => console.log('Submit game clicked')}
-            >
-              Submit Game
-            </Button>
+            <Link to="/contact">
+              <Button 
+                type="secondary" 
+                size="small"
+                onClick={() => setMenuOpen(false)}
+              >
+                Submit Game
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

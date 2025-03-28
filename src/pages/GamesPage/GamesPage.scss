@@ -11,7 +11,7 @@
   margin-bottom: $spacing-2xl;
   position: relative;
   overflow: hidden;
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -19,11 +19,11 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('/images/pattern.png'); // Add your own pattern
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' width='80' height='80'%3E%3Cg fill='%239C92AC' fill-opacity='0.4'%3E%3Cpath d='M0 0h80v80H0V0zm20 20v40h40V20H20zm20 35a15 15 0 1 1 0-30 15 15 0 0 1 0 30z' opacity='.5'%3E%3C/path%3E%3Cpath d='M15 15h50l-5 5H20v40l-5 5V15zm0 50h50V15L80 0v80H0l15-15zm32.07-32.07l3.54-3.54A15 15 0 0 1 29.4 50.6l3.53-3.53a10 10 0 1 0 14.14-14.14zM32.93 47.07a10 10 0 1 1 14.14-14.14L32.93 47.07z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
     opacity: 0.1;
     z-index: 1;
   }
-  
+
   &__title {
     position: relative;
     font-size: $font-size-3xl;
@@ -33,7 +33,7 @@
     margin-bottom: $spacing-md;
     text-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
   }
-  
+
   &__subtitle {
     position: relative;
     font-size: $font-size-lg;
@@ -52,7 +52,7 @@
   align-items: center;
   margin-bottom: $spacing-lg;
   gap: $spacing-md;
-  
+
   @media (max-width: $breakpoint-md) {
     flex-direction: column;
     align-items: stretch;
@@ -64,12 +64,12 @@
   position: relative;
   flex: 1;
   max-width: 500px;
-  
+
   @media (max-width: $breakpoint-md) {
     max-width: none;
     width: 100%;
   }
-  
+
   &__input {
     width: 100%;
     padding: $spacing-md $spacing-lg $spacing-md $spacing-xl;
@@ -80,18 +80,18 @@
     font-family: $font-body;
     font-size: $font-size-base;
     transition: all $transition-fast;
-    
+
     &::placeholder {
       color: rgba(255, 255, 255, 0.4);
     }
-    
+
     &:focus {
       outline: none;
       border-color: rgba($color-primary, 0.5);
       box-shadow: 0 0 0 2px rgba($color-primary, 0.2);
     }
   }
-  
+
   &__icon {
     position: absolute;
     left: $spacing-md;
@@ -107,12 +107,12 @@
   display: flex;
   align-items: center;
   gap: $spacing-sm;
-  
+
   &__label {
     color: rgba(255, 255, 255, 0.7);
     font-size: $font-size-sm;
   }
-  
+
   &__select {
     padding: $spacing-sm $spacing-md;
     border-radius: $border-radius-sm;
@@ -122,12 +122,12 @@
     font-family: $font-body;
     font-size: $font-size-sm;
     cursor: pointer;
-    
+
     &:focus {
       outline: none;
       border-color: rgba($color-primary, 0.5);
     }
-    
+
     option {
       background-color: $bg-card;
     }
@@ -140,7 +140,7 @@
   flex-wrap: wrap;
   gap: $spacing-sm;
   margin-bottom: $spacing-xl;
-  
+
   &__btn {
     padding: $spacing-sm $spacing-md;
     border-radius: $border-radius-pill;
@@ -152,12 +152,12 @@
     cursor: pointer;
     transition: all $transition-fast;
     font-weight: 500;
-    
+
     &:hover {
       background: rgba(255, 255, 255, 0.1);
       color: white;
     }
-    
+
     &.active {
       background: linear-gradient(to right, $color-primary, $color-secondary);
       border-color: transparent;
@@ -170,7 +170,7 @@
 // Results count
 .games-results {
   margin-bottom: $spacing-md;
-  
+
   &__count {
     color: rgba(255, 255, 255, 0.7);
     font-size: $font-size-sm;
@@ -190,19 +190,19 @@
 .games-empty {
   text-align: center;
   padding: $spacing-3xl 0;
-  
+
   &__icon {
     font-size: 3rem;
     color: rgba(255, 255, 255, 0.2);
     margin-bottom: $spacing-lg;
   }
-  
+
   &__title {
     font-size: $font-size-xl;
     color: white;
     margin-bottom: $spacing-md;
   }
-  
+
   &__text {
     color: rgba(255, 255, 255, 0.7);
     margin-bottom: $spacing-xl;
@@ -218,7 +218,7 @@
   justify-content: center;
   align-items: center;
   gap: $spacing-md;
-  
+
   &__btn {
     width: 40px;
     height: 40px;
@@ -231,23 +231,23 @@
     color: rgba(255, 255, 255, 0.7);
     cursor: pointer;
     transition: all $transition-fast;
-    
+
     &:hover:not(:disabled) {
       background: rgba(255, 255, 255, 0.1);
       color: white;
     }
-    
+
     &:disabled {
       cursor: not-allowed;
       opacity: 0.5;
     }
   }
-  
+
   &__pages {
     display: flex;
     gap: $spacing-xs;
   }
-  
+
   &__page {
     width: 40px;
     height: 40px;
@@ -262,12 +262,12 @@
     font-size: $font-size-sm;
     cursor: pointer;
     transition: all $transition-fast;
-    
+
     &:hover:not(.active) {
       background: rgba(255, 255, 255, 0.1);
       color: white;
     }
-    
+
     &.active {
       background: linear-gradient(to right, $color-primary, $color-secondary);
       border-color: transparent;

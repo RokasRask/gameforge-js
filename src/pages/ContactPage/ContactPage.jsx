@@ -12,6 +12,7 @@ const ContactPage = () => {
     gamePlatforms: [],
     gameDescription: '',
     gameWebsite: '',
+    gameRepository: '',
     attachments: []
   });
   
@@ -65,6 +66,7 @@ const ContactPage = () => {
           gamePlatforms: [],
           gameDescription: '',
           gameWebsite: '',
+          gameRepository: '',
           attachments: []
         });
       }, 5000);
@@ -102,8 +104,8 @@ const ContactPage = () => {
               <h3 className="contact-info__title">General Inquiries</h3>
               <p className="contact-info__text">
                 For general questions or feedback, please email us at:
-                <a href="mailto:contact@gamehub.com" className="contact-info__link">
-                  contact@gamehub.com
+                <a href="mailto:contact@gameforge.js" className="contact-info__link">
+                  contact@gameforge.js
                 </a>
               </p>
             </div>
@@ -115,8 +117,8 @@ const ContactPage = () => {
               <h3 className="contact-info__title">Partnership</h3>
               <p className="contact-info__text">
                 Interested in partnering with us? Please contact our business team at:
-                <a href="mailto:partners@gamehub.com" className="contact-info__link">
-                  partners@gamehub.com
+                <a href="mailto:partners@gameforge.js" className="contact-info__link">
+                  partners@gameforge.js
                 </a>
               </p>
             </div>
@@ -232,75 +234,90 @@ const ContactPage = () => {
                         <div className="contact-form__checkbox-item">
                           <input
                             type="checkbox"
-                            id="pc"
+                            id="canvas"
                             name="gamePlatforms"
-                            value="PC"
-                            checked={formData.gamePlatforms.includes('PC')}
+                            value="Canvas"
+                            checked={formData.gamePlatforms.includes('Canvas')}
                             onChange={handleCheckboxChange}
                             className="contact-form__checkbox"
                           />
-                          <label htmlFor="pc" className="contact-form__checkbox-label">
-                            PC
+                          <label htmlFor="canvas" className="contact-form__checkbox-label">
+                            Canvas
                           </label>
                         </div>
                         
                         <div className="contact-form__checkbox-item">
                           <input
                             type="checkbox"
-                            id="mac"
+                            id="webgl"
                             name="gamePlatforms"
-                            value="Mac"
-                            checked={formData.gamePlatforms.includes('Mac')}
+                            value="WebGL"
+                            checked={formData.gamePlatforms.includes('WebGL')}
                             onChange={handleCheckboxChange}
                             className="contact-form__checkbox"
                           />
-                          <label htmlFor="mac" className="contact-form__checkbox-label">
-                            Mac
+                          <label htmlFor="webgl" className="contact-form__checkbox-label">
+                            WebGL
                           </label>
                         </div>
                         
                         <div className="contact-form__checkbox-item">
                           <input
                             type="checkbox"
-                            id="web"
+                            id="react"
                             name="gamePlatforms"
-                            value="Web"
-                            checked={formData.gamePlatforms.includes('Web')}
+                            value="React"
+                            checked={formData.gamePlatforms.includes('React')}
                             onChange={handleCheckboxChange}
                             className="contact-form__checkbox"
                           />
-                          <label htmlFor="web" className="contact-form__checkbox-label">
-                            Web
+                          <label htmlFor="react" className="contact-form__checkbox-label">
+                            React
                           </label>
                         </div>
                         
                         <div className="contact-form__checkbox-item">
                           <input
                             type="checkbox"
-                            id="mobile"
+                            id="phaser"
                             name="gamePlatforms"
-                            value="Mobile"
-                            checked={formData.gamePlatforms.includes('Mobile')}
+                            value="Phaser"
+                            checked={formData.gamePlatforms.includes('Phaser')}
                             onChange={handleCheckboxChange}
                             className="contact-form__checkbox"
                           />
-                          <label htmlFor="mobile" className="contact-form__checkbox-label">
-                            Mobile
+                          <label htmlFor="phaser" className="contact-form__checkbox-label">
+                            Phaser
                           </label>
                         </div>
                         
                         <div className="contact-form__checkbox-item">
                           <input
                             type="checkbox"
-                            id="console"
+                            id="p5js"
                             name="gamePlatforms"
-                            value="Console"
-                            checked={formData.gamePlatforms.includes('Console')}
+                            value="p5.js"
+                            checked={formData.gamePlatforms.includes('p5.js')}
                             onChange={handleCheckboxChange}
                             className="contact-form__checkbox"
                           />
-                          <label htmlFor="console" className="contact-form__checkbox-label">
-                            Console
+                          <label htmlFor="p5js" className="contact-form__checkbox-label">
+                            p5.js
+                          </label>
+                        </div>
+                        
+                        <div className="contact-form__checkbox-item">
+                          <input
+                            type="checkbox"
+                            id="threejs"
+                            name="gamePlatforms"
+                            value="Three.js"
+                            checked={formData.gamePlatforms.includes('Three.js')}
+                            onChange={handleCheckboxChange}
+                            className="contact-form__checkbox"
+                          />
+                          <label htmlFor="threejs" className="contact-form__checkbox-label">
+                            Three.js
                           </label>
                         </div>
                       </div>
@@ -323,7 +340,7 @@ const ContactPage = () => {
                     
                     <div className="contact-form__group">
                       <label htmlFor="gameWebsite" className="contact-form__label">
-                        Game Website or Store Link
+                        Game Website or Deployment Link
                       </label>
                       <input
                         type="url"
@@ -333,6 +350,21 @@ const ContactPage = () => {
                         onChange={handleInputChange}
                         className="contact-form__input"
                         placeholder="https://"
+                      />
+                    </div>
+                    
+                    <div className="contact-form__group">
+                      <label htmlFor="gameRepository" className="contact-form__label">
+                        Game Repository URL (GitHub, GitLab, etc.)
+                      </label>
+                      <input
+                        type="url"
+                        id="gameRepository"
+                        name="gameRepository"
+                        value={formData.gameRepository || ''}
+                        onChange={handleInputChange}
+                        className="contact-form__input"
+                        placeholder="https://github.com/yourusername/your-game"
                       />
                     </div>
                     
@@ -406,8 +438,8 @@ const ContactPage = () => {
           <div className="contact-map__card">
             <h3 className="contact-map__title">Our Location</h3>
             <address className="contact-map__address">
-              <p>GameHub Studios</p>
-              <p>123 Gaming Street</p>
+              <p>GameForge.js Studios</p>
+              <p>123 JavaScript Street</p>
               <p>San Francisco, CA 94107</p>
             </address>
           </div>

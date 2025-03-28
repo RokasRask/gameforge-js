@@ -7,9 +7,9 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer__grid">
         <div className="footer__brand">
-          <h2 className="footer__logo">Game<span>Hub</span></h2>
+          <h2 className="footer__logo">Game<span>Forge.js</span></h2>
           <p className="footer__tagline">
-            Your gateway to indie game discovery
+            Your gateway to JavaScript-based game discovery
           </p>
           <div className="footer__social">
             <a href="#" className="footer__social-link" aria-label="Discord">
@@ -68,7 +68,7 @@ const Footer = () => {
       
       <div className="footer__bottom">
         <p className="footer__copyright">
-          &copy; {new Date().getFullYear()} GameHub. All rights reserved.
+          &copy; {new Date().getFullYear()} GameForge.js. All rights reserved.
         </p>
         <div className="footer__legal">
           <Link to="/privacy" className="footer__legal-link">Privacy Policy</Link>

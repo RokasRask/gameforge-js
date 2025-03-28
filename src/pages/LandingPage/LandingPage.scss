@@ -185,6 +185,34 @@
 // Featured Games Section
 .featured-games {
   margin-bottom: $spacing-xl;
+  
+  &__empty {
+    text-align: center;
+    padding: $spacing-3xl 0;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: $border-radius-md;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+  }
+  
+  &__empty-icon {
+    font-size: 3rem;
+    color: rgba($color-primary, 0.5);
+    margin-bottom: $spacing-lg;
+  }
+  
+  &__empty-title {
+    font-size: $font-size-xl;
+    color: white;
+    margin-bottom: $spacing-md;
+  }
+  
+  &__empty-text {
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 // Categories Section

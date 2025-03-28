@@ -116,6 +116,14 @@
         transform: scaleX(1);
       }
     }
+    
+    &--active {
+      color: white;
+      
+      &::after {
+        transform: scaleX(1);
+      }
+    }
   }
   
   &__menu-toggle {
