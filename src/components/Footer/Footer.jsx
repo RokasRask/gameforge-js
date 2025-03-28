@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.scss';
+import AuthContext from '../../contexts/Auth';
 
 const Footer = () => {
+  const { isAdmin } = useContext(AuthContext);
+
   return (
     <footer className="footer">
       <div className="footer__grid">
@@ -33,17 +36,21 @@ const Footer = () => {
             <li><Link to="/" className="footer__link">Home</Link></li>
             <li><Link to="/games" className="footer__link">Games</Link></li>
             <li><Link to="/contact" className="footer__link">Contact</Link></li>
+            {isAdmin && (
+              <li><Link to="/admin" className="footer__link">Admin Dashboard</Link></li>
+            )}
           </ul>
         </div>
         
         <div className="footer__categories">
           <h3 className="footer__heading">Categories</h3>
           <ul className="footer__links">
-            <li><Link to="/games/action" className="footer__link">Action</Link></li>
-            <li><Link to="/games/adventure" className="footer__link">Adventure</Link></li>
-            <li><Link to="/games/rpg" className="footer__link">RPG</Link></li>
-            <li><Link to="/games/strategy" className="footer__link">Strategy</Link></li>
-            <li><Link to="/games/puzzle" className="footer__link">Puzzle</Link></li>
+            <li><Link to="/games/category/canvas" className="footer__link">Canvas</Link></li>
+            <li><Link to="/games/category/webgl" className="footer__link">WebGL</Link></li>
+            <li><Link to="/games/category/react" className="footer__link">React</Link></li>
+            <li><Link to="/games/category/phaser" className="footer__link">Phaser</Link></li>
+            <li><Link to="/games/category/p5.js" className="footer__link">p5.js</Link></li>
+            <li><Link to="/games/category/three.js" className="footer__link">Three.js</Link></li>
           </ul>
         </div>
         

@@ -18,6 +18,9 @@ const Navbar = () => {
   const [loggingOut, setLoggingOut] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
+  // Check if user is admin
+  const isAdmin = user && user.role === 'admin';
+
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
@@ -129,6 +132,16 @@ const Navbar = () => {
               Contact
             </Link>
           </li>
+          {isAdmin && (
+            <li className="navbar__item">
+              <Link 
+                to="/admin" 
+                className={`navbar__link ${isLinkActive('/admin') ? 'navbar__link--active' : ''}`} 
+              >
+                Admin
+              </Link>
+            </li>
+          )}
         </ul>
 
         {/* Menu Toggle (Mobile) */}
@@ -192,6 +205,17 @@ const Navbar = () => {
               Contact
             </Link>
           </li>
+          {isAdmin && (
+            <li className="navbar__mobile-item">
+              <Link 
+                to="/admin" 
+                className={`navbar__mobile-link ${isLinkActive('/admin') ? 'navbar__mobile-link--active' : ''}`}
+                onClick={() => setMenuOpen(false)}
+              >
+                Admin Dashboard
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
 

@@ -26,7 +26,8 @@ export const Auth = ({ children }) => {
         <AuthContext.Provider value={{
             user,
             setUser,
-            isAuthenticated: !!user
+            isAuthenticated: !!user, // Boolean to easily check if user is authenticated
+            isAdmin: user && user.role === 'admin' // Boolean to easily check if user is admin
         }}>
             {loading ? (
                 <div className='loader-container'>

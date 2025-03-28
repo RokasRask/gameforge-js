@@ -13,8 +13,7 @@ const LoginPage = () => {
   const { addMessage } = useMessage();
   const [formData, setFormData] = useState({
     identifier: '', // This can be username or email
-    password: '',
-    remember: false
+    password: ''
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,10 +26,10 @@ const LoginPage = () => {
   }, [user, navigate]);
   
   const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: value
     });
     
     // Clear errors when input changes
@@ -73,8 +72,7 @@ const LoginPage = () => {
           // Send login request
           await setLoginData({
             identifier: formData.identifier,
-            password: formData.password,
-            remember: formData.remember
+            password: formData.password
           });
           
           // Message is now handled by the hook
@@ -112,7 +110,7 @@ const LoginPage = () => {
               className={`login-form__input ${errors.identifier ? 'login-form__input--error' : ''}`}
               placeholder="Enter your username or email"
               disabled={isSubmitting}
-              autoComplete="username email" // Add both username and email hints
+              autoComplete="username email"
               autoFocus
             />
             {errors.identifier && (
@@ -136,26 +134,11 @@ const LoginPage = () => {
               className={`login-form__input ${errors.password ? 'login-form__input--error' : ''}`}
               placeholder="Enter your password"
               disabled={isSubmitting}
-              autoComplete="current-password" // Specific autocomplete for passwords
+              autoComplete="current-password"
             />
             {errors.password && (
               <div className="login-form__error">{errors.password}</div>
             )}
-          </div>
-          
-          <div className="login-form__group login-form__group--checkbox">
-            <input
-              type="checkbox"
-              id="remember"
-              name="remember"
-              checked={formData.remember}
-              onChange={handleInputChange}
-              className="login-form__checkbox"
-              disabled={isSubmitting}
-            />
-            <label htmlFor="remember" className="login-form__checkbox-label">
-              Remember me
-            </label>
           </div>
           
           <div className="login-form__actions">

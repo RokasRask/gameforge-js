@@ -43,15 +43,12 @@ const generateToken = () => {
     return crypto.randomBytes(16).toString('hex');
 };
 
-const createSession = (userId, remember = false) => {
+const createSession = (userId) => {
     const token = generateToken();
     const expiresDate = new Date();
-    // Set expiration date based on remember flag (30 days if true, 24 hours if false)
-    if (remember) {
-        expiresDate.setDate(expiresDate.getDate() + 30);
-    } else {
-        expiresDate.setDate(expiresDate.getDate() + 1);
-    }
+    
+    // Set a standard expiration date (14 days)
+    expiresDate.setDate(expiresDate.getDate() + 14);
 
     return new Promise((resolve, reject) => {
         const query = 'INSERT INTO sessions (user_id, token, expires) VALUES (?, ?, ?)';
@@ -170,7 +167,7 @@ app.post('/register', async (req, res) => {
 
 // Login endpoint
 app.post('/login', async (req, res) => {
-    const { identifier, password, remember } = req.body;
+    const { identifier, password } = req.body;
 
     // Validation
     if (!identifier || !password) {
@@ -198,18 +195,16 @@ app.post('/login', async (req, res) => {
                 return res.status(401).json({ error: 'Invalid credentials' });
             }
 
-            // Create session with remember me flag
-            const session = await createSession(user.id, remember);
+            // Create session with standard duration
+            const session = await createSession(user.id);
 
-            // Set cookie with proper options for "remember me"
-            const cookieOptions = {
+            // Set cookie with expiration date
+            res.cookie('token', session.token, {
                 httpOnly: true,
                 expires: session.expires,
                 sameSite: 'lax',
                 path: '/'
-            };
-            
-            res.cookie('token', session.token, cookieOptions);
+            });
 
             // Return user data (excluding password)
             const { password: _, ...userData } = user;

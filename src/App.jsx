@@ -1,11 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, HashRouter } from 'react-router-dom';
+import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import './styles/global.scss';
 
 // Components
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
-import GameFrame from './components/GameFrame/GameFrame';
+import ProtectedRoute from './components/ProtectedRoute';
 
 // Pages
 import LandingPage from './pages/LandingPage/LandingPage';
@@ -43,8 +43,6 @@ const ScrollToTop = () => {
 
 // App wrapper with Router
 function App() {
-  // Use HashRouter to prevent 404 issues with GitHub Pages
-  // This will work both in development and production
   return (
     <HashRouter>
       <MessageProvider>
@@ -66,15 +64,23 @@ function AppContent() {
       <Navbar currentPath={location.pathname} />
       <main>
         <Routes>
+          {/* Public routes */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/games" element={<GamesPage />} />
           <Route path="/games/category/:categoryName" element={<GamesPage />} />
           <Route path="/games/:gameId" element={<GamePlayPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/admin" element={<AdminPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/logout" element={<LogoutPage />} />
+          
+          {/* Admin routes - protected with role requirement */}
+          <Route element={<ProtectedRoute requiredRole="admin" />}>
+            <Route path="/admin" element={<AdminPage />} />
+            {/* Add more admin routes here if needed */}
+          </Route>
+          
+          {/* 404 route */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

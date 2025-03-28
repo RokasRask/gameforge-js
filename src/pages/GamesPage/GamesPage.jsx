@@ -149,7 +149,7 @@ const GamesPage = () => {
             <h2 className="games-empty__title">No Games Found</h2>
             {games.length === 0 ? (
               <p className="games-empty__text">
-                There are no games in the library yet. Games added through the Admin Dashboard will appear here.
+                There are no games in the library yet.
               </p>
             ) : (
               <p className="games-empty__text">
