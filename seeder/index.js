@@ -10,7 +10,7 @@ const con = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '', // Update with your MySQL password if needed
-    database: 'gameforge' // Database name
+    database: 'gameforge' // Changed to 'gameforge'
 });
 
 con.connect(err => {
@@ -68,7 +68,7 @@ con.connect(err => {
             id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
             game_id INT(10) UNSIGNED NOT NULL,
             user_id INT(10) UNSIGNED NOT NULL,
-            rating INT(1) NOT NULL CHECK (rating BETWEEN 1 AND 5),
+            rating INT(1) NOT NULL CHECK (rating BETWEEN 0 AND 5),
             comment TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (game_id) REFERENCES games(id),
@@ -96,28 +96,34 @@ con.connect(err => {
         });
     });
 
-    // Process users with bcrypt password hashing
-    Promise.all(users.map(async user => {
-        const hashedPassword = await bcrypt.hash('123', saltRounds);
-        return [user.id, user.name, user.email, hashedPassword, user.role];
-    })).then(userValues => {
-        // Insert users
-        const insertUsers = `
-            INSERT INTO users (id, name, email, password, role)
-            VALUES ?`;
+    // Process users and insert into the database
+    const processedUsers = users.map(user => {
+        return {
+            ...user,
+            password: bcrypt.hashSync('123', saltRounds) // Default password is '123'
+        };
+    });
 
-        con.query(insertUsers, [userValues], (err) => {
+    // Insert users
+    const insertUsers = `
+        INSERT INTO users (id, name, email, password, role)
+        VALUES ?`;
+    const userValues = processedUsers.map(user => [
+        user.id, 
+        user.name, 
+        user.email, 
+        user.password, 
+        user.role
+    ]);
+
+    con.query(insertUsers, [userValues], (err) => {
+        if (err) throw err;
+        console.log('Users inserted!');
+        
+        // Close the database connection
+        con.end(err => {
             if (err) throw err;
-            console.log('Users inserted!');
-
-            // Close database connection
-            con.end(err => {
-                if (err) throw err;
-                console.log('Database connection closed!');
-            });
+            console.log('Database connection closed!');
         });
-    }).catch(error => {
-        console.error('Error processing users:', error);
-        con.end();
     });
 });
