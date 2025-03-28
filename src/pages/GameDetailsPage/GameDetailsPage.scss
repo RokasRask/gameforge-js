@@ -1,0 +1,420 @@
+@import '../../styles/variables.scss';
+
+.game-details {
+  margin-bottom: $spacing-3xl;
+}
+
+// Loading state
+.game-details-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  padding: $spacing-2xl 0;
+  color: rgba(255, 255, 255, 0.7);
+  
+  &__spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-left-color: $color-primary;
+    border-radius: 50%;
+    margin-bottom: $spacing-md;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// Error state
+.game-details-error {
+  text-align: center;
+  padding: $spacing-3xl 0;
+  
+  h2 {
+    font-size: $font-size-2xl;
+    margin-bottom: $spacing-md;
+    color: white;
+  }
+  
+  p {
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: $spacing-lg;
+  }
+}
+
+// Hero section
+.game-details-hero {
+  position: relative;
+  height: 500px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-bottom: $spacing-2xl;
+  
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to top,
+      $bg-dark 0%,
+      rgba($bg-dark, 0.9) 20%,
+      rgba($bg-dark, 0.7) 40%,
+      rgba($bg-dark, 0.3) 100%
+    );
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: $spacing-xl;
+  }
+  
+  &__content {
+    max-width: 800px;
+  }
+  
+  &__category {
+    display: inline-block;
+    background: $color-primary;
+    color: white;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-pill;
+    font-size: $font-size-xs;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: $spacing-sm;
+  }
+  
+  &__title {
+    font-size: clamp($font-size-3xl, 6vw, $font-size-4xl);
+    color: white;
+    margin-bottom: $spacing-md;
+    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-lg;
+    margin-bottom: $spacing-xl;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: $font-size-base;
+    
+    span {
+      color: rgba(255, 255, 255, 0.6);
+      margin-right: $spacing-xs;
+    }
+  }
+  
+  &__stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    
+    .filled {
+      color: $color-accent;
+    }
+    
+    span {
+      margin-left: $spacing-xs;
+      color: white;
+    }
+  }
+  
+  &__buttons {
+    display: flex;
+    gap: $spacing-md;
+    
+    @media (max-width: $breakpoint-sm) {
+      flex-direction: column;
+      align-items: flex-start;
+      
+      button {
+        width: 100%;
+      }
+    }
+  }
+  
+  &__cta {
+    animation: pulse 2s infinite;
+  }
+}
+
+// Tabs
+.game-details-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: $spacing-xl;
+  overflow-x: auto;
+  scrollbar-width: none; // Firefox
+  -ms-overflow-style: none; // IE/Edge
+  
+  &::-webkit-scrollbar {
+    display: none; // Chrome/Safari
+  }
+  
+  &__tab {
+    flex: 1;
+    min-width: fit-content;
+    padding: $spacing-md $spacing-lg;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: $font-gaming;
+    font-size: $font-size-sm;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all $transition-fast;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: $color-primary;
+      transform: scaleX(0);
+      transition: transform $transition-base;
+    }
+    
+    &:hover {
+      color: white;
+    }
+    
+    &.active {
+      color: white;
+      
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+  }
+}
+
+// Tab content
+.game-details-tabs-content {
+  margin-bottom: $spacing-2xl;
+}
+
+// Description
+.game-details-description {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.7;
+  font-size: $font-size-md;
+  
+  p {
+    margin-bottom: $spacing-xl;
+  }
+  
+  &__price {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border-radius: $border-radius-md;
+    padding: $spacing-lg;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    
+    h3 {
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-sm;
+      color: white;
+    }
+    
+    p {
+      margin-bottom: 0;
+      font-size: $font-size-xl;
+      font-weight: 700;
+      color: $color-accent;
+    }
+  }
+}
+
+// Features
+.game-details-features {
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  &__item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: $spacing-md;
+    font-size: $font-size-md;
+    color: rgba(255, 255, 255, 0.8);
+    
+    i {
+      color: $color-primary;
+      margin-right: $spacing-sm;
+      margin-top: 5px;
+    }
+  }
+}
+
+// Screenshots
+.game-details-screenshots {
+  &__main {
+    position: relative;
+    margin-bottom: $spacing-md;
+    border-radius: $border-radius-md;
+    overflow: hidden;
+    height: 400px;
+  }
+  
+  &__image-container {
+    width: 100%;
+    height: 100%;
+  }
+  
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  &__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all $transition-fast;
+    z-index: 2;
+    
+    &--prev {
+      left: $spacing-md;
+    }
+    
+    &--next {
+      right: $spacing-md;
+    }
+    
+    &:hover {
+      background: $color-primary;
+    }
+  }
+  
+  &__thumbnails {
+    display: flex;
+    gap: $spacing-sm;
+    overflow-x: auto;
+    padding-bottom: $spacing-sm;
+    
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 3px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+    }
+  }
+  
+  &__thumbnail {
+    flex: 0 0 120px;
+    height: 70px;
+    border-radius: $border-radius-sm;
+    overflow: hidden;
+    opacity: 0.6;
+    cursor: pointer;
+    transition: all $transition-fast;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    &:hover {
+      opacity: 0.8;
+    }
+    
+    &.active {
+      opacity: 1;
+      box-shadow: 0 0 0 2px $color-primary;
+    }
+  }
+}
+
+// Requirements
+.game-details-requirements {
+  h3 {
+    font-size: $font-size-lg;
+    color: white;
+    margin-bottom: $spacing-lg;
+  }
+  
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: $spacing-md;
+  }
+  
+  &__item {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border-radius: $border-radius-md;
+    padding: $spacing-md;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  &__label {
+    font-size: $font-size-sm;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: $spacing-xs;
+  }
+  
+  &__value {
+    font-size: $font-size-base;
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+// Related games
+.game-details-related {
+  margin-top: $spacing-3xl;
+  
+  &__title {
+    font-size: $font-size-xl;
+    color: white;
+    margin-bottom: $spacing-lg;
+    position: relative;
+    padding-bottom: $spacing-sm;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(to right, $color-primary, $color-secondary);
+    }
+  }
+  
+  &__placeholder {
+    text-align: center;
+    padding: $spacing-xl;
+    color: rgba(255, 255, 255, 0.6);
+  }
+}

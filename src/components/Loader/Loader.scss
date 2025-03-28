@@ -1,0 +1,114 @@
+@import '../styles/variables.scss';
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  &--small {
+    .loader__spinner {
+      width: 30px;
+      height: 30px;
+    }
+    
+    .loader__circle {
+      width: 8px;
+      height: 8px;
+    }
+    
+    .loader__text {
+      font-size: $font-size-xs;
+    }
+  }
+  
+  &--medium {
+    .loader__spinner {
+      width: 50px;
+      height: 50px;
+    }
+    
+    .loader__circle {
+      width: 10px;
+      height: 10px;
+    }
+    
+    .loader__text {
+      font-size: $font-size-sm;
+    }
+  }
+  
+  &--large {
+    .loader__spinner {
+      width: 80px;
+      height: 80px;
+    }
+    
+    .loader__circle {
+      width: 15px;
+      height: 15px;
+    }
+    
+    .loader__text {
+      font-size: $font-size-md;
+    }
+  }
+  
+  &__spinner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: $spacing-sm;
+    animation: spin 4s linear infinite;
+  }
+  
+  &__circle {
+    position: absolute;
+    border-radius: 50%;
+    
+    &:nth-child(1) {
+      background: $color-primary;
+      transform: rotate(0deg) translateX(20px);
+      animation: pulse 1.5s infinite;
+    }
+    
+    &:nth-child(2) {
+      background: $color-secondary;
+      transform: rotate(120deg) translateX(20px);
+      animation: pulse 1.5s infinite 0.5s;
+    }
+    
+    &:nth-child(3) {
+      background: $color-accent;
+      transform: rotate(240deg) translateX(20px);
+      animation: pulse 1.5s infinite 1s;
+    }
+  }
+  
+  &__text {
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    font-family: $font-gaming;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: rotate(var(--rotate, 0deg)) translateX(20px) scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: rotate(var(--rotate, 0deg)) translateX(20px) scale(0.8);
+  }
+}

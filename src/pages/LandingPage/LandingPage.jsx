@@ -1,167 +1,215 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../../components/common/Button/Button';
-import FeaturedCarousel from '../../components/common/FeaturedCarousel/FeaturedCarousel';
+import './LandingPage.scss';
+import Button from '../../components/Button/Button';
+import GameCard from '../../components/GameCard/GameCard';
 
-/**
- * Landing page component
- */
+// Sample featured games data
+const featuredGames = [
+  {
+    id: 1,
+    title: "Neon Abyss",
+    developer: "Cosmic Games",
+    image: "/images/game1.jpg", // You'll need to add your own images
+    category: "Action",
+    rating: 4.8,
+    releaseDate: "2023",
+    isFeatured: true
+  },
+  {
+    id: 2,
+    title: "Stellar Odyssey",
+    developer: "Galaxy Studios",
+    image: "/images/game2.jpg",
+    category: "RPG",
+    rating: 4.5,
+    releaseDate: "2023",
+    isFeatured: false
+  },
+  {
+    id: 3,
+    title: "Quantum Break",
+    developer: "Time Games",
+    image: "/images/game3.jpg",
+    category: "Adventure",
+    rating: 4.6,
+    releaseDate: "2022",
+    isFeatured: false
+  }
+];
+
+// Sample categories data
+const categories = [
+  { id: 1, name: "Action", icon: "fa-running", count: 42 },
+  { id: 2, name: "Adventure", icon: "fa-map-marked-alt", count: 37 },
+  { id: 3, name: "RPG", icon: "fa-dragon", count: 28 },
+  { id: 4, name: "Strategy", icon: "fa-chess", count: 24 },
+  { id: 5, name: "Puzzle", icon: "fa-puzzle-piece", count: 19 },
+  { id: 6, name: "Simulation", icon: "fa-gamepad", count: 15 }
+];
+
 const LandingPage = () => {
-  // Featured games data (would come from API in production)
-  const featuredGames = [
-    {
-      id: 'game1',
-      title: 'Pixel Platformer',
-      thumbnail: 'https://via.placeholder.com/400x300/3498db/ffffff?text=Pixel+Platformer',
-      description: 'Jump and run through challenging levels in this retro platformer.',
-      category: 'Platformer'
-    },
-    {
-      id: 'game2',
-      title: 'Space Shooter',
-      thumbnail: 'https://via.placeholder.com/400x300/e74c3c/ffffff?text=Space+Shooter',
-      description: 'Defend Earth from alien invaders in this classic arcade shooter.',
-      category: 'Arcade'
-    },
-    {
-      id: 'game3',
-      title: 'Puzzle Quest',
-      thumbnail: 'https://via.placeholder.com/400x300/2ecc71/ffffff?text=Puzzle+Quest',
-      description: 'Solve mind-bending puzzles in this brain-teasing adventure.',
-      category: 'Puzzle'
-    }
-  ];
-
-  // Game categories
-  const categories = [
-    { id: 'arcade', name: 'Arcade', icon: '🕹️', count: 12 },
-    { id: 'puzzle', name: 'Puzzle', icon: '🧩', count: 8 },
-    { id: 'platformer', name: 'Platformer', icon: '👾', count: 5 },
-    { id: 'strategy', name: 'Strategy', icon: '♟️', count: 7 },
-    { id: 'rpg', name: 'RPG', icon: '⚔️', count: 3 },
-    { id: 'sports', name: 'Sports', icon: '🏀', count: 4 }
-  ];
-
-  // Play animation when component mounts
+  // Animation on scroll effect
   useEffect(() => {
-    // Animation code would go here
+    const animateOnScroll = () => {
+      const elements = document.querySelectorAll('.animate-on-scroll');
+      
+      elements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.2;
+        
+        if (elementPosition < screenPosition) {
+          element.classList.add('animate');
+        }
+      });
+    };
+    
+    window.addEventListener('scroll', animateOnScroll);
+    // Trigger once on load
+    animateOnScroll();
+    
+    return () => window.removeEventListener('scroll', animateOnScroll);
   }, []);
 
   return (
     <div className="landing-page">
-      {/* Hero section */}
+      {/* Hero Section */}
       <section className="hero">
-        <div className="hero__container">
-          <div className="hero__content">
-            <h1 className="hero__title">
-              <span className="hero__title-line">Retro Games</span>
-              <span className="hero__title-line">Built With</span>
-              <span className="hero__title-line hero__title-line--highlight">JavaScript</span>
-            </h1>
-            <p className="hero__subtitle">
-              Play, share, and create 8-bit style games powered by modern web technologies
-            </p>
-            <div className="hero__buttons">
-              <Link to="/games">
-                <Button variant="primary" size="large">
-                  Browse Games
-                </Button>
-              </Link>
-              <Link to="/developer-portal">
-                <Button variant="secondary" size="large">
-                  Submit Your Game
-                </Button>
-              </Link>
+        <div className="hero__content">
+          <h1 className="hero__title">
+            Discover <span className="text-gradient">Indie</span> Games
+          </h1>
+          <p className="hero__subtitle">
+            Your gateway to the best independent game experiences
+          </p>
+          <div className="hero__buttons">
+            <Link to="/games">
+              <Button type="primary" size="large">
+                <i className="fas fa-gamepad"></i> Browse Games
+              </Button>
+            </Link>
+            <Link to="/contact">
+              <Button type="secondary" size="large">
+                <i className="fas fa-paper-plane"></i> Submit Game
+              </Button>
+            </Link>
+          </div>
+          <div className="hero__stats">
+            <div className="hero__stat">
+              <span className="hero__stat-number">100+</span>
+              <span className="hero__stat-label">Indie Games</span>
+            </div>
+            <div className="hero__stat">
+              <span className="hero__stat-number">50+</span>
+              <span className="hero__stat-label">Developers</span>
+            </div>
+            <div className="hero__stat">
+              <span className="hero__stat-number">10k+</span>
+              <span className="hero__stat-label">Players</span>
             </div>
           </div>
-          <div className="hero__visual">
-            {/* Animated pixel art visual */}
-            <div className="hero__pixel-art"></div>
-          </div>
+        </div>
+        <div className="hero__decoration">
+          <div className="hero__circles"></div>
+          <div className="hero__grid"></div>
         </div>
       </section>
-
-      {/* Featured games section */}
-      <section className="featured">
-        <div className="featured__container">
-          <h2 className="featured__title">Featured Games</h2>
-          <FeaturedCarousel games={featuredGames} />
-          <div className="featured__action">
+      
+      {/* Featured Games Section */}
+      <section className="section section--gradient">
+        <div className="container">
+          <div className="section__header animate-on-scroll">
+            <h2 className="section__title">Featured Games</h2>
+            <p className="section__subtitle">
+              Check out our handpicked selection of amazing indie games
+            </p>
+          </div>
+          
+          <div className="grid grid--autofit featured-games animate-on-scroll">
+            {featuredGames.map(game => (
+              <GameCard key={game.id} {...game} />
+            ))}
+          </div>
+          
+          <div className="text-center mt-xl">
             <Link to="/games">
-              <Button variant="secondary">View All Games</Button>
+              <Button type="primary">
+                View All Games <i className="fas fa-arrow-right"></i>
+              </Button>
             </Link>
           </div>
         </div>
       </section>
-
-      {/* Categories section */}
-      <section className="categories">
-        <div className="categories__container">
-          <h2 className="categories__title">Game Categories</h2>
-          <div className="categories__grid">
+      
+      {/* Categories Section */}
+      <section className="section">
+        <div className="container">
+          <div className="section__header animate-on-scroll">
+            <h2 className="section__title">Game Categories</h2>
+            <p className="section__subtitle">
+              Browse games by your favorite genre
+            </p>
+          </div>
+          
+          <div className="categories animate-on-scroll">
             {categories.map(category => (
               <Link 
-                key={category.id} 
-                to={`/categories/${category.id}`}
-                className="category-card"
+                to={`/games/category/${category.name.toLowerCase()}`} 
+                className="category-card" 
+                key={category.id}
               >
-                <div className="category-card__icon">{category.icon}</div>
-                <h3 className="category-card__name">{category.name}</h3>
-                <span className="category-card__count">{category.count} games</span>
+                <div className="category-card__icon">
+                  <i className={`fas ${category.icon}`}></i>
+                </div>
+                <h3 className="category-card__title">{category.name}</h3>
+                <p className="category-card__count">{category.count} Games</p>
               </Link>
             ))}
           </div>
         </div>
       </section>
-
-      {/* How it works section */}
-      <section className="how-it-works">
-        <div className="how-it-works__container">
-          <h2 className="how-it-works__title">How It Works</h2>
-          <div className="how-it-works__steps">
-            <div className="step">
-              <div className="step__number">1</div>
-              <h3 className="step__title">Browse Games</h3>
-              <p className="step__description">
-                Explore our collection of retro-style games built with JavaScript and React
-              </p>
-            </div>
-            <div className="step">
-              <div className="step__number">2</div>
-              <h3 className="step__title">Play Online</h3>
-              <p className="step__description">
-                Play directly in your browser, no downloads required, even offline
-              </p>
-            </div>
-            <div className="step">
-              <div className="step__number">3</div>
-              <h3 className="step__title">Create & Submit</h3>
-              <p className="step__description">
-                Build your own game using our templates and submit it to the platform
-              </p>
-            </div>
+      
+      {/* CTA Section */}
+      <section className="cta animate-on-scroll">
+        <div className="container">
+          <div className="cta__content">
+            <h2 className="cta__title">Got a Game to Share?</h2>
+            <p className="cta__text">
+              Are you an indie developer looking to showcase your game? 
+              Submit your creation to our platform and reach thousands of players!
+            </p>
+            <Link to="/contact">
+              <Button type="secondary" size="large">
+                Submit Your Game
+              </Button>
+            </Link>
+          </div>
+          <div className="cta__decoration">
+            <div className="cta__decoration-circle"></div>
+            <div className="cta__decoration-lines"></div>
           </div>
         </div>
       </section>
-
-      {/* CTA section */}
-      <section className="cta">
-        <div className="cta__container">
-          <h2 className="cta__title">Ready to Play?</h2>
-          <p className="cta__subtitle">
-            Join the GameForge.js community and start your retro gaming adventure
-          </p>
-          <div className="cta__buttons">
-            <Link to="/register">
-              <Button variant="primary" size="large">
-                Sign Up Free
+      
+      {/* Newsletter Section */}
+      <section className="newsletter">
+        <div className="container">
+          <div className="newsletter__content animate-on-scroll">
+            <h2 className="newsletter__title">Stay in the Loop</h2>
+            <p className="newsletter__text">
+              Subscribe to our newsletter for the latest indie game releases and news
+            </p>
+            <form className="newsletter__form">
+              <input 
+                type="email" 
+                placeholder="Your email address" 
+                className="newsletter__input"
+                aria-label="Email for newsletter"
+              />
+              <Button type="primary">
+                Subscribe <i className="fas fa-paper-plane"></i>
               </Button>
-            </Link>
-            <Link to="/games">
-              <Button variant="secondary" size="large">
-                Play Now
-              </Button>
-            </Link>
+            </form>
           </div>
         </div>
       </section>

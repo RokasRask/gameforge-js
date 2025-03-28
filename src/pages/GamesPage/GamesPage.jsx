@@ -1,269 +1,301 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import GamesList from '../../components/games/GamesList/GamesList';
-import SearchBar from '../../components/common/SearchBar/SearchBar';
-import FilterMenu from '../../components/common/FilterMenu/FilterMenu';
-import GameCategories from '../../components/games/GameCategories/GameCategories';
-import Button from '../../components/common/Button/Button';
+import { useParams, useNavigate } from 'react-router-dom';
+import './GamesPage.scss';
+import GameCard from '../../components/GameCard/GameCard';
+import Button from '../../components/Button/Button';
 
-/**
- * Games listing page
- */
+// Sample games data
+const allGames = [
+  {
+    id: 1,
+    title: "Neon Abyss",
+    developer: "Cosmic Games",
+    image: "/images/game1.jpg",
+    category: "Action",
+    rating: 4.8,
+    releaseDate: "2023",
+    isFeatured: true
+  },
+  {
+    id: 2,
+    title: "Stellar Odyssey",
+    developer: "Galaxy Studios",
+    image: "/images/game2.jpg",
+    category: "RPG",
+    rating: 4.5,
+    releaseDate: "2023",
+    isFeatured: false
+  },
+  {
+    id: 3,
+    title: "Quantum Break",
+    developer: "Time Games",
+    image: "/images/game3.jpg",
+    category: "Adventure",
+    rating: 4.6,
+    releaseDate: "2022",
+    isFeatured: false
+  },
+  {
+    id: 4,
+    title: "Pixel Dungeon",
+    developer: "Retro Labs",
+    image: "/images/game4.jpg",
+    category: "Puzzle",
+    rating: 4.3,
+    releaseDate: "2022",
+    isFeatured: false
+  },
+  {
+    id: 5,
+    title: "Space Commanders",
+    developer: "Star Studios",
+    image: "/images/game5.jpg",
+    category: "Strategy",
+    rating: 4.7,
+    releaseDate: "2023",
+    isFeatured: false
+  },
+  {
+    id: 6,
+    title: "Shadow Legends",
+    developer: "Dark Arts Games",
+    image: "/images/game6.jpg",
+    category: "RPG",
+    rating: 4.4,
+    releaseDate: "2022",
+    isFeatured: false
+  },
+  {
+    id: 7,
+    title: "Cyber Racer",
+    developer: "Neon Studios",
+    image: "/images/game7.jpg",
+    category: "Action",
+    rating: 4.2,
+    releaseDate: "2023",
+    isFeatured: false
+  },
+  {
+    id: 8,
+    title: "Forest Mystery",
+    developer: "Nature Games",
+    image: "/images/game8.jpg",
+    category: "Adventure",
+    rating: 4.5,
+    releaseDate: "2022",
+    isFeatured: false
+  },
+  {
+    id: 9,
+    title: "Mind Bender",
+    developer: "Puzzle Masters",
+    image: "/images/game9.jpg",
+    category: "Puzzle",
+    rating: 4.1,
+    releaseDate: "2023",
+    isFeatured: false
+  }
+];
+
+const categories = [
+  "All",
+  "Action",
+  "Adventure",
+  "RPG",
+  "Strategy",
+  "Puzzle",
+  "Simulation"
+];
+
 const GamesPage = () => {
-  // State for games and filtering
-  const [games, setGames] = useState([]);
+  const { categoryName } = useParams();
+  const navigate = useNavigate();
   const [filteredGames, setFilteredGames] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [activeCategory, setActiveCategory] = useState(categoryName || 'All');
+  const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('newest');
+  const [currentPage, setCurrentPage] = useState(1);
+  const gamesPerPage = 6;
   
-  // Load games data
+  // Filter, sort, and paginate games
   useEffect(() => {
-    // Simulating API call
-    const fetchGames = async () => {
-      setIsLoading(true);
-      try {
-        // This would be an API call in production
-        const sampleGames = [
-          {
-            id: 'game1',
-            title: 'Pixel Platformer',
-            thumbnail: 'https://via.placeholder.com/350x200/3498db/ffffff?text=Pixel+Platformer',
-            description: 'Jump and run through challenging levels in this retro platformer.',
-            category: 'platformer',
-            rating: 4.5,
-            plays: 1250,
-            tags: ['platformer', 'action', 'retro'],
-            createdAt: '2023-09-15T12:00:00Z'
-          },
-          {
-            id: 'game2',
-            title: 'Space Shooter',
-            thumbnail: 'https://via.placeholder.com/350x200/e74c3c/ffffff?text=Space+Shooter',
-            description: 'Defend Earth from alien invaders in this classic arcade shooter.',
-            category: 'arcade',
-            rating: 4.2,
-            plays: 980,
-            tags: ['arcade', 'shooter', 'space'],
-            createdAt: '2023-08-22T15:30:00Z'
-          },
-          {
-            id: 'game3',
-            title: 'Puzzle Quest',
-            thumbnail: 'https://via.placeholder.com/350x200/2ecc71/ffffff?text=Puzzle+Quest',
-            description: 'Solve mind-bending puzzles in this brain-teasing adventure.',
-            category: 'puzzle',
-            rating: 4.7,
-            plays: 1540,
-            tags: ['puzzle', 'strategy', 'adventure'],
-            createdAt: '2023-10-05T09:45:00Z'
-          },
-          {
-            id: 'game4',
-            title: 'Retro RPG',
-            thumbnail: 'https://via.placeholder.com/350x200/9b59b6/ffffff?text=Retro+RPG',
-            description: 'Embark on an epic quest in this turn-based role-playing game.',
-            category: 'rpg',
-            rating: 4.9,
-            plays: 2100,
-            tags: ['rpg', 'adventure', 'turn-based'],
-            createdAt: '2023-10-12T14:20:00Z'
-          },
-          {
-            id: 'game5',
-            title: 'Strategy Master',
-            thumbnail: 'https://via.placeholder.com/350x200/f39c12/ffffff?text=Strategy+Master',
-            description: 'Plan, build, and conquer in this challenging strategy game.',
-            category: 'strategy',
-            rating: 4.3,
-            plays: 870,
-            tags: ['strategy', 'building', 'resource-management'],
-            createdAt: '2023-09-28T08:15:00Z'
-          },
-          {
-            id: 'game6',
-            title: 'Pixel Sports',
-            thumbnail: 'https://via.placeholder.com/350x200/1abc9c/ffffff?text=Pixel+Sports',
-            description: 'Compete in various sports events with simple yet addictive gameplay.',
-            category: 'sports',
-            rating: 4.0,
-            plays: 750,
-            tags: ['sports', 'multiplayer', 'competitive'],
-            createdAt: '2023-09-10T16:45:00Z'
-          }
-        ];
-        
-        // Simulate network delay
-        setTimeout(() => {
-          setGames(sampleGames);
-          setFilteredGames(sampleGames);
-          setIsLoading(false);
-        }, 800);
-      } catch (error) {
-        console.error('Error fetching games:', error);
-        setIsLoading(false);
-      }
-    };
+    let filtered = [...allGames];
     
-    fetchGames();
-  }, []);
-  
-  // Apply filters when search query, category, or sort option changes
-  useEffect(() => {
-    if (games.length === 0) return;
-    
-    let result = [...games];
-    
-    // Filter by search query
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      result = result.filter(game => 
-        game.title.toLowerCase().includes(query) || 
-        game.description.toLowerCase().includes(query) ||
-        game.tags.some(tag => tag.toLowerCase().includes(query))
+    // Filter by category
+    if (activeCategory && activeCategory !== 'All') {
+      filtered = filtered.filter(game => 
+        game.category.toLowerCase() === activeCategory.toLowerCase()
       );
     }
     
-    // Filter by category
-    if (activeCategory !== 'all') {
-      result = result.filter(game => game.category === activeCategory);
+    // Filter by search term
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      filtered = filtered.filter(game => 
+        game.title.toLowerCase().includes(term) || 
+        game.developer.toLowerCase().includes(term)
+      );
     }
     
     // Sort games
     switch (sortBy) {
       case 'newest':
-        result.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        filtered.sort((a, b) => parseInt(b.releaseDate) - parseInt(a.releaseDate));
         break;
       case 'oldest':
-        result.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-        break;
-      case 'popular':
-        result.sort((a, b) => b.plays - a.plays);
+        filtered.sort((a, b) => parseInt(a.releaseDate) - parseInt(b.releaseDate));
         break;
       case 'rating':
-        result.sort((a, b) => b.rating - a.rating);
+        filtered.sort((a, b) => b.rating - a.rating);
+        break;
+      case 'title':
+        filtered.sort((a, b) => a.title.localeCompare(b.title));
         break;
       default:
         break;
     }
     
-    setFilteredGames(result);
-  }, [games, searchQuery, activeCategory, sortBy]);
+    setFilteredGames(filtered);
+    setCurrentPage(1); // Reset to first page when filtering/sorting
+  }, [activeCategory, searchTerm, sortBy]);
   
-  // Handle search input
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-  };
-  
-  // Handle category selection
+  // Handle category change
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
+    if (category === 'All') {
+      navigate('/games');
+    } else {
+      navigate(`/games/category/${category.toLowerCase()}`);
+    }
   };
   
-  // Handle sort selection
-  const handleSortChange = (sortOption) => {
-    setSortBy(sortOption);
-  };
+  // Pagination logic
+  const indexOfLastGame = currentPage * gamesPerPage;
+  const indexOfFirstGame = indexOfLastGame - gamesPerPage;
+  const currentGames = filteredGames.slice(indexOfFirstGame, indexOfLastGame);
+  const totalPages = Math.ceil(filteredGames.length / gamesPerPage);
   
-  // Categories for filter menu
-  const categories = [
-    { id: 'all', name: 'All Games', icon: '🎮' },
-    { id: 'arcade', name: 'Arcade', icon: '🕹️' },
-    { id: 'puzzle', name: 'Puzzle', icon: '🧩' },
-    { id: 'platformer', name: 'Platformer', icon: '👾' },
-    { id: 'strategy', name: 'Strategy', icon: '♟️' },
-    { id: 'rpg', name: 'RPG', icon: '⚔️' },
-    { id: 'sports', name: 'Sports', icon: '🏀' }
-  ];
-  
-  // Sort options
-  const sortOptions = [
-    { value: 'newest', label: 'Newest First' },
-    { value: 'oldest', label: 'Oldest First' },
-    { value: 'popular', label: 'Most Popular' },
-    { value: 'rating', label: 'Highest Rated' }
-  ];
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   
   return (
     <div className="games-page">
-      {/* Page header */}
-      <div className="games-page__header">
-        <h1 className="games-page__title">Games Library</h1>
-        <p className="games-page__subtitle">
-          Browse our collection of JavaScript and React powered retro games
-        </p>
+      <div className="games-header">
+        <div className="container">
+          <h1 className="games-header__title">Game Library</h1>
+          <p className="games-header__subtitle">
+            Browse our collection of the best indie games
+          </p>
+        </div>
       </div>
       
-      {/* Search and filters */}
-      <div className="games-page__controls">
-        <SearchBar 
-          onSearch={handleSearch} 
-          placeholder="Search games..." 
-          className="games-page__search"
-        />
-        <FilterMenu 
-          sortOptions={sortOptions}
-          currentSort={sortBy}
-          onSortChange={handleSortChange}
-          className="games-page__filter"
-        />
-      </div>
-      
-      {/* Game categories */}
-      <GameCategories 
-        categories={categories}
-        activeCategory={activeCategory}
-        onCategoryChange={handleCategoryChange}
-        className="games-page__categories"
-      />
-      
-      {/* Games list */}
-      <div className="games-page__content">
-        {isLoading ? (
-          <div className="games-page__loading">
-            <div className="pixel-loader"></div>
-            <p>Loading games...</p>
+      <div className="container">
+        <div className="games-toolbar">
+          <div className="games-search">
+            <input
+              type="text"
+              placeholder="Search games..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="games-search__input"
+            />
+            <i className="fas fa-search games-search__icon"></i>
+          </div>
+          
+          <div className="games-sort">
+            <label htmlFor="sort-select" className="games-sort__label">Sort by:</label>
+            <select
+              id="sort-select"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="games-sort__select"
+            >
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="rating">Highest Rated</option>
+              <option value="title">Title A-Z</option>
+            </select>
+          </div>
+        </div>
+        
+        <div className="games-categories">
+          {categories.map((category) => (
+            <button
+              key={category}
+              className={`games-categories__btn ${activeCategory === category ? 'active' : ''}`}
+              onClick={() => handleCategoryChange(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+        
+        {filteredGames.length === 0 ? (
+          <div className="games-empty">
+            <i className="fas fa-search games-empty__icon"></i>
+            <h2 className="games-empty__title">No Games Found</h2>
+            <p className="games-empty__text">
+              We couldn't find any games matching your search criteria.
+            </p>
+            <Button 
+              type="secondary" 
+              onClick={() => {
+                setSearchTerm('');
+                setActiveCategory('All');
+                navigate('/games');
+              }}
+            >
+              Clear Filters
+            </Button>
           </div>
         ) : (
           <>
-            {filteredGames.length > 0 ? (
-              <GamesList games={filteredGames} />
-            ) : (
-              <div className="games-page__empty">
-                <div className="games-page__empty-icon">🔍</div>
-                <h2 className="games-page__empty-title">No Games Found</h2>
-                <p className="games-page__empty-message">
-                  Try adjusting your search or filter settings
-                </p>
-                <Button 
-                  variant="primary"
-                  onClick={() => {
-                    setSearchQuery('');
-                    setActiveCategory('all');
-                    setSortBy('newest');
-                  }}
+            <div className="games-results">
+              <p className="games-results__count">
+                Showing {currentGames.length} of {filteredGames.length} games
+              </p>
+            </div>
+            
+            <div className="games-grid">
+              {currentGames.map(game => (
+                <GameCard key={game.id} {...game} />
+              ))}
+            </div>
+            
+            {totalPages > 1 && (
+              <div className="games-pagination">
+                <button
+                  className="games-pagination__btn"
+                  onClick={() => paginate(currentPage - 1)}
+                  disabled={currentPage === 1}
                 >
-                  Reset Filters
-                </Button>
+                  <i className="fas fa-chevron-left"></i>
+                </button>
+                
+                <div className="games-pagination__pages">
+                  {[...Array(totalPages)].map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => paginate(index + 1)}
+                      className={`games-pagination__page ${currentPage === index + 1 ? 'active' : ''}`}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+                </div>
+                
+                <button
+                  className="games-pagination__btn"
+                  onClick={() => paginate(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                >
+                  <i className="fas fa-chevron-right"></i>
+                </button>
               </div>
             )}
           </>
         )}
-      </div>
-      
-      {/* Submit your game CTA */}
-      <div className="games-page__cta">
-        <div className="games-page__cta-content">
-          <h2 className="games-page__cta-title">Want to see your game here?</h2>
-          <p className="games-page__cta-text">
-            Submit your JavaScript or React game to our platform and join the GameForge.js community!
-          </p>
-          <Link to="/contact" className="games-page__cta-button">
-            Contact Us
-          </Link>
-        </div>
-        <div className="games-page__cta-decoration"></div>
       </div>
     </div>
   );

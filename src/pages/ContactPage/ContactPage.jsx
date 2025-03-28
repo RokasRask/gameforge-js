@@ -1,239 +1,421 @@
 import React, { useState } from 'react';
-import Button from '../../components/common/Button/Button';
+import './ContactPage.scss';
+import Button from '../../components/Button/Button';
 
-/**
- * Contact page component
- */
 const ContactPage = () => {
-  // Form state
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: 'general',
+    subject: 'Game Submission',
     message: '',
-    isGameSubmission: false
+    gameTitle: '',
+    gamePlatforms: [],
+    gameDescription: '',
+    gameWebsite: '',
+    attachments: []
   });
   
-  // Form submission state
+  const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [submitError, setSubmitError] = useState(null);
   
-  // Handle input changes
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? checked : value
-    });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
   
-  // Handle form submission
-  const handleSubmit = async (e) => {
+  const handleCheckboxChange = (e) => {
+    const { value, checked } = e.target;
+    const updatedPlatforms = [...formData.gamePlatforms];
+    
+    if (checked) {
+      updatedPlatforms.push(value);
+    } else {
+      const index = updatedPlatforms.indexOf(value);
+      if (index > -1) {
+        updatedPlatforms.splice(index, 1);
+      }
+    }
+    
+    setFormData({ ...formData, gamePlatforms: updatedPlatforms });
+  };
+  
+  const handleFileChange = (e) => {
+    setFormData({ ...formData, attachments: e.target.files });
+  };
+  
+  const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setSubmitError(null);
     
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Simulate success response
-      console.log('Form submitted:', formData);
-      setSubmitSuccess(true);
-      
-      // Reset form after successful submission
-      setFormData({
-        name: '',
-        email: '',
-        subject: 'general',
-        message: '',
-        isGameSubmission: false
-      });
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      setSubmitError('There was an error submitting your message. Please try again.');
-    } finally {
+    // Simulate form submission (replace with actual form submission logic)
+    setTimeout(() => {
       setIsSubmitting(false);
-    }
+      setSubmitted(true);
+      console.log('Form submitted:', formData);
+      
+      // Reset form after submission
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({
+          name: '',
+          email: '',
+          subject: 'Game Submission',
+          message: '',
+          gameTitle: '',
+          gamePlatforms: [],
+          gameDescription: '',
+          gameWebsite: '',
+          attachments: []
+        });
+      }, 5000);
+    }, 1500);
   };
   
   return (
     <div className="contact-page">
-      <div className="contact-page__container">
-        <div className="contact-page__header">
-          <h1 className="contact-page__title">Contact Us</h1>
-          <p className="contact-page__subtitle">
-            Get in touch with the GameForge.js team or submit your game for review
+      <div className="contact-header">
+        <div className="container">
+          <h1 className="contact-header__title">Submit Your Game</h1>
+          <p className="contact-header__subtitle">
+            Got a game to share? We'd love to feature it on our platform!
           </p>
         </div>
-        
-        {/* Info cards */}
-        <div className="contact-page__info">
-          <div className="contact-card">
-            <div className="contact-card__icon contact-card__icon--questions"></div>
-            <h2 className="contact-card__title">General Questions</h2>
-            <p className="contact-card__text">
-              Have questions about our platform? We're here to help with any inquiries.
-            </p>
-          </div>
-          
-          <div className="contact-card">
-            <div className="contact-card__icon contact-card__icon--game"></div>
-            <h2 className="contact-card__title">Submit Your Game</h2>
-            <p className="contact-card__text">
-              Created a JavaScript or React game? Submit it to be featured on our platform!
-            </p>
-          </div>
-          
-          <div className="contact-card">
-            <div className="contact-card__icon contact-card__icon--feedback"></div>
-            <h2 className="contact-card__title">Feedback</h2>
-            <p className="contact-card__text">
-              We value your feedback to improve GameForge.js and make it even better.
-            </p>
-          </div>
-        </div>
-        
-        {/* Contact form */}
-        <div className="contact-page__form-container">
-          {submitSuccess ? (
-            <div className="contact-page__success">
-              <div className="contact-page__success-icon"></div>
-              <h2 className="contact-page__success-title">Message Sent!</h2>
-              <p className="contact-page__success-message">
-                Thank you for contacting us. We'll get back to you as soon as possible.
+      </div>
+      
+      <div className="container">
+        <div className="contact-content">
+          <div className="contact-info">
+            <div className="contact-info__card">
+              <div className="contact-info__icon">
+                <i className="fas fa-gamepad"></i>
+              </div>
+              <h3 className="contact-info__title">Game Submissions</h3>
+              <p className="contact-info__text">
+                Fill out the form to submit your game for review. We'll get back to you within 3-5 business days.
               </p>
-              <Button 
-                variant="primary"
-                onClick={() => setSubmitSuccess(false)}
-              >
-                Send Another Message
-              </Button>
             </div>
-          ) : (
-            <form className="contact-form" onSubmit={handleSubmit}>
-              <div className="contact-form__grid">
-                {/* Name field */}
-                <div className="contact-form__field">
-                  <label className="contact-form__label" htmlFor="name">Name</label>
+            
+            <div className="contact-info__card">
+              <div className="contact-info__icon">
+                <i className="fas fa-envelope"></i>
+              </div>
+              <h3 className="contact-info__title">General Inquiries</h3>
+              <p className="contact-info__text">
+                For general questions or feedback, please email us at:
+                <a href="mailto:contact@gamehub.com" className="contact-info__link">
+                  contact@gamehub.com
+                </a>
+              </p>
+            </div>
+            
+            <div className="contact-info__card">
+              <div className="contact-info__icon">
+                <i className="fas fa-handshake"></i>
+              </div>
+              <h3 className="contact-info__title">Partnership</h3>
+              <p className="contact-info__text">
+                Interested in partnering with us? Please contact our business team at:
+                <a href="mailto:partners@gamehub.com" className="contact-info__link">
+                  partners@gamehub.com
+                </a>
+              </p>
+            </div>
+            
+            <div className="contact-info__social">
+              <h3 className="contact-info__social-title">Connect With Us</h3>
+              <div className="contact-info__social-links">
+                <a href="#" className="contact-info__social-link" aria-label="Discord">
+                  <i className="fab fa-discord"></i>
+                </a>
+                <a href="#" className="contact-info__social-link" aria-label="Twitter">
+                  <i className="fab fa-twitter"></i>
+                </a>
+                <a href="#" className="contact-info__social-link" aria-label="Instagram">
+                  <i className="fab fa-instagram"></i>
+                </a>
+                <a href="#" className="contact-info__social-link" aria-label="Twitch">
+                  <i className="fab fa-twitch"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div className="contact-form-wrapper">
+            {submitted ? (
+              <div className="contact-success">
+                <div className="contact-success__icon">
+                  <i className="fas fa-check-circle"></i>
+                </div>
+                <h2 className="contact-success__title">Submission Received!</h2>
+                <p className="contact-success__text">
+                  Thank you for submitting your game. We'll review it and get back to you shortly.
+                </p>
+              </div>
+            ) : (
+              <form className="contact-form" onSubmit={handleSubmit}>
+                <div className="contact-form__header">
+                  <h2 className="contact-form__title">Contact Form</h2>
+                  <p className="contact-form__subtitle">
+                    Please fill out the form below with your game details
+                  </p>
+                </div>
+                
+                <div className="contact-form__group">
+                  <label htmlFor="name" className="contact-form__label">
+                    Your Name *
+                  </label>
                   <input
                     type="text"
                     id="name"
                     name="name"
-                    className="contact-form__input"
                     value={formData.name}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
+                    className="contact-form__input"
                     required
                   />
                 </div>
                 
-                {/* Email field */}
-                <div className="contact-form__field">
-                  <label className="contact-form__label" htmlFor="email">Email</label>
+                <div className="contact-form__group">
+                  <label htmlFor="email" className="contact-form__label">
+                    Your Email *
+                  </label>
                   <input
                     type="email"
                     id="email"
                     name="email"
-                    className="contact-form__input"
                     value={formData.email}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
+                    className="contact-form__input"
                     required
                   />
                 </div>
                 
-                {/* Subject field */}
-                <div className="contact-form__field contact-form__field--full">
-                  <label className="contact-form__label" htmlFor="subject">Subject</label>
+                <div className="contact-form__group">
+                  <label htmlFor="subject" className="contact-form__label">
+                    Subject
+                  </label>
                   <select
                     id="subject"
                     name="subject"
-                    className="contact-form__select"
                     value={formData.subject}
-                    onChange={handleChange}
-                    required
+                    onChange={handleInputChange}
+                    className="contact-form__select"
                   >
-                    <option value="general">General Inquiry</option>
-                    <option value="game-submission">Game Submission</option>
-                    <option value="feedback">Feedback</option>
-                    <option value="bug-report">Bug Report</option>
-                    <option value="partnership">Partnership</option>
+                    <option value="Game Submission">Game Submission</option>
+                    <option value="General Inquiry">General Inquiry</option>
+                    <option value="Partnership">Partnership</option>
+                    <option value="Support">Support</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
                 
-                {/* Message field */}
-                <div className="contact-form__field contact-form__field--full">
-                  <label className="contact-form__label" htmlFor="message">Message</label>
+                {formData.subject === 'Game Submission' && (
+                  <>
+                    <div className="contact-form__group">
+                      <label htmlFor="gameTitle" className="contact-form__label">
+                        Game Title *
+                      </label>
+                      <input
+                        type="text"
+                        id="gameTitle"
+                        name="gameTitle"
+                        value={formData.gameTitle}
+                        onChange={handleInputChange}
+                        className="contact-form__input"
+                        required
+                      />
+                    </div>
+                    
+                    <div className="contact-form__group">
+                      <label className="contact-form__label">Platforms *</label>
+                      <div className="contact-form__checkboxes">
+                        <div className="contact-form__checkbox-item">
+                          <input
+                            type="checkbox"
+                            id="pc"
+                            name="gamePlatforms"
+                            value="PC"
+                            checked={formData.gamePlatforms.includes('PC')}
+                            onChange={handleCheckboxChange}
+                            className="contact-form__checkbox"
+                          />
+                          <label htmlFor="pc" className="contact-form__checkbox-label">
+                            PC
+                          </label>
+                        </div>
+                        
+                        <div className="contact-form__checkbox-item">
+                          <input
+                            type="checkbox"
+                            id="mac"
+                            name="gamePlatforms"
+                            value="Mac"
+                            checked={formData.gamePlatforms.includes('Mac')}
+                            onChange={handleCheckboxChange}
+                            className="contact-form__checkbox"
+                          />
+                          <label htmlFor="mac" className="contact-form__checkbox-label">
+                            Mac
+                          </label>
+                        </div>
+                        
+                        <div className="contact-form__checkbox-item">
+                          <input
+                            type="checkbox"
+                            id="web"
+                            name="gamePlatforms"
+                            value="Web"
+                            checked={formData.gamePlatforms.includes('Web')}
+                            onChange={handleCheckboxChange}
+                            className="contact-form__checkbox"
+                          />
+                          <label htmlFor="web" className="contact-form__checkbox-label">
+                            Web
+                          </label>
+                        </div>
+                        
+                        <div className="contact-form__checkbox-item">
+                          <input
+                            type="checkbox"
+                            id="mobile"
+                            name="gamePlatforms"
+                            value="Mobile"
+                            checked={formData.gamePlatforms.includes('Mobile')}
+                            onChange={handleCheckboxChange}
+                            className="contact-form__checkbox"
+                          />
+                          <label htmlFor="mobile" className="contact-form__checkbox-label">
+                            Mobile
+                          </label>
+                        </div>
+                        
+                        <div className="contact-form__checkbox-item">
+                          <input
+                            type="checkbox"
+                            id="console"
+                            name="gamePlatforms"
+                            value="Console"
+                            checked={formData.gamePlatforms.includes('Console')}
+                            onChange={handleCheckboxChange}
+                            className="contact-form__checkbox"
+                          />
+                          <label htmlFor="console" className="contact-form__checkbox-label">
+                            Console
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="contact-form__group">
+                      <label htmlFor="gameDescription" className="contact-form__label">
+                        Game Description *
+                      </label>
+                      <textarea
+                        id="gameDescription"
+                        name="gameDescription"
+                        value={formData.gameDescription}
+                        onChange={handleInputChange}
+                        className="contact-form__textarea"
+                        rows="4"
+                        required
+                      ></textarea>
+                    </div>
+                    
+                    <div className="contact-form__group">
+                      <label htmlFor="gameWebsite" className="contact-form__label">
+                        Game Website or Store Link
+                      </label>
+                      <input
+                        type="url"
+                        id="gameWebsite"
+                        name="gameWebsite"
+                        value={formData.gameWebsite}
+                        onChange={handleInputChange}
+                        className="contact-form__input"
+                        placeholder="https://"
+                      />
+                    </div>
+                    
+                    <div className="contact-form__group">
+                      <label className="contact-form__label">
+                        Screenshots or Promotional Material
+                      </label>
+                      <div className="contact-form__file-upload">
+                        <input
+                          type="file"
+                          id="attachments"
+                          name="attachments"
+                          onChange={handleFileChange}
+                          className="contact-form__file"
+                          multiple
+                          accept="image/*,.pdf"
+                        />
+                        <label htmlFor="attachments" className="contact-form__file-label">
+                          <i className="fas fa-cloud-upload-alt"></i>
+                          <span>Choose files</span>
+                        </label>
+                        <span className="contact-form__file-info">
+                          Max 5 files, 5MB each (PNG, JPG, PDF)
+                        </span>
+                      </div>
+                    </div>
+                  </>
+                )}
+                
+                <div className="contact-form__group">
+                  <label htmlFor="message" className="contact-form__label">
+                    Message *
+                  </label>
                   <textarea
                     id="message"
                     name="message"
-                    className="contact-form__textarea"
-                    rows="6"
                     value={formData.message}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
+                    className="contact-form__textarea"
+                    rows="4"
                     required
                   ></textarea>
                 </div>
                 
-                {/* Game submission checkbox */}
-                <div className="contact-form__field contact-form__field--checkbox">
-                  <input
-                    type="checkbox"
-                    id="isGameSubmission"
-                    name="isGameSubmission"
-                    className="contact-form__checkbox"
-                    checked={formData.isGameSubmission}
-                    onChange={handleChange}
-                  />
-                  <label className="contact-form__checkbox-label" htmlFor="isGameSubmission">
-                    I'm submitting a game for review
-                  </label>
-                </div>
-                
-                {/* Submit button */}
                 <div className="contact-form__submit">
                   <Button
-                    type="submit"
-                    variant="primary"
+                    type="primary"
+                    size="large"
                     disabled={isSubmitting}
+                    fullWidth={true}
                   >
-                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                    {isSubmitting ? (
+                      <>
+                        <i className="fas fa-spinner fa-spin"></i> Submitting...
+                      </>
+                    ) : (
+                      <>
+                        Submit <i className="fas fa-paper-plane"></i>
+                      </>
+                    )}
                   </Button>
                 </div>
-                
-                {/* Error message */}
-                {submitError && (
-                  <div className="contact-form__error">
-                    {submitError}
-                  </div>
-                )}
-              </div>
-            </form>
-          )}
+              </form>
+            )}
+          </div>
         </div>
-        
-        {/* Additional contact information */}
-        <div className="contact-page__info-footer">
-          <div className="contact-info">
-            <h3 className="contact-info__title">Connect With Us</h3>
-            <div className="contact-info__item">
-              <span className="contact-info__icon contact-info__icon--email"></span>
-              <a href="mailto:hello@gameforgejs.com" className="contact-info__link">
-                hello@gameforgejs.com
-              </a>
-            </div>
-            <div className="contact-info__item">
-              <span className="contact-info__icon contact-info__icon--discord"></span>
-              <a href="https://discord.gg/gameforgejs" className="contact-info__link" target="_blank" rel="noopener noreferrer">
-                Join our Discord
-              </a>
-            </div>
-            <div className="contact-info__item">
-              <span className="contact-info__icon contact-info__icon--github"></span>
-              <a href="https://github.com/gameforgejs" className="contact-info__link" target="_blank" rel="noopener noreferrer">
-                GitHub
-              </a>
-            </div>
+      </div>
+      
+      <div className="contact-map">
+        <div className="contact-map__overlay">
+          <div className="contact-map__card">
+            <h3 className="contact-map__title">Our Location</h3>
+            <address className="contact-map__address">
+              <p>GameHub Studios</p>
+              <p>123 Gaming Street</p>
+              <p>San Francisco, CA 94107</p>
+            </address>
+          </div>
+        </div>
+        <div className="contact-map__placeholder">
+          {/* Replace with an actual map integration */}
+          <div className="contact-map__image-placeholder">
+            <i className="fas fa-map-marked-alt"></i>
           </div>
         </div>
       </div>

@@ -1,398 +1,144 @@
-// NotFoundPage.scss
-// Styles for the 404 page
+@import '../../styles/variables.scss';
 
-@import '../../styles/variables';
-@import '../../styles/mixins';
-
-.not-found-page {
-    padding: $spacing-xl 0;
-    min-height: 80vh;
+.not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at center, rgba($color-primary, 0.1), transparent 70%);
+  
+  &__container {
+    text-align: center;
+    padding: $spacing-xl;
+    max-width: 600px;
+    position: relative;
+    z-index: 2;
+  }
+  
+  &__glitch {
+    font-size: 120px;
+    font-weight: 800;
+    font-family: $font-gaming;
+    color: white;
+    text-shadow:
+      -2px -2px 0 $color-primary,
+      2px 2px 0 $color-secondary;
+    margin-bottom: $spacing-md;
+    position: relative;
+    
+    &::before,
+    &::after {
+      content: '404';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    
+    &::before {
+      color: $color-primary;
+      animation: glitch-1 2s infinite linear alternate-reverse;
+    }
+    
+    &::after {
+      color: $color-secondary;
+      animation: glitch-2 3s infinite linear alternate-reverse;
+    }
+  }
+  
+  &__title {
+    font-size: $font-size-2xl;
+    color: white;
+    margin-bottom: $spacing-md;
+  }
+  
+  &__text {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: $font-size-md;
+    margin-bottom: $spacing-xl;
+    line-height: 1.6;
+  }
+  
+  &__actions {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-
-    &__container {
-        @include container;
-        max-width: 800px;
-        margin: 0 auto;
-        text-align: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-xl;
+    
+    @media (max-width: $breakpoint-sm) {
+      flex-direction: column;
+      align-items: center;
     }
-
-    // Error display
-    &__error {
-        margin-bottom: $spacing-xl;
+  }
+  
+  &__decoration {
+    position: relative;
+    height: 100px;
+    margin-top: $spacing-xl;
+  }
+  
+  &__gamepad {
+    font-size: 4rem;
+    color: rgba(255, 255, 255, 0.1);
+    animation: float 3s infinite ease-in-out;
+  }
+  
+  &__particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  &__particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: $color-primary;
+    border-radius: 50%;
+    animation: particle-float 3s infinite ease-out;
+    
+    @for $i from 1 through 20 {
+      &:nth-child(#{$i}) {
+        left: random(100) * 1%;
+        top: random(100) * 1%;
+        animation-delay: random(3000) * 0.001s;
+        animation-duration: (random(2000) * 0.001s) + 2s;
+        opacity: random(100) * 0.01;
+        box-shadow: 0 0 random(8) + 2px $color-primary;
+      }
     }
-
-    &__error-code {
-        font-family: $font-family-pixel;
-        font-size: 8rem;
-        line-height: 1;
-        color: $color-primary;
-        margin-bottom: $spacing-md;
-        position: relative;
-        text-shadow: 4px 4px 0 $color-black;
-        display: inline-block;
-
-        // Glitch effect
-        &::before,
-        &::after {
-            content: "404";
-            position: absolute;
-            top: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        &::before {
-            left: -2px;
-            color: $color-secondary;
-            clip-path: inset(0 0 50% 0);
-            animation: glitch-1 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
-        }
-
-        &::after {
-            left: 2px;
-            color: $color-tertiary;
-            clip-path: inset(50% 0 0 0);
-            animation: glitch-2 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
-        }
-
-        // Pixel border
-        &::before,
-        &::after {
-            text-shadow: 4px 4px 0 $color-black;
-        }
-    }
-
-    &__error-message {
-        font-family: $font-family-pixel;
-        font-size: $font-size-xl;
-        margin-bottom: $spacing-xl;
-        color: $color-dark-gray;
-
-        // Typewriter effect
-        overflow: hidden;
-        border-right: 0.15em solid $color-primary;
-        white-space: nowrap;
-        margin: 0 auto $spacing-xl;
-        animation:
-            typing 3.5s steps(40, end),
-            blink-caret 0.75s step-end infinite;
-
-        @include media-breakpoint-down(sm) {
-            font-size: $font-size-lg;
-            white-space: normal;
-            border-right: none;
-            animation: none;
-        }
-    }
-
-    // Mini game area
-    &__game {
-        margin: $spacing-xl auto;
-        max-width: 500px;
-    }
-
-    &__game-message {
-        font-family: $font-family-pixel;
-        font-size: $font-size-md;
-        margin-bottom: $spacing-md;
-        color: $color-gray;
-    }
-
-    &__game-area {
-        width: 100%;
-        height: 300px;
-        background-color: $color-light-gray;
-        border: 4px solid $color-black;
-        box-shadow: 6px 6px 0 0 rgba($color-black, 0.2);
-        position: relative;
-        margin-bottom: $spacing-md;
-        overflow: hidden;
-
-        // Pixel background
-        background-image:
-            linear-gradient(to right, rgba($color-black, 0.1) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba($color-black, 0.1) 1px, transparent 1px);
-        background-size: 20px 20px;
-
-        @include media-breakpoint-down(sm) {
-            height: 200px;
-        }
-    }
-
-    // Game character
-    &__game-character {
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        background-color: $color-primary;
-        transition: left 0.2s, top 0.2s;
-        transform: translate(-50%, -50%);
-        z-index: 2;
-
-        // Pixel character
-        clip-path: polygon(0% 0%, 100% 0%, 100% 20%, 80% 20%, 80% 40%, 100% 40%,
-                100% 60%, 80% 60%, 80% 80%, 100% 80%, 100% 100%,
-                0% 100%, 0% 80%, 20% 80%, 20% 60%, 0% 60%,
-                0% 40%, 20% 40%, 20% 20%, 0% 20%);
-
-        // Walking animation
-        animation: pixel-walk 0.5s steps(2) infinite;
-    }
-
-    // Treasure chests
-    &__game-chest {
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        background-color: $color-tertiary;
-        border: 2px solid darken($color-tertiary, 20%);
-        z-index: 1;
-
-        &--top-left {
-            top: 10px;
-            left: 10px;
-        }
-
-        &--top-right {
-            top: 10px;
-            right: 10px;
-        }
-
-        &--bottom-left {
-            bottom: 10px;
-            left: 10px;
-        }
-
-        &--bottom-right {
-            bottom: 10px;
-            right: 10px;
-        }
-    }
-
-    // Controls display (for mobile)
-    &__controls {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        width: 120px;
-        margin: 0 auto;
-
-        @include media-breakpoint-up(md) {
-            display: none; // Hide on desktop
-        }
-    }
-
-    &__controls-button {
-        width: 40px;
-        height: 40px;
-        background-color: $color-dark-gray;
-        color: $color-white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: $font-family-pixel;
-        font-size: $font-size-lg;
-        cursor: pointer;
-        border: 2px solid $color-black;
-
-        &--up {
-            margin: 0 auto;
-            border-bottom: none;
-        }
-
-        &--left {
-            border-right: none;
-        }
-
-        &--right {
-            border-left: none;
-        }
-
-        &:active {
-            background-color: $color-primary;
-        }
-    }
-
-    // Secret message
-    &__secret-message {
-        background-color: $color-black;
-        color: $color-white;
-        padding: $spacing-sm;
-        margin: $spacing-md auto;
-        font-family: $font-family-pixel;
-        border: 2px solid $color-tertiary;
-        max-width: 300px;
-        animation: pixel-fade-in 0.5s forwards;
-    }
-
-    // "Go Home" button section
-    &__action {
-        margin-top: $spacing-xl;
-    }
-
-    // Theme variations
-    .theme-nes & {
-        &__error-code {
-            color: var(--primary-color);
-        }
-
-        &__game-character {
-            background-color: var(--primary-color);
-        }
-
-        &__controls-button:active {
-            background-color: var(--primary-color);
-        }
-    }
-
-    .theme-gameboy & {
-        &__error-code {
-            color: var(--primary-color);
-            text-shadow: 2px 2px 0 var(--secondary-color);
-        }
-
-        &__error-message {
-            color: var(--text-color);
-        }
-
-        &__game-area {
-            background-color: var(--background-color);
-            border-color: var(--secondary-color);
-        }
-
-        &__game-chest {
-            background-color: var(--primary-color);
-            border-color: var(--secondary-color);
-        }
-
-        &__game-character {
-            background-color: var(--secondary-color);
-        }
-
-        &__controls-button {
-            background-color: var(--secondary-color);
-            color: var(--background-color);
-            border-color: var(--secondary-color);
-
-            &:active {
-                background-color: var(--primary-color);
-            }
-        }
-    }
-
-    .theme-arcade & {
-        &__error-code {
-            color: #ff00ff;
-            text-shadow: 4px 4px 0 #0000ff;
-        }
-
-        &__error-code::before {
-            color: #00ffff;
-        }
-
-        &__error-code::after {
-            color: #ffff00;
-        }
-
-        &__game-area {
-            background-color: #000033;
-            border-color: #ff00ff;
-            box-shadow: 6px 6px 0 0 #0000ff;
-        }
-
-        &__game-chest {
-            background-color: #ffff00;
-            border-color: #ff00ff;
-        }
-
-        &__game-character {
-            background-color: #ff00ff;
-            box-shadow: 2px 2px 0 #00ffff;
-        }
-
-        &__secret-message {
-            border-color: #ff00ff;
-            background-color: #000033;
-            color: #00ffff;
-        }
-    }
+  }
 }
 
-// Typing animation
-@keyframes typing {
-    from {
-        width: 0
-    }
-
-    to {
-        width: 100%
-    }
-}
-
-// Blinking cursor animation
-@keyframes blink-caret {
-
-    from,
-    to {
-        border-color: transparent
-    }
-
-    50% {
-        border-color: $color-primary
-    }
-}
-
-// Glitch animations
 @keyframes glitch-1 {
-    0% {
-        clip-path: inset(20% 0 80% 0);
-    }
-
-    20% {
-        clip-path: inset(60% 0 40% 0);
-    }
-
-    40% {
-        clip-path: inset(40% 0 60% 0);
-    }
-
-    60% {
-        clip-path: inset(80% 0 20% 0);
-    }
-
-    80% {
-        clip-path: inset(10% 0 90% 0);
-    }
-
-    100% {
-        clip-path: inset(30% 0 70% 0);
-    }
+  0%, 100% { transform: none; opacity: 1; }
+  50% { transform: skew(-0.5deg, -0.9deg); opacity: 0.75; }
+  75% { transform: skew(1deg, 0.5deg); opacity: 0.85; }
 }
 
 @keyframes glitch-2 {
-    0% {
-        clip-path: inset(80% 0 20% 0);
-    }
+  0%, 100% { transform: none; opacity: 0.85; }
+  25% { transform: skew(0.5deg, -0.5deg); opacity: 0.65; }
+  50% { transform: skew(-1deg, 1deg); opacity: 0.75; }
+}
 
-    20% {
-        clip-path: inset(20% 0 80% 0);
-    }
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
 
-    40% {
-        clip-path: inset(60% 0 40% 0);
-    }
-
-    60% {
-        clip-path: inset(10% 0 90% 0);
-    }
-
-    80% {
-        clip-path: inset(70% 0 30% 0);
-    }
-
-    100% {
-        clip-path: inset(40% 0 60% 0);
-    }
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-50px) scale(0);
+    opacity: 0;
+  }
 }

@@ -1,460 +1,455 @@
-// ContactPage.scss
-// Styles for the contact page
-
-@import '../../styles/variables';
-@import '../../styles/mixins';
+@import '../../styles/variables.scss';
 
 .contact-page {
-    padding: $spacing-xl 0 $spacing-2xl;
-
-    &__container {
-        @include container;
-    }
-
-    // Page header
-    &__header {
-        text-align: center;
-        margin-bottom: $spacing-xl;
-    }
-
-    &__title {
-        font-family: $font-family-pixel;
-        font-size: $font-size-3xl;
-        margin-bottom: $spacing-sm;
-
-        @include media-breakpoint-down(sm) {
-            font-size: $font-size-2xl;
-        }
-    }
-
-    &__subtitle {
-        font-size: $font-size-lg;
-        color: $color-gray;
-        max-width: 600px;
-        margin: 0 auto;
-
-        @include media-breakpoint-down(sm) {
-            font-size: $font-size-md;
-        }
-    }
-
-    // Contact info cards
-    &__info {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: $spacing-lg;
-        margin-bottom: $spacing-xl;
-    }
-
-    // Contact form container
-    &__form-container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: $spacing-lg;
-        background-color: $color-white;
-        border: 4px solid $color-black;
-        box-shadow: 8px 8px 0 0 rgba($color-black, 0.2);
-
-        @include media-breakpoint-down(sm) {
-            padding: $spacing-md;
-        }
-    }
-
-    // Success message
-    &__success {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: $spacing-xl 0;
-
-        &-icon {
-            width: 80px;
-            height: 80px;
-            background-color: $color-success;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: $spacing-md;
-
-            &::before {
-                content: "✓";
-                font-size: 2.5rem;
-                color: $color-white;
-            }
-        }
-
-        &-title {
-            font-family: $font-family-pixel;
-            font-size: $font-size-xl;
-            margin-bottom: $spacing-sm;
-            color: $color-success;
-        }
-
-        &-message {
-            color: $color-gray;
-            margin-bottom: $spacing-lg;
-            max-width: 400px;
-        }
-    }
-
-    // Additional info footer
-    &__info-footer {
-        margin-top: $spacing-xl;
-        padding-top: $spacing-lg;
-        border-top: 1px dashed $color-gray;
-    }
+  padding-bottom: $spacing-3xl;
 }
 
-// Contact card component
-.contact-card {
-    padding: $spacing-lg;
-    background-color: $color-white;
-    border: 4px solid $color-black;
+// Header
+.contact-header {
+  background: linear-gradient(135deg, rgba($color-primary, 0.2), rgba($color-accent, 0.2)), $bg-dark;
+  padding: $spacing-3xl 0 $spacing-2xl;
+  margin-bottom: $spacing-2xl;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.03) 0%, transparent 20%);
+    background-size: 20px 20px;
+    opacity: 0.5;
+    z-index: 1;
+  }
+  
+  &__title {
+    position: relative;
+    font-size: $font-size-3xl;
+    color: white;
     text-align: center;
-    transition: transform $transition-speed-normal;
-
-    &:hover {
-        transform: translateY(-8px);
-    }
-
-    &__icon {
-        width: 64px;
-        height: 64px;
-        margin: 0 auto $spacing-md;
-        background-color: $color-light-gray;
-        position: relative;
-
-        &::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 32px;
-            height: 32px;
-            background-color: $color-primary;
-        }
-
-        // Different icons for each card
-        &--questions::before {
-            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
-        }
-
-        &--game::before {
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-        }
-
-        &--feedback::before {
-            clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
-        }
-    }
-
-    &__title {
-        font-family: $font-family-pixel;
-        font-size: $font-size-lg;
-        margin-bottom: $spacing-sm;
-    }
-
-    &__text {
-        color: $color-gray;
-    }
-}
-
-// Contact form
-.contact-form {
-    &__grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: $spacing-md;
-
-        @include media-breakpoint-down(sm) {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    &__field {
-        margin-bottom: $spacing-md;
-
-        &--full {
-            grid-column: 1 / -1;
-        }
-
-        &--checkbox {
-            display: flex;
-            align-items: center;
-            grid-column: 1 / -1;
-        }
-    }
-
-    &__label {
-        display: block;
-        margin-bottom: $spacing-xs;
-        font-weight: bold;
-    }
-
-    &__input,
-    &__select,
-    &__textarea {
-        width: 100%;
-        padding: $spacing-sm;
-        border: 3px solid $color-black;
-        background-color: $color-white;
-        font-family: $font-family-base;
-        font-size: $font-size-md;
-        transition: border-color $transition-speed-fast, box-shadow $transition-speed-fast;
-
-        &:focus {
-            outline: none;
-            border-color: $color-primary;
-            box-shadow: 0 0 0 2px rgba($color-primary, 0.2);
-        }
-    }
-
-    &__textarea {
-        resize: vertical;
-        min-height: 120px;
-    }
-
-    &__checkbox {
-        width: 20px;
-        height: 20px;
-        margin-right: $spacing-sm;
-        appearance: none;
-        border: 3px solid $color-black;
-        background-color: $color-white;
-        position: relative;
-        cursor: pointer;
-
-        &:checked {
-            background-color: $color-primary;
-
-            &::after {
-                content: "";
-                position: absolute;
-                top: 3px;
-                left: 3px;
-                width: 8px;
-                height: 8px;
-                background-color: $color-white;
-            }
-        }
-
-        &:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px rgba($color-primary, 0.2);
-        }
-    }
-
-    &__checkbox-label {
-        cursor: pointer;
-    }
-
-    &__submit {
-        grid-column: 1 / -1;
-        text-align: center;
-        margin-top: $spacing-md;
-    }
-
-    &__error {
-        grid-column: 1 / -1;
-        color: $color-danger;
-        background-color: rgba($color-danger, 0.1);
-        padding: $spacing-sm;
-        border: 1px solid $color-danger;
-        margin-top: $spacing-sm;
-        font-size: $font-size-sm;
-    }
-}
-
-// Contact information component
-.contact-info {
+    z-index: 2;
+    margin-bottom: $spacing-md;
+    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  &__subtitle {
+    position: relative;
+    font-size: $font-size-lg;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
     max-width: 600px;
     margin: 0 auto;
-
-    &__title {
-        font-family: $font-family-pixel;
-        font-size: $font-size-lg;
-        margin-bottom: $spacing-md;
-        text-align: center;
-    }
-
-    &__item {
-        display: flex;
-        align-items: center;
-        margin-bottom: $spacing-sm;
-
-        &:last-child {
-            margin-bottom: 0;
-        }
-    }
-
-    &__icon {
-        width: 24px;
-        height: 24px;
-        margin-right: $spacing-sm;
-        background-color: $color-primary;
-        position: relative;
-
-        // Icon styles
-        &--email::before {
-            content: "@";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: $font-size-sm;
-            color: $color-white;
-        }
-
-        &--discord::before {
-            content: "D";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: $font-size-sm;
-            color: $color-white;
-        }
-
-        &--github::before {
-            content: "G";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: $font-size-sm;
-            color: $color-white;
-        }
-    }
-
-    &__link {
-        color: $color-primary;
-        text-decoration: none;
-
-        &:hover {
-            text-decoration: underline;
-        }
-    }
+    z-index: 2;
+  }
 }
 
-// Theme variations
-.theme-nes {
-    .contact-card__icon::before {
-        background-color: var(--primary-color);
-    }
-
-    .contact-form__checkbox:checked {
-        background-color: var(--primary-color);
-    }
-
-    .contact-info__icon {
-        background-color: var(--primary-color);
-    }
-
-    .contact-info__link {
-        color: var(--primary-color);
-    }
-
-    .contact-page__success-icon {
-        background-color: var(--primary-color);
-    }
-
-    .contact-page__success-title {
-        color: var(--primary-color);
-    }
+// Content layout
+.contact-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: $spacing-2xl;
+  
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: 1fr;
+  }
 }
 
-.theme-gameboy {
-    .contact-card {
-        background-color: var(--background-color);
-        border-color: var(--secondary-color);
+// Info cards
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  
+  &__card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border-radius: $border-radius-md;
+    padding: $spacing-lg;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform $transition-base, box-shadow $transition-base;
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      border-color: rgba($color-primary, 0.2);
     }
-
-    .contact-card__icon::before {
-        background-color: var(--primary-color);
+  }
+  
+  &__icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, $color-primary, $color-secondary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $font-size-lg;
+    margin-bottom: $spacing-md;
+  }
+  
+  &__title {
+    font-family: $font-gaming;
+    font-size: $font-size-lg;
+    color: white;
+    margin-bottom: $spacing-sm;
+  }
+  
+  &__text {
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0;
+    font-size: $font-size-base;
+    line-height: 1.6;
+  }
+  
+  &__link {
+    display: block;
+    margin-top: $spacing-xs;
+    color: $color-primary;
+    transition: color $transition-fast;
+    
+    &:hover {
+      color: $color-secondary;
+      text-decoration: underline;
     }
-
-    .contact-form__checkbox:checked {
-        background-color: var(--primary-color);
+  }
+  
+  &__social {
+    margin-top: $spacing-md;
+  }
+  
+  &__social-title {
+    font-family: $font-gaming;
+    font-size: $font-size-md;
+    color: white;
+    margin-bottom: $spacing-md;
+  }
+  
+  &__social-links {
+    display: flex;
+    gap: $spacing-md;
+  }
+  
+  &__social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: $font-size-md;
+    transition: all $transition-base;
+    
+    &:hover {
+      transform: translateY(-3px);
+      background: linear-gradient(135deg, $color-primary, $color-secondary);
+      box-shadow: 0 5px 15px rgba($color-primary, 0.3);
     }
-
-    .contact-page__form-container {
-        background-color: var(--background-color);
-        border-color: var(--secondary-color);
-    }
-
-    .contact-form__input,
-    .contact-form__select,
-    .contact-form__textarea,
-    .contact-form__checkbox {
-        background-color: var(--background-color);
-        border-color: var(--secondary-color);
-        color: var(--text-color);
-    }
+  }
 }
 
-.theme-arcade {
-    .contact-card {
-        background-color: #000033;
-        border-color: #ff00ff;
-        box-shadow: 6px 6px 0 0 #0000ff;
-    }
+// Form
+.contact-form-wrapper {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border-radius: $border-radius-lg;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to right, $color-primary, $color-secondary);
+  }
+}
 
-    .contact-card__title {
-        color: #ff00ff;
-        text-shadow: 1px 1px 0 #0000ff;
+.contact-form {
+  padding: $spacing-xl;
+  
+  &__header {
+    text-align: center;
+    margin-bottom: $spacing-xl;
+  }
+  
+  &__title {
+    font-family: $font-gaming;
+    font-size: $font-size-xl;
+    color: white;
+    margin-bottom: $spacing-sm;
+  }
+  
+  &__subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: $font-size-base;
+  }
+  
+  &__group {
+    margin-bottom: $spacing-lg;
+  }
+  
+  &__label {
+    display: block;
+    margin-bottom: $spacing-sm;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    font-size: $font-size-sm;
+  }
+  
+  &__input,
+  &__select,
+  &__textarea {
+    width: 100%;
+    padding: $spacing-md;
+    border-radius: $border-radius-md;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-family: $font-body;
+    transition: all $transition-fast;
+    
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.4);
     }
-
-    .contact-card__text {
-        color: #ffffff;
+    
+    &:focus {
+      outline: none;
+      border-color: rgba($color-primary, 0.5);
+      box-shadow: 0 0 0 2px rgba($color-primary, 0.2);
     }
-
-    .contact-card__icon::before {
-        background-color: #ff00ff;
+  }
+  
+  &__textarea {
+    resize: vertical;
+  }
+  
+  &__select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: calc(100% - 1rem) center;
+    padding-right: 2.5rem;
+    
+    option {
+      background-color: $bg-card;
     }
-
-    .contact-page__form-container {
-        background-color: #000033;
-        border-color: #ff00ff;
-        box-shadow: 8px 8px 0 0 #0000ff;
+  }
+  
+  &__checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+    margin-top: $spacing-sm;
+  }
+  
+  &__checkbox-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  &__checkbox {
+    position: absolute;
+    opacity: 0;
+    
+    & + label {
+      position: relative;
+      cursor: pointer;
+      padding: 0;
+      padding-left: 28px;
     }
-
-    .contact-form__label {
-        color: #ffffff;
+    
+    & + label:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 20px;
+      height: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: $border-radius-sm;
+      transition: all $transition-fast;
     }
-
-    .contact-form__input,
-    .contact-form__select,
-    .contact-form__textarea {
-        background-color: #000022;
-        border-color: #00ffff;
-        color: #ffffff;
+    
+    &:hover + label:before {
+      border-color: rgba($color-primary, 0.5);
     }
-
-    .contact-form__checkbox {
-        border-color: #00ffff;
-
-        &:checked {
-            background-color: #ff00ff;
-        }
+    
+    &:checked + label:before {
+      background: $color-primary;
+      border-color: $color-primary;
     }
-
-    .contact-form__checkbox-label {
-        color: #ffffff;
+    
+    &:checked + label:after {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 3px;
+      width: 8px;
+      height: 12px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
     }
-
-    .contact-info__title {
-        color: #ff00ff;
-        text-shadow: 1px 1px 0 #0000ff;
+  }
+  
+  &__checkbox-label {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: $font-size-sm;
+    user-select: none;
+  }
+  
+  &__file-upload {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+  
+  &__file {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+  &__file-label {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-md;
+    border-radius: $border-radius-md;
+    border: 1px dashed rgba($color-primary, 0.3);
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all $transition-fast;
+    
+    &:hover {
+      background: rgba($color-primary, 0.1);
+      border-color: rgba($color-primary, 0.5);
     }
-
-    .contact-info__icon {
-        background-color: #ff00ff;
+    
+    i {
+      font-size: $font-size-lg;
+      color: $color-primary;
     }
+  }
+  
+  &__file-info {
+    font-size: $font-size-xs;
+    color: rgba(255, 255, 255, 0.6);
+  }
+  
+  &__submit {
+    margin-top: $spacing-xl;
+  }
+}
 
-    .contact-info__link {
-        color: #00ffff;
+// Success message
+.contact-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-3xl $spacing-xl;
+  text-align: center;
+  
+  &__icon {
+    font-size: 4rem;
+    color: $color-primary;
+    margin-bottom: $spacing-lg;
+    animation: pulse 2s infinite;
+  }
+  
+  &__title {
+    font-family: $font-gaming;
+    font-size: $font-size-2xl;
+    color: white;
+    margin-bottom: $spacing-md;
+  }
+  
+  &__text {
+    font-size: $font-size-lg;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 500px;
+  }
+}
+
+// Map section
+.contact-map {
+  position: relative;
+  height: 400px;
+  margin-top: $spacing-3xl;
+  
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: $spacing-2xl;
+    z-index: 2;
+  }
+  
+  &__card {
+    background: rgba($bg-dark, 0.85);
+    backdrop-filter: blur(10px);
+    padding: $spacing-lg;
+    border-radius: $border-radius-md;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 300px;
+  }
+  
+  &__title {
+    font-family: $font-gaming;
+    font-size: $font-size-lg;
+    color: white;
+    margin-bottom: $spacing-md;
+  }
+  
+  &__address {
+    font-style: normal;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    
+    p {
+      margin-bottom: $spacing-xs;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
+  }
+  
+  &__placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, lighten($bg-dark, 5%), $bg-dark);
+    position: relative;
+  }
+  
+  &__image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: rgba(255, 255, 255, 0.1);
+    font-size: 4rem;
+  }
 }

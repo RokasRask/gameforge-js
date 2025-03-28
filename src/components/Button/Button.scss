@@ -1,0 +1,152 @@
+@import '../styles/variables.scss';
+
+.game-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  overflow: hidden;
+  font-family: $font-gaming;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    height: 40%;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 2px 2px 100px 100px;
+    pointer-events: none;
+  }
+  
+  &:active {
+    transform: translateY(2px);
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba($color-primary, 0.3);
+  }
+  
+  &__text {
+    position: relative;
+    z-index: 2;
+  }
+  
+  &__icon {
+    margin-right: 0.5rem;
+    font-size: 1.2em;
+  }
+  
+  &__glint {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 20px;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(45deg);
+    transition: 0.5s;
+    animation: glint 3s infinite;
+    pointer-events: none;
+  }
+  
+  &:hover &__glint {
+    animation: glint 1.5s infinite;
+  }
+  
+  // Button Types
+  &--primary {
+    background: linear-gradient(to right, $color-primary, darken($color-primary, 10%));
+    color: white;
+    box-shadow: 0 4px 0 darken($color-primary, 15%), 
+                0 5px 15px rgba(0, 0, 0, 0.3);
+    
+    &:hover {
+      background: linear-gradient(to right, lighten($color-primary, 5%), $color-primary);
+    }
+    
+    &:active {
+      box-shadow: 0 2px 0 darken($color-primary, 15%);
+    }
+  }
+  
+  &--secondary {
+    background: linear-gradient(to right, $color-secondary, darken($color-secondary, 10%));
+    color: white;
+    box-shadow: 0 4px 0 darken($color-secondary, 15%), 
+                0 5px 15px rgba(0, 0, 0, 0.3);
+    
+    &:hover {
+      background: linear-gradient(to right, lighten($color-secondary, 5%), $color-secondary);
+    }
+    
+    &:active {
+      box-shadow: 0 2px 0 darken($color-secondary, 15%);
+    }
+  }
+  
+  &--danger {
+    background: linear-gradient(to right, $color-danger, darken($color-danger, 10%));
+    color: white;
+    box-shadow: 0 4px 0 darken($color-danger, 15%), 
+                0 5px 15px rgba(0, 0, 0, 0.3);
+    
+    &:hover {
+      background: linear-gradient(to right, lighten($color-danger, 5%), $color-danger);
+    }
+    
+    &:active {
+      box-shadow: 0 2px 0 darken($color-danger, 15%);
+    }
+  }
+  
+  // Button Sizes
+  &--small {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+  
+  &--medium {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  &--large {
+    padding: 1rem 2rem;
+    font-size: 1.15rem;
+  }
+  
+  &--full-width {
+    width: 100%;
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: gray;
+    box-shadow: 0 4px 0 darken(gray, 15%);
+    
+    &:active {
+      transform: none;
+    }
+  }
+}
+
+@keyframes glint {
+  0% {
+    left: -50%;
+  }
+  100% {
+    left: 150%;
+  }
+}
