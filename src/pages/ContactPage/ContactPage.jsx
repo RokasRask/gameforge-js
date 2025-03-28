@@ -432,25 +432,6 @@ const ContactPage = () => {
           </div>
         </div>
       </div>
-      
-      <div className="contact-map">
-        <div className="contact-map__overlay">
-          <div className="contact-map__card">
-            <h3 className="contact-map__title">Our Location</h3>
-            <address className="contact-map__address">
-              <p>GameForge.js Studios</p>
-              <p>123 JavaScript Street</p>
-              <p>San Francisco, CA 94107</p>
-            </address>
-          </div>
-        </div>
-        <div className="contact-map__placeholder">
-          {/* Replace with an actual map integration */}
-          <div className="contact-map__image-placeholder">
-            <i className="fas fa-map-marked-alt"></i>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
